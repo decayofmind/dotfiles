@@ -1,1 +1,0 @@
-/Users/zengeist/.zprezto/runcoms/zshrc
