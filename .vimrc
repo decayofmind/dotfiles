@@ -1,55 +1,57 @@
+runtime! plugin/sensible.vim
+
+let s:darwin = has('mac')
+
 set nocompatible
 set hidden
-filetype plugin on
-syntax on
-set history=1000
+
+let mapleader = ","
+
 set wildmode=longest,list,full
-set wildmenu
 set title
-set ruler
 set number
-set autoindent
 set mouse=a
 set ttyfast
 set modeline
 set autowrite
 set modelines=5
-set backspace=indent,eol,start
 set completeopt-=preview
 set cursorline
 set clipboard=unnamed
-set incsearch
 set ignorecase
 set showmode
 set showmatch
-set smarttab
-set softtabstop=4
-set tabstop=8
+"set softtabstop=4
+"set tabstop=8
 set gcr=a:blinkon0
 set guifont=Inconsolata\ for\ Powerline:h14
-set encoding=utf-8
-set laststatus=2
 set visualbell t_vb= 
 set scrolloff=5
-set background=dark
-tab sball
+"set background=dark
 set switchbuf=useopen
 set novisualbell  
 set splitbelow
 set splitright
-set directory=$HOME/.vim/swapfiles//
-set backupdir=$HOME/.vim/backupfiles//
-runtime! macros/matchit.vim
+set directory=/tmp//
+set backupdir=/tmp//
+
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor\ --column'
+endif
+command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 
 if $TERM =~ '-256color'
 	    set t_Co=256
-endif"
+endif
 
 colorscheme onedark 
 "colorscheme jellybeans 
 
 
 call plug#begin('~/.vim/bundle')
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sleuth'
+
 Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
 	autocmd! User indentLine doautocmd indentLine Syntax
 
@@ -62,6 +64,7 @@ Plug 'vim-airline/vim-airline'
 	let g:airline#extensions#tabline#formatter = 'unique_tail'
 	let g:airline#extensions#tabline#left_sep = ' '
 	let g:airline#extensions#tabline#left_alt_sep = '|'
+	let g:airline#extensions#tabline#fnamemod = ':t'
 
 Plug 'majutsushi/tagbar'
 	nmap 	 <F8> :TagbarToggle<CR>
@@ -73,19 +76,8 @@ Plug 'scrooloose/syntastic'
 	let g:syntastic_always_populate_loc_list   = 1
 	let g:syntastic_auto_loc_list              = 1
 	let g:syntastic_check_on_open              = 0
-	let g:syntastic_check_on_wq                = 0
+	let g:syntastic_check_on_wq                = 1
 	let g:syntastic_markdown_checkers          = ['mdl']
-
-Plug 'Shougo/unite.vim'
-	let g:unite_split_rule = "botright"
-	let g:unite_force_overwrite_statusline = 0
-	let g:unite_winheight = 10
-	let g:unite_candidate_icon="▷"
-	let g:unite_source_history_yank_enable = 1
-	nnoremap <Leader>f :Unite file<CR>
-	nnoremap <Leader>b :Unite buffer<CR>
-	nnoremap <Leader>r :Unite register<CR>
-	nnoremap <Leader>y :Unite history/yank<CR>
 
 Plug 'scrooloose/nerdtree'
 	nmap 	 <F7> :NERDTreeToggle<CR>
@@ -107,15 +99,29 @@ Plug 'mhinz/vim-startify'
 
 Plug 'luochen1990/rainbow'
 	let g:rainbow_active = 1
+	let g:rainbow_conf = {
+	\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+	\   'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+	\   'operators': '_,\;\=_',
+	\   'separately': {
+	\       '*' : {},
+	\       'vim': {
+	\           'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+	\   },
+	\       'ansible': 0,
+	\       'ansible_template': 0,
+	\   }
+	\ }
 
+if s:darwin
 Plug 'rizzatti/dash.vim', { 'on': 'Dash' }
 Plug 'Keithbsmiley/investigate.vim'
 	let g:investigate_use_dash=1
-
-Plug 'szw/vim-ctrlspace'
-	let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
-	let g:CtrlSpaceUseTabline = 1
-
+	let g:investigate_use_dash_for_vim=1
+	let g:investigate_dash_for_ansible="ansible"
+	nnoremap <leader>K :call investigate#Investigate('n')<CR>
+	vnoremap <leader>K :call investigate#Investigate('v')<CR>
+endif
 
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 	nnoremap <F5> :UndotreeToggle<cr>
@@ -135,7 +141,19 @@ Plug 'SirVer/ultisnips'
 	let g:UltiSnipsJumpForwardTrigger='<C-j>'
 	let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
-Plug 'mitsuhiko/vim-jinja'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
+Plug 'junegunn/fzf.vim'
+	let g:fzf_layout = { 'down': '~20%'  }
+	nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+	nnoremap <silent> <Leader><Enter>  :Buffers<CR>
+	nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
+	imap <c-x><c-k> <plug>(fzf-complete-word)
+	imap <c-x><c-f> <plug>(fzf-complete-path)
+	imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+	imap <c-x><c-l> <plug>(fzf-complete-line)
+	inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+
+Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
 Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' }
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
@@ -180,6 +198,10 @@ Plug 'gabrielelana/vim-markdown' | Plug 'godlygeek/tabular'
 
 Plug 'dbakker/vim-lint'
 Plug 'chrisbra/vim-diff-enhanced'
+	if &diff
+		    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+	endif
+
 Plug 'tpope/vim-endwise'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'Shougo/neocomplete.vim'
@@ -200,12 +222,14 @@ Plug 'nvie/vim-togglemouse'
 Plug 'vim-scripts/DrawIt'
 Plug 'manicmaniac/ftcompl'
 Plug 'tmux-plugins/vim-tmux'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
+Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'ktonga/vim-follow-my-lead'
+	let g:fml_all_sources=1
+
 call plug#end()
 
 call yankstack#setup()
 
-let mapleader = ","
 
 inoremap jj <Esc>
 inoremap <C-space> <C-x><C-o>
@@ -239,11 +263,13 @@ nnoremap <leader>m :silent !open -a Marked\ 2.app '%:p'<cr>
 
 augroup vimrc_autocmds
 	autocmd!
+
 	"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 	"autocmd StdinReadPre * let s:std_in=1
 	"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 	"autocmd FileType ruby,python,javascript,c,cpp highlight Excess ctermbg=DarkGrey guibg=Black
 	"autocmd FileType ruby,python,javascript,c,cpp match Excess /\%80v.*/
+
 	autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown setlocal spell
 			\ ft=markdown colorcolumn=80
 	autocmd FileType markdown setlocal spell
