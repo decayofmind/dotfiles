@@ -1,4 +1,3 @@
-#alias russianproxy='ssh -NL 1080:localhost:1080 zloduch' 
 alias i2cssh='i2cssh -b'
 alias htop='sudo htop'
 alias nano='vim'
