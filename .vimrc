@@ -27,7 +27,6 @@ set gcr=a:blinkon0
 set guifont=Inconsolata\ for\ Powerline:h14
 set visualbell t_vb= 
 set scrolloff=5
-"set background=dark
 set switchbuf=useopen
 set novisualbell  
 set splitbelow
@@ -43,9 +42,6 @@ command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 if $TERM =~ '-256color'
 	    set t_Co=256
 endif
-
-colorscheme onedark 
-"colorscheme jellybeans 
 
 
 call plug#begin('~/.vim/bundle')
@@ -68,6 +64,8 @@ Plug 'vim-airline/vim-airline'
 
 Plug 'majutsushi/tagbar'
 	nmap 	 <F8> :TagbarToggle<CR>
+
+Plug 'Valloric/ListToggle'
 
 Plug 'scrooloose/syntastic'
 	set statusline+=%#warningmsg#
@@ -229,10 +227,30 @@ Plug 'mhinz/vim-hugefile'
 Plug 'ktonga/vim-follow-my-lead'
 	let g:fml_all_sources=1
 
+"color themes
+Plug 'stulzer/heroku-colorscheme'
+Plug 'tomasr/molokai'
+Plug 'ajh17/Spacegray.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'nanotech/jellybeans.vim'
+Plug 'w0ng/vim-hybrid'
+	let g:hybrid_custom_term_colors = 1
+	"let g:hybrid_reduced_contrast = 1
+Plug 'joshdick/onedark.vim'
+Plug 'joshdick/airline-onedark.vim'
+
 call plug#end()
 
-call yankstack#setup()
+"if has('gui_running')
+    "set background=light
+"else
+    "set background=dark
+"endif
 
+colorscheme onedark 
+"colorscheme symck 
+
+call yankstack#setup()
 
 inoremap jj <Esc>
 inoremap <C-space> <C-x><C-o>
