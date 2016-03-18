@@ -76,7 +76,7 @@ Plug 'scrooloose/syntastic'
 	let g:syntastic_always_populate_loc_list   = 1
 	let g:syntastic_auto_loc_list              = 1
 	let g:syntastic_check_on_open              = 0
-	let g:syntastic_check_on_wq                = 1
+	let g:syntastic_check_on_wq                = 0
 	let g:syntastic_markdown_checkers          = ['mdl']
 
 Plug 'scrooloose/nerdtree'
@@ -120,7 +120,7 @@ Plug 'Keithbsmiley/investigate.vim'
 	let g:investigate_use_dash_for_vim=1
 	let g:investigate_dash_for_ansible="ansible"
 	nnoremap <leader>K :call investigate#Investigate('n')<CR>
-	vnoremap <leader>K :call investigate#Investigate('v')<CR>
+	xnoremap <leader>K :call investigate#Investigate('v')<CR>
 endif
 
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
@@ -221,8 +221,11 @@ Plug 'rking/ag.vim'
 Plug 'nvie/vim-togglemouse'
 Plug 'vim-scripts/DrawIt'
 Plug 'manicmaniac/ftcompl'
+
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tmux-plugins/vim-tmux-focus-events'
+
+Plug 'mhinz/vim-hugefile'
 Plug 'ktonga/vim-follow-my-lead'
 	let g:fml_all_sources=1
 
