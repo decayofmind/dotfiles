@@ -5,7 +5,21 @@ let s:darwin = has('mac')
 set nocompatible
 set hidden
 
-let mapleader = ","
+let g:mapleader = ","
+
+if has('gui_running')
+    set background=light
+    " Hide scrollbars
+    set guioptions-=r
+    set guioptions-=R
+    set guioptions-=l
+    set guioptions-=L
+    " Hide menubar
+    set guioptions-=m
+    set guioptions-=T
+else
+    set background=dark
+endif
 
 set wildmode=longest,list,full
 set title
@@ -65,7 +79,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'majutsushi/tagbar'
 	nmap 	 <F8> :TagbarToggle<CR>
 
-Plug 'Valloric/ListToggle'
+Plug 'decayofmind/ListToggle'
 
 Plug 'scrooloose/syntastic'
 	set statusline+=%#warningmsg#
@@ -193,8 +207,12 @@ Plug 'dhruvasagar/vim-table-mode'
 	let g:table_mode_corner="|"
 Plug 'gabrielelana/vim-markdown' | Plug 'godlygeek/tabular'
 	let g:markdown_enable_insert_mode_mappings = 0
+Plug 'itspriddle/vim-marked'
+	map	<Leader>m :MarkedOpen<CR>
 
 Plug 'dbakker/vim-lint'
+Plug 'ynkdir/vim-vimlparser'
+
 Plug 'chrisbra/vim-diff-enhanced'
 	if &diff
 		    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
@@ -223,9 +241,10 @@ Plug 'manicmaniac/ftcompl'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 
+Plug 'syngan/vim-vimlint' | Plug 'ynkdir/vim-vimlparser'
+
+Plug 'markcornick/vim-bats'
 Plug 'mhinz/vim-hugefile'
-Plug 'ktonga/vim-follow-my-lead'
-	let g:fml_all_sources=1
 
 "color themes
 Plug 'stulzer/heroku-colorscheme'
@@ -240,12 +259,6 @@ Plug 'joshdick/onedark.vim'
 Plug 'joshdick/airline-onedark.vim'
 
 call plug#end()
-
-"if has('gui_running')
-    "set background=light
-"else
-    "set background=dark
-"endif
 
 colorscheme onedark 
 "colorscheme symck 
@@ -280,7 +293,6 @@ nnoremap <leader>Tj :set ft=javascript<CR>
 nnoremap <leader>Tc :set ft=css<CR>
 nnoremap <leader>Ta :set ft=ansible<CR>
 
-nnoremap <leader>m :silent !open -a Marked\ 2.app '%:p'<cr>
 
 augroup vimrc_autocmds
 	autocmd!
@@ -305,3 +317,16 @@ augroup vimrc_autocmds
 	autocmd FileType python map <buffer> <leader>8 :PymodeLint<CR>
 	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
+
+
+" Open current file with app given
+function! s:OpenWith(appname)
+  noautocmd silent execute "!open -a \"" . a:appname . "\" " . expand("%:p")
+  if v:shell_error
+    echohl Error
+    echon "Problem opening the file."
+    echohl Normal
+  endif
+endfunction
+
+command! -bar -nargs=1 OpenWith call s:OpenWith(<f-args>)

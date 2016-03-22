@@ -8,7 +8,8 @@ export ANSIBLE_NOCOWS=1
 export HOMEBREW_GITHUB_API_TOKEN="a110e4ac10373697a0734fe62bde6eec3dfd7885"
 
 # Pretty colors
-export TERM='xterm-256color'
+export TERM=xterm-256color
+[ -n "$TMUX"  ] && export TERM=screen-256color
 
 bindkey '^[[Z' reverse-menu-complete
 
