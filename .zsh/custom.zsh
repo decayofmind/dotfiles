@@ -7,6 +7,8 @@ export LESS=" -R "
 export ANSIBLE_NOCOWS=1
 export HOMEBREW_GITHUB_API_TOKEN="a110e4ac10373697a0734fe62bde6eec3dfd7885"
 
+export FZF_DEFAULT_OPTS='--bind alt-j:down,alt-k:up'
+
 # Pretty colors
 export TERM=xterm-256color
 [ -n "$TMUX"  ] && export TERM=screen-256color
