@@ -8,7 +8,7 @@ alias updatedb='sudo /usr/libexec/locate.updatedb'
 alias ss='ssh'
 alias fm='vifm .'
 alias rv='/Applications/RemoteViewer.app/Contents/MacOS/RemoteViewer'
-alias dockerenv='/Applications/Docker/Docker\ Quickstart\ Terminal.app/Contents/Resources/Scripts/start.sh'
+alias dockerenv=eval $(docker-machine env)
 
 alias v='f -e vim'
 alias o='a -e open'
@@ -23,6 +23,16 @@ mkansrole() {
 }
 
 dkh() {
-	sed -e "$1d" ~/.ssh/known_hosts 
+	sed -e "$1d" ~/.ssh/known_hosts
 }
 
+ssh() {
+	if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux"  ]; then
+		tmux rename-window "$*"
+		command ssh "$@"
+		tmux rename-window "(exited ssh)"
+		tmux set-window-option automatic-rename "on" 1>/dev/null
+	else
+		command ssh "$@"
+	fi
+}

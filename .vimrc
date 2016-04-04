@@ -100,6 +100,7 @@ Plug 'scrooloose/syntastic'
     let g:syntastic_check_on_open              = 0
     let g:syntastic_check_on_wq                = 0
     let g:syntastic_markdown_checkers          = ['mdl']
+    let g:syntastic_sh_checkers                = ['shellcheck', 'bashate']
     cabbrev <silent> bd <C-r>=(getcmdtype()==#':' && getcmdpos()==1 ? 'lclose\|bdelete' : 'bd')<CR>
 
 Plug 'scrooloose/nerdtree'
@@ -142,6 +143,7 @@ Plug 'Keithbsmiley/investigate.vim'
     let g:investigate_use_dash=1
     let g:investigate_use_dash_for_vim=1
     let g:investigate_dash_for_ansible="ansible"
+    let g:investigate_dash_for_ansible_template="ansible"
     nnoremap <leader>K :call investigate#Investigate('n')<CR>
     xnoremap <leader>K :call investigate#Investigate('v')<CR>
 endif
@@ -332,6 +334,7 @@ augroup vimrc_autocmds
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType python setlocal completeopt-=preview
     autocmd FileType python map <buffer> <leader>8 :PymodeLint<CR>
+    autocmd FileType sh set et ts=4 sw=4
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
 
