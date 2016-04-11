@@ -8,7 +8,6 @@ alias updatedb='sudo /usr/libexec/locate.updatedb'
 alias ss='ssh'
 alias fm='vifm .'
 alias rv='/Applications/RemoteViewer.app/Contents/MacOS/RemoteViewer'
-alias dockerenv=eval $(docker-machine env)
 
 alias v='f -e vim'
 alias o='a -e open'

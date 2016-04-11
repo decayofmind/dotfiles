@@ -214,6 +214,7 @@ Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'tpope/vim-jdaddy'
 
 Plug 'vim-scripts/Modeliner'
+    map <Leader>ml :Modeliner<CR>
     let g:Modeliner_format = 'ft=  fenc=  tw=  et  ts=  sts=  sw='
 
 Plug 'dhruvasagar/vim-table-mode'
@@ -221,7 +222,7 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'gabrielelana/vim-markdown' | Plug 'godlygeek/tabular'
     let g:markdown_enable_insert_mode_mappings = 0
 Plug 'itspriddle/vim-marked'
-    map <Leader>m :MarkedOpen<CR>
+    map <Leader>M :MarkedOpen<CR>
 
 Plug 'dbakker/vim-lint'
 Plug 'ynkdir/vim-vimlparser'

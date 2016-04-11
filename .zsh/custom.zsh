@@ -1,11 +1,10 @@
-export PATH=/usr/local/mysql/bin:$PATH
 export LC_CTYPE="en_US.UTF-8"
 export WORKON_HOME=~/.virtualenvs
 export EDITOR="vim"
+export VISUAL="vim"
 export LESSOPEN="| /usr/local/bin/src-hilite-lesspipe.sh %s"
 export LESS=" -R "
 export ANSIBLE_NOCOWS=1
-export HOMEBREW_GITHUB_API_TOKEN="a110e4ac10373697a0734fe62bde6eec3dfd7885"
 
 export FZF_DEFAULT_OPTS='--bind alt-j:down,alt-k:up'
 
@@ -16,7 +15,7 @@ export TERM=xterm-256color
 bindkey '^[[Z' reverse-menu-complete
 
 # Set vi mode
-#bindkey -v
+bindkey -v
 
 # Tun on bash style incremental search
 bindkey '^R' history-incremental-search-backward
