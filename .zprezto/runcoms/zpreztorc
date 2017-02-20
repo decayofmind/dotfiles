@@ -28,9 +28,10 @@ zstyle ':prezto:load' pmodule \
   'terminal' \
   'editor' \
   'history' \
+  'gnu-utility' \
+  'utility' \
   'directory' \
   'spectrum' \
-  'utility' \
   'completion' \
   'prompt' \
   'python' \
@@ -38,7 +39,10 @@ zstyle ':prezto:load' pmodule \
   'tmux' \
   'osx' \
   'fasd' \
-  'homebrew'
+  'homebrew' \
+  'syntax-highlighting' \
+  'history-substring-search'
+
 
 #
 # Autosuggestions
@@ -139,12 +143,6 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
    'line' \
    'cursor' \
    'root'
-#
-# Set syntax highlighting styles.
-zstyle ':prezto:module:syntax-highlighting' styles \
-   'builtin' 'bg=blue' \
-   'command' 'bg=blue' \
-   'function' 'bg=blue'
 
 #
 # Terminal

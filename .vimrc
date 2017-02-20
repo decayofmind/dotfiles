@@ -6,7 +6,6 @@ set nocompatible
 scriptencoding utf-8
 set hidden
 
-"let g:mapleader = ","
 let g:mapleader = " "
 
 if has('gui_running')
@@ -22,6 +21,16 @@ if has('gui_running')
     set guioptions-=T
 else
     set background=dark
+endif
+
+if has("multi_byte")
+  if &termencoding == ""
+    let &termencoding = &encoding
+  endif
+  set encoding=utf-8
+  setglobal fileencoding=utf-8
+  "setglobal bomb
+  set fileencodings=ucs-bom,utf-8,latin1
 endif
 
 set wildmode=longest,list,full
@@ -66,11 +75,14 @@ endif
 call plug#begin('~/.vim/bundle')
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-dispatch'
+    nnoremap <Leader>D :Dispatch<SPACE>
 
 Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
     autocmd! User indentLine doautocmd indentLine Syntax
     let g:indentLine_char='┊'
 Plug 'ntpeters/vim-better-whitespace'
+    let g:better_whitespace_filetypes_blacklist=['startify', 'gitcommit']
 
 Plug 'vim-airline/vim-airline'
     let g:airline_theme='jellybeans'
@@ -90,6 +102,9 @@ Plug 'majutsushi/tagbar'
     nmap     <F8> :TagbarToggle<CR>
 
 Plug 'decayofmind/ListToggle'
+
+Plug 'embear/vim-localvimrc'
+Plug 'darfink/vim-plist'
 
 Plug 'scrooloose/syntastic'
     set statusline+=%#warningmsg#
@@ -156,15 +171,15 @@ Plug 'maxbrunsfeld/vim-yankstack'
     nmap <leader>p <Plug>yankstack_substitute_older_paste
     nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
-Plug 'SirVer/ultisnips'
-    set runtimepath+=~/.vim/my-snippets/
-    let g:UltiSnipsSnippetsDir='~/.vim/my-snippets/'
-    let g:UltiSnipsSnippetDirectories=["my-snippets"]
-    let g:UltiSnipsEditSplit='vertical'
-    let g:UltiSnipsExpandTrigger='<c-l>'
-    let g:UltiSnipsListSnippets='<c-tab>'
-    let g:UltiSnipsJumpForwardTrigger='<C-j>'
-    let g:UltiSnipsJumpBackwardTrigger='<C-k>'
+"Plug 'SirVer/ultisnips'
+    "set runtimepath+=~/.vim/my-snippets/
+    "let g:UltiSnipsSnippetsDir='~/.vim/my-snippets/'
+    "let g:UltiSnipsSnippetDirectories=["my-snippets"]
+    "let g:UltiSnipsEditSplit='vertical'
+    "let g:UltiSnipsExpandTrigger='<c-l>'
+    "let g:UltiSnipsListSnippets='<c-tab>'
+    "let g:UltiSnipsJumpForwardTrigger='<C-j>'
+    "let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
 Plug 'junegunn/fzf.vim'
@@ -213,14 +228,21 @@ Plug 'mattn/gist-vim' | Plug 'mattn/webapi-vim'
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'tpope/vim-jdaddy'
 
+Plug 'WolfgangMehner/bash-support', { 'for': 'sh' }
+
 Plug 'vim-scripts/Modeliner'
     map <Leader>ml :Modeliner<CR>
     let g:Modeliner_format = 'ft=  fenc=  tw=  et  ts=  sts=  sw='
 
 Plug 'dhruvasagar/vim-table-mode'
     let g:table_mode_corner="|"
-Plug 'gabrielelana/vim-markdown' | Plug 'godlygeek/tabular'
-    let g:markdown_enable_insert_mode_mappings = 0
+
+Plug 'plasticboy/vim-markdown' | Plug 'godlygeek/tabular'
+    let g:vim_markdown_folding_disabled = 1
+Plug 'mzlogin/vim-markdown-toc'
+
+"Plug 'gabrielelana/vim-markdown' | Plug 'godlygeek/tabular'
+    "let g:markdown_enable_insert_mode_mappings = 0
 Plug 'itspriddle/vim-marked'
     map <Leader>M :MarkedOpen<CR>
 
@@ -257,6 +279,8 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 
 Plug 'syngan/vim-vimlint' | Plug 'ynkdir/vim-vimlparser'
 
+Plug 'amiorin/vim-fasd' | Plug 'tomtom/tlib_vim'
+
 Plug 'markcornick/vim-bats'
 Plug 'mhinz/vim-hugefile'
 
@@ -273,7 +297,6 @@ Plug 'w0ng/vim-hybrid'
     "let g:hybrid_reduced_contrast = 1
 Plug 'joshdick/onedark.vim'
 Plug 'jordwalke/flatlandia'
-Plug 'joshdick/airline-onedark.vim'
 
 call plug#end()
 
@@ -300,6 +323,8 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
+
+nnoremap <M-Tab> <C-w>w
 
 nnoremap ]b :bnext<CR>
 nnoremap [b :bprev<CR>
@@ -351,5 +376,6 @@ function! s:OpenWith(appname)
 endfunction
 
 command! -bar -nargs=1 OpenWith call s:OpenWith(<f-args>)
+command! -nargs=+ S execute 'silent <args>' | redraw!
 
 " vim: set et fenc=utf-8 ft=vim sts=4 sw=4 ts=4 tw=78 :

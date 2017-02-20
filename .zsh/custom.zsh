@@ -1,3 +1,4 @@
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
 export LC_CTYPE="en_US.UTF-8"
 export WORKON_HOME=~/.virtualenvs
 export EDITOR="vim"

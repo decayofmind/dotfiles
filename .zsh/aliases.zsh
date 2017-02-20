@@ -7,6 +7,7 @@ alias ge='cd ~/Code/glogster/glogengine'
 alias updatedb='sudo /usr/libexec/locate.updatedb'
 alias ss='ssh'
 alias fm='vifm .'
+alias ff='find .'
 alias rv='/Applications/RemoteViewer.app/Contents/MacOS/RemoteViewer'
 
 alias v='f -e vim'
@@ -17,12 +18,21 @@ weather() {
 	curl "http://wttr.in/$1"
 }
 
+myip() {
+	curl "ifconfig.co"
+}
+
 mkansrole() {
 	mkdir -p $1/{files,vars,templates,tasks,handlers}
 }
 
 dkh() {
 	sed -e "$1d" ~/.ssh/known_hosts
+}
+
+docker-clean() {
+	docker rm -f	$(docker ps -aq)
+	docker rmi -f $(docker images -q)
 }
 
 ssh() {
