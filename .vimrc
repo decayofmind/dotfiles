@@ -9,7 +9,12 @@ set hidden
 let g:mapleader = " "
 
 if has('gui_running')
-    set guifont=Inconsolata-dz\ for\ Powerline\ Nerd\ Font\ Plus\ Font\ Awesome\ Plus\ Octicons:h12
+    if has('gui_macvim')
+        set guifont=Inconsolata-dz\ for\ Powerline\ Nerd\ Font\ Plus\ Font\ Awesome\ Plus\ Octicons:h12
+    else
+        set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12
+    endif
+
     set background=light
     " Hide scrollbars
     set guioptions-=r
@@ -43,7 +48,7 @@ set autowrite
 set modelines=5
 set completeopt-=preview
 set cursorline
-set clipboard=unnamed
+set clipboard=unnamedplus
 set ignorecase
 set showmode
 set showmatch
@@ -61,6 +66,8 @@ set splitbelow
 set splitright
 set directory=/tmp//
 set backupdir=/tmp//
+
+set fillchars+=vert:│
 
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --column'
@@ -99,11 +106,21 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 Plug 'majutsushi/tagbar'
-    nmap     <F8> :TagbarToggle<CR>
+    nmap <F8> :TagbarToggle<CR>
+    let g:tagbar_type_ansible = {
+        \ 'ctagstype' : 'ansible',
+        \ 'kinds' : [
+            \ 't:tasks'
+        \
+        \ ],
+        \ 'sort' : 0
+        \
+    \}
 
 Plug 'decayofmind/ListToggle'
 
 Plug 'embear/vim-localvimrc'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'darfink/vim-plist'
 
 Plug 'scrooloose/syntastic'
@@ -151,6 +168,18 @@ Plug 'luochen1990/rainbow'
     \       'ansible_template': 0,
     \   }
     \ }
+
+
+
+
+Plug 'KabbAmine/zeavim.vim', {'on': [
+    \   'Zeavim', 'Docset',
+    \   '<Plug>Zeavim',
+    \   '<Plug>ZVVisSelection',
+    \   '<Plug>ZVKeyDocset',
+    \   '<Plug>ZVMotion'
+    \ ]}
+
 
 if s:darwin
 Plug 'rizzatti/dash.vim', { 'on': 'Dash' }
