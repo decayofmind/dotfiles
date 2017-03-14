@@ -28,7 +28,7 @@ else
     set background=dark
 endif
 
-if has("multi_byte")
+if has('multi_byte')
   if &termencoding == ""
     let &termencoding = &encoding
   endif
@@ -266,14 +266,21 @@ Plug 'vim-scripts/Modeliner'
 Plug 'dhruvasagar/vim-table-mode'
     let g:table_mode_corner="|"
 
-Plug 'plasticboy/vim-markdown' | Plug 'godlygeek/tabular'
-    let g:vim_markdown_folding_disabled = 1
-Plug 'mzlogin/vim-markdown-toc'
+"Plug 'plasticboy/vim-markdown' | Plug 'godlygeek/tabular'
+    "let g:vim_markdown_folding_disabled = 1
+"Plug 'mzlogin/vim-markdown-toc'
 
-"Plug 'gabrielelana/vim-markdown' | Plug 'godlygeek/tabular'
-    "let g:markdown_enable_insert_mode_mappings = 0
+Plug 'gabrielelana/vim-markdown' | Plug 'godlygeek/tabular'
+    let g:markdown_enable_insert_mode_mappings = 0
+
+if has('mac')
 Plug 'itspriddle/vim-marked'
     map <Leader>M :MarkedOpen<CR>
+else
+Plug 'iamcco/markdown-preview.vim'
+    let g:mkdp_path_to_chrome = "firefox"
+    map <Leader>M :MarkdownPreview<CR>
+endif
 
 Plug 'dbakker/vim-lint'
 Plug 'ynkdir/vim-vimlparser'
@@ -318,6 +325,7 @@ Plug 'ryanoasis/vim-devicons'
 "color themes
 Plug 'stulzer/heroku-colorscheme'
 Plug 'tomasr/molokai'
+Plug 'chriskempson/base16-vim'
 Plug 'ajh17/Spacegray.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'nanotech/jellybeans.vim'
@@ -329,6 +337,7 @@ Plug 'jordwalke/flatlandia'
 
 call plug#end()
 
+let g:base16colorspace=256
 "colorscheme onedark
 colorscheme jellybeans
 
