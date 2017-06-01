@@ -48,7 +48,9 @@ set autowrite
 set modelines=5
 set completeopt-=preview
 set cursorline
-set clipboard=unnamedplus
+if $TMUX == ''
+    set clipboard=+unnamed
+endif
 set ignorecase
 set showmode
 set showmatch
