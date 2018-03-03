@@ -21,12 +21,13 @@ zplug "modules/environment", from:prezto
 zplug "modules/terminal", from:prezto
 zplug "modules/editor", from:prezto
 zplug "modules/history", from:prezto
+zplug "modules/directory", from:prezto
 zplug "modules/gnu-utility", from:prezto, if:"[[ $OSTYPE == *darwin* ]]"
 zplug "modules/utility", from:prezto
-zplug "modules/directory", from:prezto
-zplug "modules/prompt", from:prezto
 zplug "modules/python", from:prezto
 zplug "modules/git", from:prezto
+zplug "modules/completion", from:prezto
+zplug "modules/prompt", from:prezto
 
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
@@ -97,14 +98,9 @@ export ANSIBLE_NOCOWS=1
 export TERM=xterm-256color
 [ -n "$TMUX"  ] && export TERM=screen-256color
 
-bindkey '^[[Z' reverse-menu-complete
-
-# Set vi mode
-bindkey -v
-
-# Tun on bash style incremental search
-bindkey '^R' history-incremental-search-backward
 # Aliases
+alias c="zz"
+
 alias cat="ccat"
 alias htop="sudo htop"
 alias dnf="sudo dnf"
