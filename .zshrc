@@ -33,11 +33,16 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-history-substring-search", defer:3
 
+
 zplug "plugins/fasd", from:oh-my-zsh
 
-#zplug "jonmosco/kube-ps1", use:"*.sh", defer:1
+zplug "dbz/zsh-kubernetes"
+zplug "jonmosco/kube-ps1", use:"*.sh", defer:1
 
-zplug "junegunn/fzf", use:"shell/key-bindings.zsh", defer:3
+zplug "ahmetb/kubectx", use:"{kubectx,kubens}", as:command
+zplug "decayofmind/kubectx", at:"feature/zplug-integration"
+
+zplug "junegunn/fzf", use:"shell/key-bindings.zsh", defer:1
 
 zplug "jingweno/ccat", \
     from:gh-r, \
@@ -45,6 +50,7 @@ zplug "jingweno/ccat", \
     use:"*linux*amd64*"
 
 zplug "~/.zsh", from:local
+zplug "/usr/share/zsh/vendor-completions", from:local
 
 zstyle ':prezto:module:prompt' theme 'sorin'
 zstyle ':prezto:module:terminal' auto-title 'yes'
@@ -91,12 +97,15 @@ fi
 
 # Variables
 export EDITOR="vimx"
-export VISUAL="vim"
+export VISUAL="vimx"
 export PATH=$PATH:$ZPLUG_BIN
 export ANSIBLE_NOCOWS=1
 
 export TERM=xterm-256color
 [ -n "$TMUX"  ] && export TERM=screen-256color
+
+#PROMPT+=" $(kube_ps1)"
+#kubeoff
 
 # Aliases
 alias c="zz"
@@ -104,6 +113,7 @@ alias c="zz"
 alias cat="ccat"
 alias htop="sudo htop"
 alias dnf="sudo dnf"
+alias vim="vimx"
 
 weather() {
 	curl "http://wttr.in/$1"
