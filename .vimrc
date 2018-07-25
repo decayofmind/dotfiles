@@ -38,6 +38,7 @@ if has('multi_byte')
   set fileencodings=ucs-bom,utf-8,latin1
 endif
 
+set wildmenu
 set wildmode=longest,list,full
 set title
 set number
@@ -48,9 +49,7 @@ set autowrite
 set modelines=5
 set completeopt-=preview
 set cursorline
-if $TMUX == ''
-    set clipboard=+unnamed
-endif
+set clipboard=unnamed,unnamedplus
 set ignorecase
 set showmode
 set showmatch
@@ -68,6 +67,7 @@ set splitbelow
 set splitright
 set directory=/tmp//
 set backupdir=/tmp//
+set path+=**
 
 set fillchars+=vert:│
 
@@ -125,7 +125,7 @@ Plug 'embear/vim-localvimrc'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'darfink/vim-plist'
 
-Plug 'scrooloose/syntastic'
+Plug 'vim-plugins/syntastic'
     set statusline+=%#warningmsg#
     set statusline+=%{SyntasticStatuslineFlag()}
     set statusline+=%*
@@ -198,9 +198,13 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
     nnoremap <F5> :UndotreeToggle<cr>
     let g:undotree_WindowLayout = 2
 
-Plug 'maxbrunsfeld/vim-yankstack'
-    nmap <leader>p <Plug>yankstack_substitute_older_paste
-    nmap <leader>P <Plug>yankstack_substitute_newer_paste
+"Plug 'maxbrunsfeld/vim-yankstack'
+    "nmap <leader>p <Plug>yankstack_substitute_older_paste
+    "nmap <leader>P <Plug>yankstack_substitute_newer_paste
+
+Plug 'svermeulen/vim-easyclip'
+    let g:EasyClipShareYanks = 1
+    let g:EasyClipEnableBlackHoleRedirect = 0
 
 "Plug 'SirVer/ultisnips'
     "set runtimepath+=~/.vim/my-snippets/
@@ -223,6 +227,8 @@ Plug 'junegunn/fzf.vim'
     imap <c-x><c-j> <plug>(fzf-complete-file-ag)
     imap <c-x><c-l> <plug>(fzf-complete-line)
     inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+
+Plug 'junegunn/vim-peekaboo'
 
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
@@ -324,6 +330,10 @@ Plug 'mhinz/vim-hugefile'
 
 Plug 'ryanoasis/vim-devicons'
 
+Plug 'hashivim/vim-terraform'
+Plug 'vim-syntastic/syntastic'
+Plug 'juliosueiras/vim-terraform-completion'
+
 "color themes
 Plug 'stulzer/heroku-colorscheme'
 Plug 'tomasr/molokai'
@@ -331,6 +341,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'ajh17/Spacegray.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'nanotech/jellybeans.vim'
+Plug 'crusoexia/vim-monokai'
 Plug 'w0ng/vim-hybrid'
     let g:hybrid_custom_term_colors = 1
     "let g:hybrid_reduced_contrast = 1
@@ -340,10 +351,10 @@ Plug 'jordwalke/flatlandia'
 call plug#end()
 
 let g:base16colorspace=256
-"colorscheme onedark
-colorscheme jellybeans
+colorscheme onedark
+"colorscheme jellybeans
 
-call yankstack#setup()
+"call yankstack#setup()
 
 inoremap jj <Esc>
 inoremap <C-space> <C-x><C-o>
@@ -404,6 +415,8 @@ augroup vimrc_autocmds
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
 
+com! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
+nnoremap = :FormatXML<Cr>
 
 " Open current file with app given
 function! s:OpenWith(appname)
