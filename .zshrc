@@ -25,6 +25,7 @@ zplug "modules/directory", from:prezto
 zplug "modules/gnu-utility", from:prezto, if:"[[ $OSTYPE == *darwin* ]]"
 zplug "modules/utility", from:prezto
 zplug "modules/python", from:prezto
+zplug "plugins/pyenv", from:oh-my-zsh
 zplug "modules/git", from:prezto
 zplug "modules/completion", from:prezto
 zplug "modules/prompt", from:prezto
@@ -36,9 +37,10 @@ zplug "zsh-users/zsh-history-substring-search", defer:3
 
 zplug "plugins/fasd", from:oh-my-zsh
 
+# Kubernetes
 zplug "dbz/zsh-kubernetes"
 zplug "jonmosco/kube-ps1", use:"*.sh", defer:1
-
+zplug "superbrothers/zsh-kubectl-prompt", defer:2
 zplug "ahmetb/kubectx", use:"{kubectx,kubens}", as:command
 zplug "decayofmind/kubectx", at:"feature/zplug-integration"
 
@@ -47,7 +49,8 @@ zplug "junegunn/fzf", use:"shell/key-bindings.zsh", defer:1
 zplug "jingweno/ccat", \
     from:gh-r, \
     as:command, \
-    use:"*linux*amd64*"
+    use:"*linux*amd64*", \
+    if:"[[ $OSTYPE == linux* ]]"
 
 zplug "~/.zsh", from:local
 zplug "/usr/share/zsh/vendor-completions", from:local
@@ -96,16 +99,25 @@ if [ $commands[minikube] ]; then
 fi
 
 # Variables
-export EDITOR="vimx"
-export VISUAL="vimx"
+if [[ $(uname) == 'Linux' ]]; then
+  export EDITOR="vimx"
+  export VISUAL="vimx"
+  alias vim="vimx"
+elif [[ $(uname) == 'Darwin' ]]; then
+  export EDITOR="vim"
+  export VISUAL="vim"
+fi
 export PATH=$PATH:$ZPLUG_BIN
 export ANSIBLE_NOCOWS=1
 
 export TERM=xterm-256color
 [ -n "$TMUX"  ] && export TERM=screen-256color
 
-#PROMPT+=" $(kube_ps1)"
-#kubeoff
+export KUBE_PS1_SYMBOL_DEFAULT=''
+export KUBE_PS1_SEPARATOR=''
+RPROMPT='$(kube_ps1) '$RPROMPT
+kubeoff
+
 
 # Aliases
 alias c="zz"
@@ -113,7 +125,6 @@ alias c="zz"
 alias cat="ccat"
 alias htop="sudo htop"
 alias dnf="sudo dnf"
-alias vim="vimx"
 
 weather() {
 	curl "http://wttr.in/$1"
@@ -122,3 +133,5 @@ weather() {
 myip() {
 	curl "ifconfig.co"
 }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
