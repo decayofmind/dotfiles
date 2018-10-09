@@ -3,6 +3,17 @@ if [[ ! -d ~/.zplug ]]; then
   source ~/.zplug/init.zsh
 fi
 
+if [[ $(uname) == 'Linux' ]]; then
+  export EDITOR="vimx"
+  export VISUAL="vimx"
+  alias vim="vimx"
+elif [[ $(uname) == 'Darwin' ]]; then
+  export EDITOR="vim"
+  export VISUAL="vim"
+fi
+
+set -o vi
+
 source ~/.zplug/init.zsh
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
@@ -26,15 +37,16 @@ zplug "modules/gnu-utility", from:prezto, if:"[[ $OSTYPE == *darwin* ]]"
 zplug "modules/utility", from:prezto
 zplug "modules/python", from:prezto
 zplug "plugins/pyenv", from:oh-my-zsh
+#zplug "plugins/vi-mode", from:oh-my-zsh, defer:2
 zplug "modules/git", from:prezto
 zplug "modules/completion", from:prezto
-zplug "modules/prompt", from:prezto
+zplug "modules/homebrew", from:prezto, if:"[[ $OSTYPE == *darwin* ]]"
+zplug "modules/osx", from:prezto, if:"[[ $OSTYPE == *darwin* ]]"
 
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-history-substring-search", defer:3
-
-
+zplug "modules/prompt", from:prezto
 zplug "plugins/fasd", from:oh-my-zsh
 
 # Kubernetes
@@ -43,6 +55,7 @@ zplug "jonmosco/kube-ps1", use:"*.sh", defer:1
 zplug "superbrothers/zsh-kubectl-prompt", defer:2
 zplug "ahmetb/kubectx", use:"{kubectx,kubens}", as:command
 zplug "decayofmind/kubectx", at:"feature/zplug-integration"
+zplug "plugins/kubectl", from:oh-my-zsh
 
 zplug "junegunn/fzf", use:"shell/key-bindings.zsh", defer:1
 
@@ -57,6 +70,8 @@ zplug "/usr/share/zsh/vendor-completions", from:local
 
 zstyle ':prezto:module:prompt' theme 'sorin'
 zstyle ':prezto:module:terminal' auto-title 'yes'
+zstyle ':prezto:module:editor' ps-context 'yes'
+zstyle ':prezto:module:editor:info:keymap:alternate' format '<<<'
 zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
 zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
 
@@ -86,6 +101,9 @@ fi
 
 # Non-Zplug customizations
 
+# Unset gstat alias to make kube-ps1 work
+unset -f stat
+
 if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
@@ -99,14 +117,6 @@ if [ $commands[minikube] ]; then
 fi
 
 # Variables
-if [[ $(uname) == 'Linux' ]]; then
-  export EDITOR="vimx"
-  export VISUAL="vimx"
-  alias vim="vimx"
-elif [[ $(uname) == 'Darwin' ]]; then
-  export EDITOR="vim"
-  export VISUAL="vim"
-fi
 export PATH=$PATH:$ZPLUG_BIN
 export ANSIBLE_NOCOWS=1
 
