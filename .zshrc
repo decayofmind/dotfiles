@@ -12,7 +12,6 @@ elif [[ $(uname) == 'Darwin' ]]; then
   export VISUAL="vim"
 fi
 
-set -o vi
 
 source ~/.zplug/init.zsh
 
@@ -100,6 +99,7 @@ fi
 
 
 # Non-Zplug customizations
+set -o vi
 
 # Unset gstat alias to make kube-ps1 work
 unset -f stat
@@ -117,6 +117,10 @@ if [ $commands[minikube] ]; then
 fi
 
 # Variables
+#
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 export PATH=$PATH:$ZPLUG_BIN
 export ANSIBLE_NOCOWS=1
 
@@ -131,9 +135,9 @@ kubeoff
 
 # Aliases
 alias c="zz"
-
 alias cat="ccat"
 alias htop="sudo htop"
+alias ls="ls --color=auto"
 alias dnf="sudo dnf"
 
 weather() {
