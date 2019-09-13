@@ -1,11 +1,8 @@
 runtime! plugin/sensible.vim
 
-let s:darwin = has('mac')
-
-set nocompatible
-scriptencoding utf-8
-set hidden
-
+let s:darwin = has('macunix')
+let g:has_async = v:version >= 800 || has('nvim')
+let g:python3_host_prog = '/usr/local/bin/python3.7'
 let g:mapleader = " "
 
 if has('gui_running')
@@ -38,16 +35,20 @@ if has('multi_byte')
   set fileencodings=ucs-bom,utf-8,latin1
 endif
 
-set wildmenu
+if &compatible
+  set nocompatible
+end
+
 set wildmode=longest,list,full
 set title
 set number
 set mouse=a
 set ttyfast
 set modeline
+set exrc
 set autowrite
 set modelines=5
-set completeopt-=preview
+set completeopt=noinsert,menuone,noselect
 set cursorline
 set clipboard=unnamed,unnamedplus
 set ignorecase
@@ -58,6 +59,7 @@ set smarttab
 set softtabstop=2
 set tabstop=2
 set shiftwidth=2
+set hidden
 set gcr=a:blinkon0
 set visualbell t_vb=
 set scrolloff=5
@@ -65,14 +67,16 @@ set switchbuf=useopen
 set novisualbell
 set splitbelow
 set splitright
+set updatetime=300
 set directory=/tmp//
 set backupdir=/tmp//
 set path+=**
 
 set fillchars+=vert:│
 
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor\ --column'
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow\ --multiline-dotall
+  let g:ackprg = 'rg -S --no-heading --vimgrep'
 endif
 command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 
@@ -81,17 +85,54 @@ if $TERM =~ '-256color'
 endif
 
 
+" Install Plug
+let vimplug_exists=expand('~/.vim/autoload/plug.vim')
+
+if !filereadable(vimplug_exists)
+  if !executable("curl")
+    echoerr "You have to install curl or first install vim-plug yourself!"
+    execute "q!"
+  endif
+  echo "Installing Vim-Plug..."
+  echo ""
+  silent exec "!\curl -fLo " . vimplug_exists . " --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  let g:not_finish_vimplug = "yes"
+
+  autocmd VimEnter * PlugInstall
+endif
+
 call plug#begin('~/.vim/bundle')
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-dispatch'
     nnoremap <Leader>D :Dispatch<SPACE>
 
-Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
+
+" Linting
+if g:has_async
+    Plug 'dense-analysis/ale'
+endif
+
+" Completion
+if g:has_async
+    Plug 'ncm2/ncm2'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+        autocmd BufEnter * call ncm2#enable_for_buffer()
+    Plug 'ncm2/ncm2-jedi'
+    Plug 'ncm2/ncm2-path'
+    Plug 'ncm2/ncm2-bufword'
+endif
+
+" Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
+Plug 'Yggdroot/indentLine'
     autocmd! User indentLine doautocmd indentLine Syntax
-    let g:indentLine_char='┊'
+    let g:indentLine_char='⎸'
+    let g:indentLine_faster = 1
+    let g:indentLine_setConceal = 1
+
 Plug 'ntpeters/vim-better-whitespace'
-    let g:better_whitespace_filetypes_blacklist=['startify', 'gitcommit']
+    let g:better_whitespace_filetypes_blacklist=['gitcommit']
 
 Plug 'vim-airline/vim-airline'
     let g:airline_theme='jellybeans'
@@ -125,35 +166,13 @@ Plug 'embear/vim-localvimrc'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'darfink/vim-plist'
 
-Plug 'vim-plugins/syntastic'
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
-    let g:syntastic_always_populate_loc_list   = 1
-    let g:syntastic_auto_loc_list              = 1
-    let g:syntastic_check_on_open              = 0
-    let g:syntastic_check_on_wq                = 0
-    let g:syntastic_markdown_checkers          = ['mdl']
-    let g:syntastic_sh_checkers                = ['shellcheck', 'bashate']
-    cabbrev <silent> bd <C-r>=(getcmdtype()==#':' && getcmdpos()==1 ? 'lclose\|bdelete' : 'bd')<CR>
-
 Plug 'scrooloose/nerdtree'
     nmap     <F7> :NERDTreeToggle<CR>
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+    let g:NERDTreeUpdateOnCursorHold = 0
+    let g:NERDTreeUpdateOnWrite = 0
 
 Plug 'vim-scripts/mru.vim'
-Plug 'mhinz/vim-startify'
-    let g:startify_files_number  = 8
-
-    let g:startify_custom_header =
-        \ map(split(system('fortune -s|cowsay -f milk'), '\n'), '" ". v:val') + ['']
-
-    let g:startify_bookmarks  = [ '~/.vimrc' ]
-    let g:startify_list_order = [
-        \ ['   Bookmarks:'],
-        \ 'bookmarks',
-        \ ['   Recent files:'],
-        \ 'files',
-        \ ]
 
 Plug 'luochen1990/rainbow'
     let g:rainbow_active = 1
@@ -170,8 +189,6 @@ Plug 'luochen1990/rainbow'
     \       'ansible_template': 0,
     \   }
     \ }
-
-
 
 
 Plug 'KabbAmine/zeavim.vim', {'on': [
@@ -216,17 +233,23 @@ Plug 'svermeulen/vim-easyclip'
     "let g:UltiSnipsJumpForwardTrigger='<C-j>'
     "let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  }
-Plug 'junegunn/fzf.vim'
-    let g:fzf_layout = { 'down': '~20%'  }
-    nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
-    nnoremap <silent> <Leader><Enter>  :Buffers<CR>
-    nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
-    imap <c-x><c-k> <plug>(fzf-complete-word)
-    imap <c-x><c-f> <plug>(fzf-complete-path)
-    imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-    imap <c-x><c-l> <plug>(fzf-complete-line)
-    inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+" Fuzzy-finder
+if isdirectory('/usr/local/opt/fzf')
+  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+else
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+  Plug 'junegunn/fzf.vim'
+endif
+
+let g:fzf_layout = { 'down': '~20%'  }
+nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <silent> <Leader><Enter>  :Buffers<CR>
+nnoremap <silent> <Leader>rg       :Ack <C-R><C-W><CR>
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
 Plug 'junegunn/vim-peekaboo'
 
@@ -234,6 +257,7 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'jmcantrell/vim-virtualenv', { 'for': 'python' }
 Plug 'mitsuhiko/vim-python-combined', { 'for': 'python' }
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+    let g:jedi#completions_enabled = 0
     let g:jedi#popup_select_first = 0
 Plug 'klen/python-mode', { 'for': 'python' }
     let g:pymode_rope = 0
@@ -281,7 +305,11 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'gabrielelana/vim-markdown' | Plug 'godlygeek/tabular'
     let g:markdown_enable_insert_mode_mappings = 0
 
-if has('mac')
+" Align GitHub-flavored Markdown tables
+Plug 'junegunn/vim-easy-align'
+    au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
+
+if s:darwin
 Plug 'itspriddle/vim-marked'
     map <Leader>M :MarkedOpen<CR>
 else
@@ -300,20 +328,37 @@ Plug 'chrisbra/vim-diff-enhanced'
 
 Plug 'tpope/vim-endwise'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'Shougo/neocomplete.vim'
 
-Plug 'Shougo/vimshell.vim' | Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak'  }
-    let g:vimshell_prompt= '$ '
+" Plug 'Shougo/vimshell.vim' | Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak'  }
+"     let g:vimshell_prompt= '$ '
+
+Plug 'Shougo/deol.nvim'
 
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'pearofducks/ansible-vim'
+Plug 'towolf/vim-helm'
 Plug 'airblade/vim-gitgutter'
+    let g:gitgutter_grep = 'rg'
+    " let g:gitgutter_map_keys                = 0
+    " let g:gitgutter_sign_added              = '▎'
+    " let g:gitgutter_sign_modified           = '▎'
+    " let g:gitgutter_sign_modified_removed   = '▶'
+    " let g:gitgutter_sign_removed            = '▶'
+    " let g:gitgutter_sign_removed_first_line = '◥'
+    " nmap [g <Plug>GitGutterPrevHunkzz
+    " nmap ]g <Plug>GitGutterNextHunkzz
+    " nmap <Leader>p <Plug>GitGutterPreviewHunk
+    " nmap <Leader>+ <Plug>GitGutterStageHunk
+    " nmap <Leader>- <Plug>GitGutterUndoHunk
+
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'godlygeek/csapprox'
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdcommenter'
-Plug 'rking/ag.vim'
+    let g:NERDSpaceDelims = 1
+    let g:NERDDefaultAlign = 'left'
 Plug 'nvie/vim-togglemouse'
 Plug 'vim-scripts/DrawIt'
 Plug 'manicmaniac/ftcompl'
@@ -325,8 +370,19 @@ Plug 'syngan/vim-vimlint' | Plug 'ynkdir/vim-vimlparser'
 
 Plug 'amiorin/vim-fasd' | Plug 'tomtom/tlib_vim'
 
+Plug 'mileszs/ack.vim'
+Plug 'mhinz/vim-grepper'
+    let g:grepper = {}
+    let g:grepper.tools = ["rg"]
+    runtime autoload/grepper.vim
+    let g:grepper.jump = 1
+    nnoremap <Leader>g :GrepperRg<Space>
+    nnoremap gr :Grepper -cword -noprompt<CR>
+    xmap gr <plug>(GrepperOperator)
+
 Plug 'markcornick/vim-bats'
 Plug 'mhinz/vim-hugefile'
+Plug 'junegunn/goyo.vim'
 
 Plug 'ryanoasis/vim-devicons'
 
@@ -350,9 +406,10 @@ Plug 'jordwalke/flatlandia'
 
 call plug#end()
 
-let g:base16colorspace=256
-colorscheme onedark
-"colorscheme jellybeans
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
 "call yankstack#setup()
 
@@ -361,7 +418,7 @@ inoremap <C-space> <C-x><C-o>
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
-nnoremap \ :Ag<SPACE>
+nnoremap \ :Ack<SPACE>
 
 set pastetoggle=<F2>
 nnoremap <F2> :set invpaste paste?<CR>
@@ -388,6 +445,17 @@ nnoremap <leader>Tj :set ft=javascript<CR>
 nnoremap <leader>Tc :set ft=css<CR>
 nnoremap <leader>Ta :set ft=ansible<CR>
 
+" Bypass capital letters
+cnoreabbrev W! w!
+cnoreabbrev Q! q!
+cnoreabbrev Qall! qall!
+cnoreabbrev Wq wq
+cnoreabbrev Wa wa
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qall qall
 
 augroup vimrc_autocmds
     autocmd!
