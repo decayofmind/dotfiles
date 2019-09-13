@@ -68,6 +68,11 @@ zplg ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-binding
   pick"/dev/null"
 zplg light junegunn/fzf
 
+zplg ice as"program" make'!' \
+            atclone'./direnv hook zsh > zhook.zsh' \
+            atpull'%atclone' src"zhook.zsh"
+zplg light direnv/direnv
+
 zplg ice wait"0" lucid; zplg light marzocchi/zsh-notify
 
 zplg ice svn silent if"[[ $+ITERM_PROFILE ]]"; zplg snippet OMZ::plugins/iterm2
@@ -118,7 +123,6 @@ export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat 
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 
 export HOMEBREW_NO_ANALYTICS=1
-# export ITERM2_SHOULD_DECORATE_PROMPT=""
 
 SPACESHIP_PROMPT_SEPARATE_LINE=false
 SPACESHIP_PROMPT_ORDER=(dir host vi_mode jobs char)
