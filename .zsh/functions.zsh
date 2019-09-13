@@ -14,7 +14,7 @@ myip() {
 	curl "ifconfig.co"
 }
 
-zshtime() {
+zshbench() {
   for i in $(seq 1 10); do
     /usr/bin/time /usr/local/bin/zsh -i -c exit
   done
