@@ -7,13 +7,14 @@ fi
 
 source ~/.zplugin/bin/zplugin.zsh
 
-zplg ice svn silent; zplg snippet PZT::modules/environment
+
+zplg ice svn lucid wait'1'; zplg snippet PZT::modules/environment
+zplg ice svn lucid wait'1'; zplg snippet PZT::modules/gnu-utility
+zplg ice svn lucid wait'1'; zplg snippet PZT::modules/utility
+zplg ice svn lucid wait'1' pick'init.zsh'
+zplg snippet PZT::modules/directory
 zplg ice svn silent; zplg snippet PZT::modules/history
 zplg ice svn silent; zplg snippet PZT::modules/completion
-zplg ice svn silent; zplg snippet PZT::modules/gnu-utility
-zplg ice svn silent; zplg snippet PZT::modules/utility
-zplg ice svn wait'1' pick'init.zsh' lucid
-zplg snippet PZT::modules/directory
 
 zstyle ':prezto:module:editor' key-bindings 'bindings'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
@@ -26,13 +27,14 @@ zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
 zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
 zplg ice svn silent; zplg snippet PZT::modules/terminal
 
-zplg ice svn silent; zplg snippet PZT::modules/osx
-zplg ice svn silent; zplg snippet PZT::modules/python
-zplg ice svn silent; zplg snippet PZT::modules/gpg
 
-zplg ice wait'0' as"completion" lucid
+zplg ice svn lucid wait'1'; zplg snippet PZT::modules/osx
+zplg ice svn lucid wait'1'; zplg snippet PZT::modules/python
+zplg ice svn lucid wait'1'; zplg snippet PZT::modules/gpg
+
+zplg ice wait'1' as"completion" lucid
 zplg snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
-zplg ice wait'0' as"completion" lucid
+zplg ice wait'1' as"completion" lucid
 zplg snippet https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/terraform/_terraform
 
 zplg light mafredri/zsh-async
@@ -41,6 +43,7 @@ zplg ice depth'1'; zplg light denysdovhan/spaceship-prompt
 zplg ice svn wait'0' lucid atinit"local ZSH_CACHE_DIR=~/.cache"
 zplg snippet OMZ::plugins/fasd
 
+zplg ice lucid wait'1'
 zplg light davidparsson/zsh-pyenv-lazy
 # zplg ice svn wait'2' silent; zplg snippet OMZ::plugins/pyenv
 
@@ -67,16 +70,22 @@ zplg light junegunn/fzf
 
 zplg ice wait"0" lucid; zplg light marzocchi/zsh-notify
 
-# Shell colors
+# Colors
+zplg ice atclone"dircolors -b src/dir_colors > c.zsh" \
+            atpull'%atclone' \
+            pick"c.zsh" \
+            nocompile'!'
+zplg load arcticicestudio/nord-dircolors
+
+zplg light 'chrissicool/zsh-256color'
 zplg ice pick"async.sh" src"scripts/base16-chalk.sh"
 zplg light "chriskempson/base16-shell"
 
-zplg ice lucid wait"0" \
+zplg ice lucid wait'0' \
 	    src'bash/base16-chalk.config' \
 	    pick'bash/base16-chalk.config' nocompile'!'
 zplg light 'nicodebo/base16-fzf'
 
-# This must be last
 zplg ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
 zplg light zdharma/fast-syntax-highlighting
 
