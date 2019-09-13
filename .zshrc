@@ -70,6 +70,12 @@ zplg light junegunn/fzf
 
 zplg ice wait"0" lucid; zplg light marzocchi/zsh-notify
 
+zplg ice svn silent if"[[ $+ITERM_PROFILE ]]"; zplg snippet OMZ::plugins/iterm2
+zplg ice depth'1' pick"source/shell_integration/zsh" if"[[ $+ITERM_PROFILE ]]"
+zplg light gnachman/iterm2-website
+zplg ice depth'1' wait"0" lucid as"command" pick"source/utilities/*" if"[[ $+ITERM_PROFILE ]]"
+zplg light gnachman/iterm2-website
+
 # Colors
 zplg ice atclone"dircolors -b src/dir_colors > c.zsh" \
             atpull'%atclone' \
@@ -110,7 +116,9 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d ."
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+
 export HOMEBREW_NO_ANALYTICS=1
+# export ITERM2_SHOULD_DECORATE_PROMPT=""
 
 SPACESHIP_PROMPT_SEPARATE_LINE=false
 SPACESHIP_PROMPT_ORDER=(dir host vi_mode jobs char)
