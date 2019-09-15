@@ -27,9 +27,7 @@ zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
 zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
 zplg ice svn silent; zplg snippet PZT::modules/terminal
 
-
 zplg ice svn lucid wait'1'; zplg snippet PZT::modules/osx
-zplg ice svn lucid wait'1'; zplg snippet PZT::modules/python
 zplg ice svn lucid wait'1'; zplg snippet PZT::modules/gpg
 
 zplg ice wait'1' as"completion" lucid
@@ -43,9 +41,10 @@ zplg ice depth'1'; zplg light denysdovhan/spaceship-prompt
 zplg ice svn wait'0' lucid atinit"local ZSH_CACHE_DIR=~/.cache"
 zplg snippet OMZ::plugins/fasd
 
-zplg ice lucid wait'1'
+zplg ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true"
 zplg light davidparsson/zsh-pyenv-lazy
 # zplg ice svn wait'2' silent; zplg snippet OMZ::plugins/pyenv
+zplg ice svn wait'2' silent; zplg snippet OMZ::plugins/pipenv
 
 zplg ice svn silent; zplg snippet OMZ::plugins/vi-mode
 
