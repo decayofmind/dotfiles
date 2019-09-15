@@ -74,11 +74,14 @@ zplg light direnv/direnv
 
 zplg ice wait"0" lucid; zplg light marzocchi/zsh-notify
 
+# iTerm2 integration
+# zplg ice depth'1' pick"source/shell_integration/zsh" if"[[ $+ITERM_PROFILE ]]"
+# zplg light gnachman/iterm2-website
+# zplg ice depth'1' wait"0" lucid as"command" pick"source/utilities/*" if"[[ $+ITERM_PROFILE ]]"
+# zplg light gnachman/iterm2-website
 zplg ice svn silent if"[[ $+ITERM_PROFILE ]]"; zplg snippet OMZ::plugins/iterm2
-zplg ice depth'1' pick"source/shell_integration/zsh" if"[[ $+ITERM_PROFILE ]]"
-zplg light gnachman/iterm2-website
-zplg ice depth'1' wait"0" lucid as"command" pick"source/utilities/*" if"[[ $+ITERM_PROFILE ]]"
-zplg light gnachman/iterm2-website
+zplg ice pick'init.zsh' compile'*.zsh' if"[[ $+ITERM_PROFILE ]]"
+zplg light laggardkernel/zsh-iterm2
 
 # Colors
 zplg ice atclone"dircolors -b src/dir_colors > c.zsh" \
