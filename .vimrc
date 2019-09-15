@@ -80,9 +80,11 @@ if executable('rg')
 endif
 command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 
+" if ! has('nvim')
 if $TERM =~ '-256color'
   set t_Co=256
 endif
+" endif
 
 
 " Install Plug
