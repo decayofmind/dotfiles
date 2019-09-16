@@ -7,72 +7,61 @@ tap "homebrew/fuse"
 tap "homebrew/services"
 tap "homebrew/versions"
 tap "iveney/mocha"
-tap "koekeishiya/kwm"
-tap "neovim/neovim"
 tap "thelocehiliosan/yadm"
-cask "java"
-brew "ack"
-brew "libyaml"
-brew "ansible-cmdb"
 brew "sqlite"
 brew "python"
 brew "asciinema", args: ["HEAD"]
-brew "gettext"
 brew "libffi"
+brew "atk"
 brew "audiofile"
 brew "autoconf"
 brew "automake"
 brew "bash"
 brew "bash-completion"
+brew "bat"
 brew "bats"
 brew "bchunk"
-brew "boost"
-brew "catimg"
-brew "ccat"
 brew "checkbashisms"
 brew "gmp"
 brew "cloc"
 brew "cmake"
 brew "colordiff"
 brew "coreutils"
-brew "cowsay"
 brew "cscope"
 brew "ctags"
 brew "curl"
 brew "dockutil"
 brew "e2fsprogs"
+brew "ecm"
 brew "ext4fuse"
 brew "fasd"
-brew "libogg"
-brew "flac"
 brew "fortune"
 brew "fzf"
 brew "mpfr"
 brew "gawk"
 brew "gcc"
+brew "gdk-pixbuf"
 brew "geoip"
 brew "git"
 brew "git-crypt"
 brew "glew"
 brew "gnu-sed"
-brew "go"
-brew "gource"
-brew "gradle"
-brew "libtool"
-brew "graphviz"
 brew "icu4c"
+brew "go"
 brew "hicolor-icon-theme"
 brew "highlight"
 brew "htop"
+brew "httpie"
+brew "libtool"
 brew "imagemagick"
 brew "intltool"
 brew "ipcalc"
 brew "oniguruma"
 brew "jq"
 brew "json-c"
+brew "kubectx"
 brew "lame"
 brew "libev"
-brew "libevent"
 brew "libmagic"
 brew "liboil"
 brew "libqalculate"
@@ -80,52 +69,44 @@ brew "libsndfile"
 brew "libsamplerate"
 brew "libsodium"
 brew "libssh2"
-brew "links", args: ["with-jpeg", "with-librsvg", "with-x11"]
+brew "links"
 brew "mas"
 brew "midnight-commander"
 brew "most"
 brew "ncdu"
+brew "neovim"
 brew "nmap"
 brew "nyancat"
 brew "pandoc"
 brew "parallel"
-brew "tree"
 brew "pass"
+brew "pipenv"
 brew "ponysay"
 brew "pssh"
+brew "pyenv"
 brew "pyenv-virtualenv"
 brew "pyenv-virtualenvwrapper"
-brew "pygtk"
-brew "pypy"
 brew "ranger"
 brew "reattach-to-user-namespace"
-brew "rolldice"
-brew "sbt"
+brew "ripgrep"
 brew "scons"
-brew "sdl"
-brew "sdl_gfx"
-brew "sdl_image"
-brew "sdl_mixer"
-brew "sdl_ttf"
 brew "shellcheck"
 brew "shpotify"
 brew "sl"
-brew "source-highlight"
 brew "speedtest-cli"
 brew "speex"
 brew "ssh-copy-id"
-brew "the_silver_searcher"
+brew "terminal-notifier"
 brew "tig"
 brew "tmux"
-brew "tmux-cssh"
 brew "tor"
 brew "trash"
 brew "unrar"
 brew "utf8proc"
-brew "vim", args: ["with-lua"]
+brew "vim"
 brew "wakeonlan"
 brew "watch"
-brew "weechat", args: ["with-perl", "with-python@2"]
+brew "weechat"
 brew "xhyve"
 brew "zsh"
 brew "iveney/mocha/realpath"
@@ -137,7 +118,6 @@ cask "bitbar"
 cask "clipy"
 cask "dash"
 cask "docker-edge"
-cask "dropbox"
 cask "evernote"
 cask "fantastical"
 cask "firefox"
@@ -146,6 +126,7 @@ cask "google-chrome"
 cask "grammarly"
 cask "insomnia"
 cask "iterm2"
+cask "java"
 cask "lepton"
 cask "little-snitch"
 cask "macvim"
@@ -160,24 +141,24 @@ cask "transmission-remote-gui"
 cask "vagrant"
 cask "virtualbox"
 cask "wraparound"
-mas "1Blocker", id: 1107421413
-mas "Amphetamine", id: 937984704
-mas "ApolloOne", id: 1044484672
-mas "Be Focused Pro", id: 961632517
-mas "Bear", id: 1091189122
-mas "DockPhone", id: 933855184
-mas "DrCleaner", id: 921458519
-mas "HazeOver", id: 430798174
-mas "iMovie", id: 408981434
-mas "iPhoto", id: 408981381
-mas "iStat Mini", id: 927292435
-mas "Keynote", id: 409183694
-mas "Magnet", id: 441258766
-mas "Marked 2", id: 890031187
-mas "Microsoft Remote Desktop", id: 715768417
-mas "MindNode", id: 992076693
-mas "Pixelmator", id: 407963104
-mas "QREncoder", id: 452695239
-mas "Reeder", id: 880001334
-mas "The Archive Browser", id: 510232205
-mas "WiFi Scanner", id: 411680127
+mas "bg.peternikolow.qrencoder", id: 452695239
+mas "com.accessagility.wifiscanner", id: 411680127
+mas "com.anogeissus.ApolloOne", id: 1044484672
+mas "com.apple.iMovieApp", id: 408981434
+mas "com.apple.iPhoto", id: 408981381
+mas "com.apple.iWork.Keynote", id: 409183694
+mas "com.crowdcafe.windowmagnet", id: 441258766
+mas "com.fasthatchapps.gifgrabberosx", id: 668208984
+mas "com.hahainteractive.GoodTask3Mac", id: 1143437985
+mas "com.ideasoncanvas.MindNodeMac", id: 992076693
+mas "com.if.Amphetamine", id: 937984704
+mas "com.khanov.BlockerMac", id: 1107421413
+mas "com.microsoft.rdc.mac", id: 715768417
+mas "com.pixelmatorteam.pixelmator", id: 407963104
+mas "com.pointum.hazeover", id: 430798174
+mas "com.reederapp.macOS", id: 1449412482
+mas "com.trendmicro.DrCleaner", id: 921458519
+mas "com.weareyeah.mac.Phone", id: 933855184
+mas "com.xwavesoft.pomodoromac", id: 961632517
+mas "cx.c3.thearchivebrowser", id: 510232205
+mas "net.shinyfrog.bear", id: 1091189122
