@@ -7,4 +7,7 @@ alias ls='ls --color=auto'
 alias rg='rg -i'
 alias kctx='kubectx'
 alias kns='kubens'
-alias vim='nvim'
+
+if command -v nvim > /dev/null 2>&1; then
+  alias vim='nvim'
+fi

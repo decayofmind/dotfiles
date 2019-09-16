@@ -4,7 +4,11 @@
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export VISUAL=nvim
+
+export VISUAL=vim
+if command -v nvim > /dev/null 2>&1; then
+  export VISUAL=nvim
+fi
 export EDITOR=$VISUAL
 
 # eliminates duplicates in *paths
@@ -12,7 +16,6 @@ typeset -gU cdpath fpath path
 
 # Zsh search path for executable
 path=(
-
   /usr/local/{bin,sbin}
   $path
 )
