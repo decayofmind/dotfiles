@@ -1,5 +1,9 @@
+# vim:foldlevel=0
+# vim:foldmethod=marker
+
 # zmodload zsh/zprof && zprof
 
+# Zplugin {{{
 if [[ ! -d ~/.zplugin ]]; then
   mkdir ~/.zplugin
   git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
@@ -7,15 +11,17 @@ fi
 
 source ~/.zplugin/bin/zplugin.zsh
 
-# Prezto
+# Prezto {{{
 zplg snippet PZT::modules/environment/init.zsh
 zplg snippet PZT::modules/gnu-utility/init.zsh
+# zstyle ':prezto:module:utility' safe-ops 'no'
 zplg snippet PZT::modules/utility/init.zsh
 zplg snippet PZT::modules/directory/init.zsh
 zplg snippet PZT::modules/history/init.zsh
 zplg snippet PZT::modules/completion/init.zsh
 zplg snippet PZT::modules/osx/init.zsh
 zplg snippet PZT::modules/gpg/init.zsh
+# }}}
 
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' ps-context 'yes'
@@ -23,8 +29,6 @@ zplg snippet PZT::modules/editor/init.zsh
 
 # zplg load "jreese/zsh-titles"
 zstyle ':prezto:module:terminal' auto-title 'yes'
-zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
-zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
 zplg snippet PZT::modules/terminal/init.zsh
 
 zplg ice wait'1' as"completion" lucid
@@ -35,14 +39,14 @@ zplg snippet https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/terra
 zplg light mafredri/zsh-async
 zplg ice depth'1'; zplg light denysdovhan/spaceship-prompt
 
-zplg ice wait'0' lucid atinit"local ZSH_CACHE_DIR=~/.cache"
-zplg snippet OMZ::plugins/fasd/fasd.plugin.zsh
+zplg ice wait'0' lucid; zplg snippet OMZ::plugins/fasd/fasd.plugin.zsh
 
-# Python
+# Python {{{
 zplg ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true"
 zplg light davidparsson/zsh-pyenv-lazy
 # zplg ice svn wait'2' silent; zplg snippet OMZ::plugins/pyenv
 zplg ice wait'2' silent; zplg snippet OMZ::plugins/pipenv/pipenv.plugin.zsh
+# }}}
 
 zplg ice silent; zplg snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
 
@@ -72,30 +76,34 @@ zplg light direnv/direnv
 
 zplg ice wait"0" lucid; zplg light marzocchi/zsh-notify
 
-# iTerm2 integration
+# iTerm2 integration {{{
 zplg ice silent if"[[ $+ITERM_PROFILE ]]"; zplg snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
 zplg ice as"command" pick"bin/*" \
   atclone'./_utils/download_files.sh' \
   atpull'%atclone' if"[[ $+ITERM_PROFILE ]]"
 zplg light decayofmind/zsh-iterm2-utilities
 zplg snippet 'https://raw.githubusercontent.com/gnachman/iterm2-website/master/source/shell_integration/zsh'
+# }}}
 
-# Colors
+# Colors {{{
+zplg light 'chrissicool/zsh-256color'
 zplg ice atclone"dircolors -b src/dir_colors > c.zsh" \
             atpull'%atclone' \
             pick"c.zsh" \
             nocompile'!'
 zplg load arcticicestudio/nord-dircolors
-zplg light 'chrissicool/zsh-256color'
 zplg ice pick"async.sh" src"scripts/base16-chalk.sh"
 zplg light "chriskempson/base16-shell"
 zplg ice lucid wait'0' \
-	    src'bash/base16-chalk.config' \
-	    pick'bash/base16-chalk.config' nocompile'!'
+            src'bash/base16-chalk.config' \
+            pick'bash/base16-chalk.config' nocompile'!'
 zplg light 'nicodebo/base16-fzf'
+# }}}
 
 zplg ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
 zplg light zdharma/fast-syntax-highlighting
+
+# }}}
 
 if (which zprof > /dev/null) ;then
   zprof | less
@@ -113,14 +121,17 @@ for file in ${HOME}/.zsh/*.zsh; do
   source $file
 done
 
+# FZF {{{
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d ."
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+# }}}
 
 export HOMEBREW_NO_ANALYTICS=1
 
+# Spaceship prompt {{{
 SPACESHIP_PROMPT_SEPARATE_LINE=false
 SPACESHIP_PROMPT_ORDER=(
   dir
@@ -148,3 +159,4 @@ SPACESHIP_KUBECONTEXT_SYMBOL='⎈  '
 SPACESHIP_PYENV_SHOW=false
 SPACESHIP_EXIT_CODE_SHOW=true
 SPACESHIP_EXIT_CODE_SYMBOL='✘ '
+# }}}
