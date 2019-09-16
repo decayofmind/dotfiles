@@ -48,7 +48,7 @@ zplg ice svn wait'2' silent; zplg snippet OMZ::plugins/pipenv
 
 zplg ice svn silent; zplg snippet OMZ::plugins/vi-mode
 
-zplg ice wait"0" blockf lucid
+zplg ice wait'0' blockf lucid
 zplg light zsh-users/zsh-completions
 
 zplg light zsh-users/zsh-history-substring-search
@@ -125,9 +125,23 @@ export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat 
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 
 export HOMEBREW_NO_ANALYTICS=1
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 SPACESHIP_PROMPT_SEPARATE_LINE=false
-SPACESHIP_PROMPT_ORDER=(dir host vi_mode jobs char)
+SPACESHIP_PROMPT_ORDER=(
+  dir
+  host
+  vi_mode
+  jobs
+  char
+)
+SPACESHIP_RPROMPT_ORDER=(
+  terraform
+  kubecontext
+  venv
+  git
+  exit_code
+)
 SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_CHAR_SYMBOL='❯ '
 SPACESHIP_VI_MODE_SUFFIX='❯'
@@ -140,4 +154,3 @@ SPACESHIP_KUBECONTEXT_SYMBOL='⎈  '
 SPACESHIP_PYENV_SHOW=false
 SPACESHIP_EXIT_CODE_SHOW=true
 SPACESHIP_EXIT_CODE_SYMBOL='✘ '
-SPACESHIP_RPROMPT_ORDER=(terraform kubecontext venv git exit_code)
