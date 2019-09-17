@@ -1,4 +1,4 @@
-alias bdump='brew bundle dump --force'
+alias brewdump='brew bundle dump --force'
 alias c='zz'
 alias cat='bat -np --paging=never --theme base16'
 alias diff='icdiff -N'
