@@ -65,6 +65,12 @@ zplg ice as"program" make'!' \
             atpull'%atclone' src"zhook.zsh"
 zplg light direnv/direnv
 
+zplg ice from"gh-r" as"program" bpick"krew.tar.gz" \
+            mv"krew-darwin_amd64 -> krew" pick"krew" \
+            atclone"rm -f krew-* && ./krew install krew" \
+            atpull"%atclone" has"kubectl"
+zplg light kubernetes-sigs/krew
+
 zplg ice wait"0" lucid; zplg light marzocchi/zsh-notify
 
 # iTerm2 integration {{{

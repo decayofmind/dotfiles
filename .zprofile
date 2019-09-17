@@ -23,6 +23,7 @@ typeset -gU cdpath fpath path
 
 # Zsh search path for executable
 path=(
+  $HOME/.krew/bin
   /usr/local/{bin,sbin}
   $path
 )
