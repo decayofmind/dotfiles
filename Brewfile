@@ -105,6 +105,7 @@ mas "CatchMouse", id: 439700005
 mas "Gestimer", id: 990588172
 mas "GoodTask", id: 1143437985
 mas "Grammarly for Safari", id: 1462114288
+mas "HazeOver", id: 430798174
 mas "Keynote", id: 409183694
 mas "Magnet", id: 441258766
 mas "Marked 2", id: 890031187
