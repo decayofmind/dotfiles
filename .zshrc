@@ -16,12 +16,11 @@ zplg snippet PZT::modules/environment/init.zsh
 zplg snippet PZT::modules/gnu-utility/init.zsh
 # zstyle ':prezto:module:utility' safe-ops 'no'
 zplg snippet PZT::modules/utility/init.zsh
-zplg snippet PZT::modules/directory/init.zsh
+zplg ice wait'1' lucid; zplg snippet PZT::modules/directory/init.zsh
 zplg snippet PZT::modules/history/init.zsh
 zplg snippet PZT::modules/completion/init.zsh
 zplg snippet PZT::modules/osx/init.zsh
 zplg snippet PZT::modules/gpg/init.zsh
-# }}}
 
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' ps-context 'yes'
@@ -30,6 +29,7 @@ zplg snippet PZT::modules/editor/init.zsh
 # zplg load "jreese/zsh-titles"
 zstyle ':prezto:module:terminal' auto-title 'yes'
 zplg snippet PZT::modules/terminal/init.zsh
+# }}}
 
 zplg ice wait'1' as"completion" lucid
 zplg snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
@@ -39,8 +39,6 @@ zplg snippet https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/terra
 zplg light mafredri/zsh-async
 zplg ice depth'1'; zplg light denysdovhan/spaceship-prompt
 
-zplg ice wait'0' lucid; zplg snippet OMZ::plugins/fasd/fasd.plugin.zsh
-
 # Python {{{
 zplg ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true"
 zplg light davidparsson/zsh-pyenv-lazy
@@ -49,18 +47,11 @@ zplg ice wait'2' silent; zplg snippet OMZ::plugins/pipenv/pipenv.plugin.zsh
 # }}}
 
 zplg ice silent; zplg snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
+zplg ice wait'0' lucid atload"unalias d"
+zplg snippet OMZ::plugins/fasd/fasd.plugin.zsh
 
 zplg ice wait'0' blockf lucid
 zplg light zsh-users/zsh-completions
-
-zplg light zsh-users/zsh-history-substring-search
-  zmodload zsh/terminfo
-  [ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
-  [ -n "${terminfo[kcud1]}" ] && bindkey "${terminfo[kcud1]}" history-substring-search-down
-  bindkey -M emacs '^P' history-substring-search-up
-  bindkey -M emacs '^N' history-substring-search-down
-  bindkey -M vicmd 'k' history-substring-search-up
-  bindkey -M vicmd 'j' history-substring-search-down
 
 zplg ice wait"0" lucid; zplg load zdharma/history-search-multi-word
 
@@ -91,7 +82,7 @@ zplg ice atclone"dircolors -b src/dir_colors > c.zsh" \
             atpull'%atclone' \
             pick"c.zsh" \
             nocompile'!'
-zplg load arcticicestudio/nord-dircolors
+zplg light arcticicestudio/nord-dircolors
 zplg ice pick"async.sh" src"scripts/base16-chalk.sh"
 zplg light "chriskempson/base16-shell"
 zplg ice lucid wait'0' \
@@ -102,6 +93,14 @@ zplg light 'nicodebo/base16-fzf'
 
 zplg ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
 zplg light zdharma/fast-syntax-highlighting
+zplg light zsh-users/zsh-history-substring-search
+  zmodload zsh/terminfo
+  [ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
+  [ -n "${terminfo[kcud1]}" ] && bindkey "${terminfo[kcud1]}" history-substring-search-down
+  bindkey -M emacs '^P' history-substring-search-up
+  bindkey -M emacs '^N' history-substring-search-down
+  bindkey -M vicmd 'k' history-substring-search-up
+  bindkey -M vicmd 'j' history-substring-search-down
 
 # }}}
 
