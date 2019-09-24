@@ -50,7 +50,7 @@ set autowrite
 set modelines=5
 set completeopt=noinsert,menuone,noselect
 set cursorline
-set clipboard=unnamed,unnamedplus
+set clipboard+=unnamed,unnamedplus
 set ignorecase
 set showmode
 set showmatch
@@ -108,6 +108,13 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-dispatch'
     nnoremap <Leader>D :Dispatch<SPACE>
+
+" Clipboard fix
+if has('nvim')
+    Plug 'bfredl/nvim-miniyank'
+    map p <Plug>(miniyank-autoput)
+    map P <Plug>(miniyank-autoPut)
+endif
 
 
 " Linting
@@ -393,18 +400,9 @@ Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
 
 "color themes
-Plug 'stulzer/heroku-colorscheme'
-Plug 'tomasr/molokai'
 Plug 'chriskempson/base16-vim'
-Plug 'ajh17/Spacegray.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'nanotech/jellybeans.vim'
-Plug 'crusoexia/vim-monokai'
-Plug 'w0ng/vim-hybrid'
-    let g:hybrid_custom_term_colors = 1
-    "let g:hybrid_reduced_contrast = 1
-Plug 'joshdick/onedark.vim'
-Plug 'jordwalke/flatlandia'
+" Plug 'joshdick/onedark.vim'
+" Plug 'jordwalke/flatlandia'
 
 call plug#end()
 
