@@ -7,11 +7,11 @@ kpst() {
 }
 
 weather() {
-	curl "http://wttr.in/$1"
+  curl "http://wttr.in/$1"
 }
 
 myip() {
-	curl "ifconfig.co"
+  curl "ifconfig.co"
 }
 
 zbench() {
