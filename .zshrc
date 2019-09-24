@@ -89,7 +89,7 @@ zplg ice atclone"dircolors -b src/dir_colors > c.zsh" \
             pick"c.zsh" \
             nocompile'!'
 zplg light arcticicestudio/nord-dircolors
-zplg ice pick"async.sh" src"scripts/base16-chalk.sh"
+zplg ice atload"base16_chalk"
 zplg light "chriskempson/base16-shell"
 zplg ice lucid wait'0' \
             src'bash/base16-chalk.config' \
