@@ -134,8 +134,6 @@ export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat 
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 # }}}
 
-export HOMEBREW_NO_ANALYTICS=1
-
 # Spaceship prompt {{{
 SPACESHIP_PROMPT_SEPARATE_LINE=false
 SPACESHIP_PROMPT_ORDER=(
@@ -164,4 +162,9 @@ SPACESHIP_KUBECONTEXT_SYMBOL='⎈  '
 SPACESHIP_PYENV_SHOW=false
 SPACESHIP_EXIT_CODE_SHOW=true
 SPACESHIP_EXIT_CODE_SYMBOL='✘ '
+SPACESHIP_GIT_STATUS_PREFIX=' '
+SPACESHIP_GIT_STATUS_SUFFIX=''
+SPACESHIP_GIT_STATUS_COLOR='magenta'
 # }}}
+
+export HOMEBREW_NO_ANALYTICS=1

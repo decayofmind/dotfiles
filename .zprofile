@@ -24,6 +24,7 @@ typeset -gU cdpath fpath path
 # Zsh search path for executable
 path=(
   $HOME/.krew/bin
+  /usr/local/opt/node@10/bin
   /usr/local/{bin,sbin}
   $path
 )

@@ -8,6 +8,7 @@ alias ls='ls --color=auto'
 alias k='kubectl'
 alias kctx='kubectx'
 alias kns='kubens'
+alias kubeon='kpst'
 alias rg='rg -i'
 alias t='true'
 
