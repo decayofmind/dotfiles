@@ -5,6 +5,7 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "jenkins-x/jx"
 tap "jzaleski/jzaleski"
+tap "universal-ctags/universal-ctags"
 brew "python"
 brew "aws-shell"
 brew "awscli"
@@ -12,7 +13,6 @@ brew "bash"
 brew "bat"
 brew "cfssl"
 brew "coreutils"
-brew "ctags"
 brew "fasd"
 brew "fd"
 brew "fzf"
@@ -21,6 +21,7 @@ brew "gnu-getopt"
 brew "gnu-sed"
 brew "htop"
 brew "httpie"
+brew "hub"
 brew "icdiff"
 brew "ipcalc"
 brew "jq"
@@ -33,6 +34,7 @@ brew "mas"
 brew "ncdu"
 brew "neovim"
 brew "nmap"
+brew "node@10"
 brew "pass"
 brew "pipenv"
 brew "ponysay"
@@ -60,6 +62,7 @@ brew "zsh"
 brew "aylei/tap/kubectl-debug"
 brew "jenkins-x/jx/jx"
 brew "jzaleski/jzaleski/apg"
+brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD", "with-jansson"]
 cask "1password"
 cask "appcleaner"
 cask "bartender"
@@ -106,9 +109,10 @@ mas "Gestimer", id: 990588172
 mas "GoodTask", id: 1143437985
 mas "Grammarly for Safari", id: 1462114288
 mas "HazeOver", id: 430798174
+mas "JSONPeep", id: 1458969831
 mas "Keynote", id: 409183694
-mas "Magnet", id: 441258766
 mas "Marked 2", id: 890031187
+mas "Moom", id: 419330170
 mas "PiPifier", id: 1160374471
 mas "Pixelmator", id: 407963104
 mas "PopClip", id: 445189367
