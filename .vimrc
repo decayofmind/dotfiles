@@ -205,14 +205,20 @@ endif
 
 " junegunn/fzf.vim {{{
 let g:fzf_layout = { 'down': '~20%'  }
-nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
-nnoremap <silent> <Leader><Enter>  :Buffers<CR>
-nnoremap <silent> <Leader>rg       :Ack <C-R><C-W><CR>
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
 if has('nvim')
 let $FZF_DEFAULT_OPTS='--layout=reverse'
@@ -224,7 +230,6 @@ function! FloatingFZF()
 
   let height = float2nr(&lines/2)
   let width = float2nr(&columns - (&columns * 4 / 10))
-  "let width = &columns
   let row = float2nr(&lines / 4)
   let col = float2nr((&columns - width) / 2)
 
@@ -240,6 +245,14 @@ function! FloatingFZF()
   call setwinvar(win, '&relativenumber', 0)
 endfunction
 endif
+
+nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <silent> <Leader><Enter>  :Buffers<CR>
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 " }}}
 
 " itchyny/lightline.vim {{{
