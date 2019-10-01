@@ -89,11 +89,11 @@ zplg ice atclone"dircolors -b src/dir_colors > c.zsh" \
             pick"c.zsh" \
             nocompile'!'
 zplg light arcticicestudio/nord-dircolors
-zplg ice atload"base16_chalk"
+zplg ice atload"base16_${BASE16_THEME}"
 zplg light "chriskempson/base16-shell"
 zplg ice lucid wait'0' \
-            src'bash/base16-chalk.config' \
-            pick'bash/base16-chalk.config' nocompile'!'
+            src"bash/base16-${BASE16_THEME}.config" \
+            pick"bash/base16-${BASE16_THEME}.config" nocompile'!'
 zplg light 'nicodebo/base16-fzf'
 # }}}
 

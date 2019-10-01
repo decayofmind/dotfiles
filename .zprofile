@@ -18,6 +18,9 @@ if [[ ! -d "$ZSH_CACHE_DIR" ]]; then
   /bin/chmod 0700 "$ZSH_CACHE_DIR"
 fi
 
+# set base16 theme
+export BASE16_THEME='chalk'
+
 # eliminates duplicates in *paths
 typeset -gU cdpath fpath path
 
