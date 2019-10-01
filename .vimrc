@@ -337,6 +337,7 @@ au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
 let g:indentLine_char='⎸'
 let g:indentLine_faster = 1
 let g:indentLine_setConceal = 1
+let g:indentLine_fileTypeExclude = ['markdown']
 
 let g:better_whitespace_filetypes_blacklist=['gitcommit']
 
@@ -419,11 +420,10 @@ cnoreabbrev Qall qall
 
 nnoremap <Leader>D :Dispatch<SPACE>
 
-augroup vimrc_autocmds
+augroup vimrc
     autocmd!
-    autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown setlocal spell
-            \ ft=markdown colorcolumn=80
-    autocmd FileType markdown setlocal spell
+    autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown
+            \ setlocal spell ft=markdown colorcolumn=80 conceallevel=0
     autocmd BufWritePre * StripWhitespace
     autocmd BufWritePost ~/.vimrc source ~/.vimrc  | call lightline#functions#reload()
     autocmd FileType sh set et ts=4 sw=4
