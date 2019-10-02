@@ -1,0 +1,20 @@
+{
+  "git.addGlameToBufferVar": true,
+  "diagnostic.displayByAle": true,
+  "languageserver": {
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["Dockerfile"],
+      "args": ["--stdio"]
+    }
+  },
+  "yaml.hover": true,
+  "yaml.validate": true,
+  "yaml.completion": true,
+  "yaml.format.bracketSpacing": true,
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/docker/compose/master/compose/config/config_schema_v3.0.json": "docker-compose.y*ml",
+    "http://json.schemastore.org/ansible-stable-2.6": "*/*.(yml|yaml)"
+  },
+  "yaml.format.enable": true
+}
