@@ -1,7 +1,8 @@
 let s:darwin = has('mac')
-let g:has_async = v:version >= 800 || has('nvim')
+let s:has_async = v:version >= 800 || has('nvim')
 
 " General {{{
+
 let g:mapleader = "\<SPACE>"
 
 set nocompatible
@@ -18,9 +19,7 @@ set backupdir=/tmp//
 set clipboard+=unnamed,unnamedplus
 set diffopt+=internal,algorithm:patience
 set directory=/tmp//
-set formatoptions+=j
-set history=1000
-set lazyredraw
+set formatoptions-=o
 set modelines=2
 set mouse=a
 set pastetoggle=<F2>
@@ -73,6 +72,10 @@ set ignorecase
 set showmatch
 set smartcase
 set gdefault
+
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow\ --multiline-dotall
+endif
 " }}}
 
 " Whitespaces {{{
@@ -110,10 +113,11 @@ call plug#begin('~/.vim/bundle')
   Plug 'tpope/vim-sleuth'
   Plug 'tpope/vim-dispatch'
   Plug 'jszakmeister/vim-togglecursor'
+  Plug 'svermeulen/vim-yoink'
 
   Plug 'junegunn/vim-peekaboo'  " browse registers
+  Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
-  Plug 'svermeulen/vim-yoink'
   Plug 'itchyny/lightline.vim'
   Plug 'mike-hearn/base16-vim-lightline'
   Plug 'mengelbrecht/lightline-bufferline'
@@ -145,7 +149,6 @@ call plug#begin('~/.vim/bundle')
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
   Plug 'terryma/vim-multiple-cursors'
   Plug 'junegunn/goyo.vim'
-
   Plug 'mhinz/vim-grepper'
 
   " Fuzzy-finder
@@ -263,7 +266,7 @@ if exists('$BASE16_THEME')
 endif
 let g:lightline.active = {
     \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'readonly', 'relativepath', 'modified'],
+    \             [ 'readonly', 'filename'],
     \             [ 'gitinfo', 'method', 'cocstatus']
     \           ],
     \   'right': [
@@ -297,15 +300,17 @@ let g:lightline.component_type = {
       \   'linter_ok': 'left',
       \ }
 let g:lightline.component_function = {
-    \   'filetype': 'lightline#functions#filetype_devicons',
-    \   'fileformat': 'lightline#functionsfileformat_devicons',
-    \   'filename': 'lightline#functions#filename',
     \   'cocstatus': 'coc#status',
-    \   'method': 'lightline#functions#method_vista',
-    \   'lineinfo': 'lightline#functions#lineinfo',
-    \   'readonly': 'lightline#functions#readonly',
+    \   'fileencoding': 'lightline#functions#fileencoding',
+    \   'fileformat': 'lightline#functions#fileformat_devicons',
+    \   'filename': 'lightline#functions#filename',
+    \   'filetype': 'lightline#functions#filetype_devicons',
     \   'gitinfo': 'lightline#functions#gitinfo_coc',
     \   'gitblame': 'lightline#functions#gitblame_coc',
+    \   'lineinfo': 'lightline#functions#lineinfo',
+    \   'method': 'lightline#functions#method_vista',
+    \   'mode': 'lightline#functions#mode',
+    \   'readonly': 'lightline#functions#readonly',
   \ }
 let g:lightline.mode_map = {
       \ 'n': 'N', 'i': 'I', 'R': 'R', 'v': 'V', 'V': 'V', "\<C-v>": 'V',
@@ -360,10 +365,11 @@ let g:undotree_WindowLayout = 2
 
 " NERDTree
 noremap <leader>n :NERDTreeToggle<CR>
-let NERDTreeShowHidden = 1
-let NERDTreeMinimalUI = 1
-let NERDTreeHighlightCursorline = 0
 let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeHighlightCursorline = 0
+let NERDTreeMinimalUI = 1
+let NERDTreeQuitOnOpen = 1
+let NERDTreeShowHidden = 1
 
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
@@ -377,7 +383,11 @@ let g:gist_show_privates = 1
 let g:gist_post_private = 1
 
 let g:grepper = {}
-let g:grepper.tools = ["rg"]
+let g:grepper.tools = ["git", "rg"]
+nnoremap \ :GrepperRg<SPACE>
+nnoremap K :Grepper -cword -noprompt<CR>
+nmap gs <plug>(GrepperOperator)
+xmap gs <plug>(GrepperOperator)
 
 " }}}
 
@@ -395,10 +405,7 @@ inoremap <C-l> <Right>
 
 inoremap jj <Esc>
 inoremap <C-space> <C-x><C-o>
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-
-nnoremap \ :GrepperRg<SPACE>
+nmap <silent> <leader>ev :e ~/.vimrc<CR>
 
 nnoremap <F9> :set nu! nu?<CR>
 
@@ -433,19 +440,36 @@ cnoreabbrev Qall qall
 
 nnoremap <Leader>D :Dispatch<SPACE>
 
+" auto quit vim if main file is closed
+function! s:CheckLeftBuffers()
+  let filetypes = ['help', 'qf', 'nerdtree', 'vista']
+  if tabpagenr('$') == 1
+    let i = 1
+    while i <= winnr('$')
+      if index(filetypes, getbufvar(winbufnr(i), '&filetype')) >= 0
+        let i += 1
+      else
+        break
+      endif
+    endwhile
+    if i == winnr('$') + 1
+      qall
+    endif
+    unlet i
+  endif
+endfunction
+
 augroup vimrc
     autocmd!
+    autocmd BufEnter * call s:CheckLeftBuffers()
     autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown
             \ setlocal spell ft=markdown colorcolumn=80 conceallevel=0
     autocmd BufWritePre * StripWhitespace
     autocmd BufWritePost ~/.vimrc source ~/.vimrc  | call lightline#functions#reload()
     autocmd FileType sh set et ts=4 sw=4
+    autocmd FileType qf setlocal nobuflisted
 augroup END
-
-if executable('rg')
-  set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow\ --multiline-dotall
-endif
 
 command! -nargs=+ S execute 'silent <args>' | redraw!
 
-" vim: set et fenc=utf-8 ft=vim sts=4 sw=4 ts=4 tw=78 :
+" vim: set et fenc=utf-8 ft=vim sts=2 sw=2 ts=2 tw=120 :
