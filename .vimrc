@@ -116,7 +116,6 @@ call plug#begin('~/.vim/bundle')
   Plug 'svermeulen/vim-yoink'
 
   Plug 'junegunn/vim-peekaboo'  " browse registers
-  Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
   Plug 'itchyny/lightline.vim'
   Plug 'mike-hearn/base16-vim-lightline'
