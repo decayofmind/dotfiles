@@ -40,7 +40,8 @@ zplg light mafredri/zsh-async
 zplg ice depth'1'; zplg light denysdovhan/spaceship-prompt
 
 # Python {{{
-zplg ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true"
+zplg ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true" \
+  atload"pyenv virtualenvwrapper_lazy"
 zplg light davidparsson/zsh-pyenv-lazy
 # zplg ice svn wait'2' silent; zplg snippet OMZ::plugins/pyenv
 zplg ice wait'2' silent; zplg snippet OMZ::plugins/pipenv/pipenv.plugin.zsh
