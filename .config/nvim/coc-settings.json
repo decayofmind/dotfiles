@@ -1,20 +1,29 @@
 {
-  "git.addGlameToBufferVar": true,
-  "diagnostic.displayByAle": true,
   "languageserver": {
+    "yaml": {
+      "command": "yaml-language-server",
+      "args": ["--stdio"],
+      "filetypes": ["yaml.ansible", "yaml"]
+    },
     "dockerfile": {
       "command": "docker-langserver",
       "filetypes": ["Dockerfile"],
       "args": ["--stdio"]
     }
   },
-  "yaml.hover": true,
-  "yaml.validate": true,
+  "git.addGlameToBufferVar": true,
+  "diagnostic.displayByAle": true,
+  "git.enableGutters": true,
+  "git.realtimeGutters": false,
+  "git.addedSign.hlGroup": "GitGutterAdd",
+  "git.changedSign.hlGroup": "GitGutterChange",
+  "git.removedSign.hlGroup": "GitGutterDelete",
+  "git.topRemovedSign.hlGroup": "GitGutterDelete",
+  "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
+  "yaml.trace.server": "verbose",
+  "yaml.format.enable": true,
   "yaml.completion": true,
-  "yaml.format.bracketSpacing": true,
   "yaml.schemas": {
-    "https://raw.githubusercontent.com/docker/compose/master/compose/config/config_schema_v3.0.json": "docker-compose.y*ml",
-    "http://json.schemastore.org/ansible-stable-2.6": "*/*.(yml|yaml)"
-  },
-  "yaml.format.enable": true
+    "http://json.schemastore.org/ansible-stable-2.6": "/(playbooks|roles|tasks|handlers|defaults|vars)/*.(yml|yaml)"
+  }
 }

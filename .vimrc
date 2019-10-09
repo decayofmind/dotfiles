@@ -159,7 +159,6 @@ call plug#begin('~/.vim/bundle')
   endif
 
   " Git {{{
-  Plug 'mhinz/vim-signify'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-rhubarb'
   Plug 'mattn/gist-vim' | Plug 'mattn/webapi-vim'
@@ -332,7 +331,11 @@ let g:coc_global_extensions = [
     \ 'coc-python',
     \ 'coc-snippets',
     \ 'coc-yaml',
+    \ 'coc-yank',
 \ ]
+let g:coc_filetype_map = {
+    \ 'yaml.ansible': 'yaml'
+\ }
 
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
@@ -461,6 +464,7 @@ endfunction
 augroup vimrc
     autocmd!
     autocmd BufEnter * call s:CheckLeftBuffers()
+    autocmd BufRead,BufNewFile *.json setlocal conceallevel=0
     autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown
             \ setlocal spell ft=markdown colorcolumn=80 conceallevel=0
     autocmd BufWritePre * StripWhitespace
