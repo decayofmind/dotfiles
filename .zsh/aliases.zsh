@@ -12,6 +12,7 @@ alias kubeon='kpst'
 alias rg='rg -i'
 alias t='true'
 alias ym='yadm'
+alias zreload='exec $SHELL -l'
 
 if command -v nvim > /dev/null 2>&1; then
   alias vim='nvim'
