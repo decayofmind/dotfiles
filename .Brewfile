@@ -103,7 +103,6 @@ cask "zoomus"
 mas "1Blocker", id: 1107421413
 mas "Amphetamine", id: 937984704
 mas "Bear", id: 1091189122
-mas "CatchMouse", id: 439700005
 mas "Gestimer", id: 990588172
 mas "GoodTask", id: 1143437985
 mas "Grammarly for Safari", id: 1462114288
