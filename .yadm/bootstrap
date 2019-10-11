@@ -16,9 +16,7 @@ if [ "$system_type" = "Darwin" ]; then
   fi
 
   # install fonts
-  for i in "$HOME"/.fonts/*; do
-    ln -s "$i" "$HOME/Library/Fonts/${i##*/}";
-  done
+  cp "$HOME"/.fonts/* "$HOME/Library/Fonts/"
 
   # configure iterm2
   if [ -d "$HOME/.iterm2" ]; then
