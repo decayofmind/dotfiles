@@ -79,9 +79,7 @@ cask "grammarly"
 cask "insomnia"
 cask "iterm2"
 cask "java"
-cask "karabiner-elements"
 cask "little-snitch"
-cask "macvim"
 cask "michaelvillar-timer"
 cask "micro-snitch"
 cask "microsoft-remote-desktop-beta"
@@ -99,15 +97,14 @@ cask "visual-studio-code"
 cask "visualvm"
 cask "vlc"
 cask "wraparound"
-cask "zoomus"
 mas "1Blocker", id: 1107421413
 mas "Amphetamine", id: 937984704
 mas "Bear", id: 1091189122
-mas "Gestimer", id: 990588172
 mas "GoodTask", id: 1143437985
 mas "Grammarly for Safari", id: 1462114288
 mas "HazeOver", id: 430798174
 mas "JSONPeep", id: 1458969831
+mas "Keymou", id: 449863619
 mas "Keynote", id: 409183694
 mas "Marked 2", id: 890031187
 mas "Moom", id: 419330170
@@ -118,3 +115,4 @@ mas "Reeder", id: 1449412482
 mas "Roofs", id: 1449570266
 mas "RSS Button for Safari", id: 1437501942
 mas "The Archive Browser", id: 510232205
+mas "Vimari", id: 1480933944
