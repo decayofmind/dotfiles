@@ -1,4 +1,4 @@
-#! /env/bin bash
+#!/bin/bash
 
 system_type=$(uname -s)
 
@@ -14,6 +14,11 @@ if [ "$system_type" = "Darwin" ]; then
     echo "Updating homebrew bundle"
     brew bundle --global
   fi
+
+  # install fonts
+  for i in "$HOME"/.fonts/*; do
+    ln -s "$i" "$HOME/Library/Fonts/${i##*/}";
+  done
 
   # configure iterm2
   if [ -d "$HOME/.iterm2" ]; then
