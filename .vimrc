@@ -399,12 +399,6 @@ noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
-" Movement in insert mode
-inoremap <C-k> <Up>
-inoremap <C-j> <Down>
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
-
 inoremap jj <Esc>
 inoremap <C-space> <C-x><C-o>
 nmap <silent> <leader>ev :e ~/.vimrc<CR>
