@@ -61,6 +61,18 @@ zplg ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-binding
   pick"/dev/null"
 zplg light junegunn/fzf
 
+zplg ice wait"0" lucid; zplg light marzocchi/zsh-notify
+
+# iTerm2 integration {{{
+zplg ice silent if"[[ $+ITERM_PROFILE ]]"; zplg snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
+zplg ice as"command" pick"bin/*" \
+  atclone'./_utils/download_files.sh' \
+  atpull'%atclone' if"[[ $+ITERM_PROFILE ]]"
+zplg light decayofmind/zsh-iterm2-utilities
+zplg snippet 'https://raw.githubusercontent.com/gnachman/iterm2-website/master/source/shell_integration/zsh'
+# }}}
+
+# Programs {{{
 zplg ice as"program" make'!' \
             atclone'./direnv hook zsh > zhook.zsh' \
             atpull'%atclone' src"zhook.zsh"
@@ -72,15 +84,8 @@ zplg ice from"gh-r" as"program" bpick"krew.tar.gz" \
             atpull"%atclone" has"kubectl"
 zplg light kubernetes-sigs/krew
 
-zplg ice wait"0" lucid; zplg light marzocchi/zsh-notify
-
-# iTerm2 integration {{{
-zplg ice silent if"[[ $+ITERM_PROFILE ]]"; zplg snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
-zplg ice as"command" pick"bin/*" \
-  atclone'./_utils/download_files.sh' \
-  atpull'%atclone' if"[[ $+ITERM_PROFILE ]]"
-zplg light decayofmind/zsh-iterm2-utilities
-zplg snippet 'https://raw.githubusercontent.com/gnachman/iterm2-website/master/source/shell_integration/zsh'
+zplg ice from"gh-r" as"program" bpick"*darwin_amd64*" pick"terraform-lsp"
+zplg light juliosueiras/terraform-lsp
 # }}}
 
 # Colors {{{
@@ -166,6 +171,7 @@ SPACESHIP_EXIT_CODE_SYMBOL='✘ '
 SPACESHIP_GIT_STATUS_PREFIX=' '
 SPACESHIP_GIT_STATUS_SUFFIX=''
 SPACESHIP_GIT_STATUS_COLOR='magenta'
+SPACESHIP_TERRAFORM_SYMBOL=' '
 # }}}
 
 export HOMEBREW_NO_ANALYTICS=1
