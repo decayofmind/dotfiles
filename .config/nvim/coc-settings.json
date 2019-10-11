@@ -1,14 +1,25 @@
 {
   "languageserver": {
-    "yaml": {
-      "command": "yaml-language-server",
-      "args": ["--stdio"],
-      "filetypes": ["yaml.ansible", "yaml"]
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
     },
     "dockerfile": {
       "command": "docker-langserver",
       "filetypes": ["Dockerfile"],
       "args": ["--stdio"]
+    },
+    "terraform": {
+      "command": "terraform-lsp",
+      "filetypes": ["terraform"],
+      "initializationOptions": {}
+    },
+    "yaml": {
+      "command": "yaml-language-server",
+      "args": ["--stdio"],
+      "filetypes": ["yaml.ansible", "yaml"]
     }
   },
   "git.addGlameToBufferVar": true,
