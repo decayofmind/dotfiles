@@ -18,6 +18,7 @@ brew "fzf"
 brew "gawk"
 brew "gnu-getopt"
 brew "gnu-sed"
+brew "go"
 brew "htop"
 brew "httpie"
 brew "hub"
@@ -56,7 +57,7 @@ brew "unrar"
 brew "vim"
 brew "watch"
 brew "wget"
-brew "yadm"
+brew "yadm", link: false
 brew "yq"
 brew "zsh"
 brew "aylei/tap/kubectl-debug"
@@ -84,7 +85,7 @@ cask "michaelvillar-timer"
 cask "micro-snitch"
 cask "microsoft-remote-desktop-beta"
 cask "nordvpn"
-cask "onyx"
+cask "openemu"
 cask "protonvpn"
 cask "slack"
 cask "spotify"
@@ -92,11 +93,9 @@ cask "teamviewer"
 cask "telegram"
 cask "touchswitcher"
 cask "vagrant"
-cask "virtualbox"
 cask "visual-studio-code"
 cask "visualvm"
 cask "vlc"
-cask "wraparound"
 mas "1Blocker", id: 1107421413
 mas "Amphetamine", id: 937984704
 mas "Bear", id: 1091189122
@@ -110,7 +109,6 @@ mas "Marked 2", id: 890031187
 mas "Moom", id: 419330170
 mas "PiPifier", id: 1160374471
 mas "Pixelmator", id: 407963104
-mas "PopClip", id: 445189367
 mas "Reeder", id: 1449412482
 mas "Roofs", id: 1449570266
 mas "RSS Button for Safari", id: 1437501942
