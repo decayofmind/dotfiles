@@ -195,11 +195,12 @@ if has('termguicolors')
 endif
 
 " set colorscheme
-if exists('$BASE16_THEME') && (!exists('g:colors_name') || g:colors_name != 'base16-' . $BASE16_THEME)
-  let base16colorspace=256
-  execute 'colorscheme base16-' . $BASE16_THEME
+if isdirectory(expand('~/.vim/bundle/base16-vim'))
+  if exists('$BASE16_THEME') && (!exists('g:colors_name') || g:colors_name != 'base16-' . $BASE16_THEME)
+    let base16colorspace=256
+    execute 'colorscheme base16-' . $BASE16_THEME
+  endif
 endif
-
 " }}}
 
 " Plugin settings {{{
