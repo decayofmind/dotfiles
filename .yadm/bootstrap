@@ -18,7 +18,11 @@ function install_brew() {
 
 function install_npm() {
   local NPM_PACKAGES=(
-
+    bash-language-server
+    dockerfile-language-server-nodejs
+    neovim
+    prettier
+    yaml-language-server
   )
 
   if command -v npm >/dev/null 2>&1; then
