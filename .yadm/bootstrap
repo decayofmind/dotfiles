@@ -1,56 +1,26 @@
 #!/bin/bash
 
-system_type=$(uname -s)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+OS_TYPE=$(uname -s)
 
-function install_brew() {
-  if ! command -v brew >/dev/null 2>&1; then
-    echo "Installing homebrew"
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  fi
-
-  if [ -f "$HOME/.Brewfile" ]; then
-    echo "Updating homebrew bundle"
-    brew bundle --global
-    # controll yadm with brew
-    brew link --overwrite yadm
-  fi
-}
-
-function install_npm() {
-  local NPM_PACKAGES=(
-    bash-language-server
-    dockerfile-language-server-nodejs
-    neovim
-    prettier
-    yaml-language-server
-  )
-
-  if command -v npm >/dev/null 2>&1; then
-    for package in "${NPM_PACKAGES[@]}"; do
-      npm install -g "$package"
-    done
-  fi
-}
+# shellcheck source=lib.sh
+source "$SCRIPT_DIR/lib.sh"
 
 if [ -n "$1" ]; then
   $1
   exit $?
 fi
 
-if [ "$system_type" = "Darwin" ]; then
-
-  # install homebrew if it's missing
+if [ "$OS_TYPE" = "Darwin" ]; then
   install_brew
-
-  # install fonts
-  cp "$HOME"/.fonts/* "$HOME/Library/Fonts/"
-
-  # install global npm packages
+  install_fonts
   install_npm
 
   # configure iterm2
   if [ -d "$HOME/.iterm2" ]; then
     echo "Setting iTerm preference folder"
+    wget
+    open "$HOME".iterm2/
     defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.iterm2"
   fi
 fi
