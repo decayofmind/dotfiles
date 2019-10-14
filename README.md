@@ -1,12 +1,12 @@
 # dotfiles
 
-# Installation
+## Installation
 
-## Install Xcode CLI tools
+### Install Xcode CLI tools
 
 `xcode-select --install`
 
-## yadm
+### yadm
 
 ```sh
   sudo mkdir -p -m 775 /usr/local/bin && \
@@ -19,11 +19,11 @@
   yadm clone https://github.com/decayofmind/dotfiles.git
 ```
 
-# Key Bindings
+## Key Bindings
 
-## Concepts
+### Concepts
 
-## Remapping ESC key
+### Remapping ESC key
 
 Go to:
 
@@ -31,6 +31,6 @@ Go to:
 
 ...and remap CapsLock to ESC
 
-## Moom and Keymou
+### Moom and Keymou
 
-## HJKL navigation
+### HJKL navigation
