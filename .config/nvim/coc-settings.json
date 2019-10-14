@@ -2,24 +2,56 @@
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
-      "args": ["start"],
-      "filetypes": ["sh"],
-      "ignoredRootPaths": ["~"]
+      "args": [
+        "start"
+      ],
+      "filetypes": [
+        "sh"
+      ],
+      "ignoredRootPaths": [
+        "~"
+      ]
+    },
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": [
+        "go.mod",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "filetypes": [
+        "go"
+      ],
+      "initializationOptions": {
+        "usePlaceholders": true
+      }
     },
     "dockerfile": {
       "command": "docker-langserver",
-      "filetypes": ["Dockerfile"],
-      "args": ["--stdio"]
+      "filetypes": [
+        "Dockerfile"
+      ],
+      "args": [
+        "--stdio"
+      ]
     },
     "terraform": {
       "command": "terraform-lsp",
-      "filetypes": ["terraform"],
+      "filetypes": [
+        "terraform"
+      ],
       "initializationOptions": {}
     },
     "yaml": {
       "command": "yaml-language-server",
-      "args": ["--stdio"],
-      "filetypes": ["yaml.ansible", "yaml"]
+      "args": [
+        "--stdio"
+      ],
+      "filetypes": [
+        "yaml.ansible",
+        "yaml"
+      ]
     }
   },
   "git.addGlameToBufferVar": true,
@@ -35,6 +67,7 @@
   "yaml.format.enable": true,
   "yaml.completion": true,
   "yaml.schemas": {
-    "http://json.schemastore.org/ansible-stable-2.6": "/(playbooks|roles|tasks|handlers|defaults|vars)/*.(yml|yaml)"
+    "http://json.schemastore.org/ansible-stable-2.6": "/(playbooks|roles|tasks|handlers|defaults|vars)/*.(yml|yaml)",
+    "kubernetes": "/!(playbooks|roles|tasks|handlers|defaults|vars)/*.(yml|yaml)"
   }
 }

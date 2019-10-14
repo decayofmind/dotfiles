@@ -414,6 +414,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 nnoremap <leader>x :bd<CR>
+nnoremap <leader>X :bd!<CR>
 
 nnoremap <M-Tab> <C-w>w
 
