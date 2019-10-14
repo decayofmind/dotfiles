@@ -1,3 +1,4 @@
+alias bootstrap='.yadm/bootstrap'
 alias brewdump='brew bundle dump --force --global'
 alias c='zz'
 alias cat='bat -np --paging=never --theme base16'

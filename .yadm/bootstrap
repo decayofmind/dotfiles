@@ -2,9 +2,7 @@
 
 system_type=$(uname -s)
 
-if [ "$system_type" = "Darwin" ]; then
-
-  # install homebrew if it's missing
+function install_brew() {
   if ! command -v brew >/dev/null 2>&1; then
     echo "Installing homebrew"
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -13,10 +11,38 @@ if [ "$system_type" = "Darwin" ]; then
   if [ -f "$HOME/.Brewfile" ]; then
     echo "Updating homebrew bundle"
     brew bundle --global
+    # controll yadm with brew
+    brew link --overwrite yadm
   fi
+}
+
+function install_npm() {
+  local NPM_PACKAGES=(
+
+  )
+
+  if command -v npm >/dev/null 2>&1; then
+    for package in "${NPM_PACKAGES[@]}"; do
+      npm install -g "$package"
+    done
+  fi
+}
+
+if [ -n "$1" ]; then
+  $1
+  exit $?
+fi
+
+if [ "$system_type" = "Darwin" ]; then
+
+  # install homebrew if it's missing
+  install_brew
 
   # install fonts
   cp "$HOME"/.fonts/* "$HOME/Library/Fonts/"
+
+  # install global npm packages
+  install_npm
 
   # configure iterm2
   if [ -d "$HOME/.iterm2" ]; then
