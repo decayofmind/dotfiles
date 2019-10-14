@@ -101,7 +101,6 @@ mas "1Blocker", id: 1107421413
 mas "Amphetamine", id: 937984704
 mas "Bear", id: 1091189122
 mas "DaisyDisk", id: 411643860
-mas "GoodTask", id: 1143437985
 mas "Grammarly for Safari", id: 1462114288
 mas "HazeOver", id: 430798174
 mas "JSONPeep", id: 1458969831
