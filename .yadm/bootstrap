@@ -15,6 +15,8 @@ if [ "$OS_TYPE" = "Darwin" ]; then
   install_brew
   install_fonts
   install_npm
+  install_defaults
+  install_plists
 
   # configure iterm2
   if [ -d "$HOME/.iterm2" ]; then

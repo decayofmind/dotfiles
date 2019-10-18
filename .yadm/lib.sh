@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 function install_brew() {
   if ! command -v brew >/dev/null 2>&1; then
@@ -32,5 +32,22 @@ function install_npm() {
 }
 
 function install_fonts() {
-  cp "$HOME"/.fonts/* "$HOME/Library/Fonts/"
+  \cp "$HOME"/.fonts/* "$HOME/Library/Fonts/"
+}
+
+function install_defaults() {
+  # shellcheck source=../.macos/defaults
+  source "$HOME/.macos/defaults"
+}
+
+function install_plists() {
+  for plist in "$HOME"/.macos/*.plist; do
+    cp "$plist" "$HOME/Library/Preferences/"
+  done
+}
+
+function export_plists() {
+  for plist in "$HOME"/.macos/*.plist; do
+    cp "$HOME/Library/Preferences/${plist##*/}"  "$HOME/.macos/"
+  done
 }
