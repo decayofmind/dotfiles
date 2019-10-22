@@ -463,6 +463,7 @@ augroup vimrc
     autocmd BufRead,BufNewFile *.json setlocal conceallevel=0
     autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown
             \ setlocal spell ft=markdown colorcolumn=80 conceallevel=0
+    autocmd BufRead,BufNewFile *.yml,*.yaml setlocal colorcolumn=160
     autocmd BufWritePre * StripWhitespace
     autocmd BufWritePost ~/.vimrc source ~/.vimrc  | call lightline#functions#reload()
     autocmd FileType sh set et ts=4 sw=4
