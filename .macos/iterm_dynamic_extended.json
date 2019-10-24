@@ -1,0 +1,70 @@
+{
+  "Profiles": [
+    {
+      "Name": "Extended",
+      "Description": "Extended Default",
+      "Guid": "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF",
+      "ASCII Ligatures": true,
+      "AWDS Pane Directory": "",
+      "AWDS Pane Option": "Recycle",
+      "AWDS Tab Directory": "",
+      "AWDS Tab Option": "No",
+      "AWDS Window Directory": "",
+      "AWDS Window Option": "No",
+      "Allow Title Reporting": true,
+      "BM Growl": false,
+      "Columns": 120,
+      "Command": "/usr/local/bin/zsh",
+      "Custom Command": "Yes",
+      "Custom Directory": "Advanced",
+      "Draw Powerline Glyphs": true,
+      "Icon": 1,
+      "Rows": 40,
+      "Show Mark Indicators": false,
+      "Silence Bell": true,
+      "Title Components": 512,
+      "Transparency": 0.2,
+      "Unlimited Scrollback": true,
+      "Normal Font": "MonacoNerdFontComplete- 12",
+      "Triggers": [
+        {
+          "action": "PasswordTrigger",
+          "parameter": "",
+          "regex": "(roman.*password)|(.*password.*roman)",
+          "partial": false
+        }
+      ],
+      "Semantic History": {
+        "editor": "com.github.atom",
+        "text": "echo vim \\1 +\\2",
+        "action": "coprocess"
+      },
+      "Keyboard Map": {
+        "0x6b-0x80000": {
+          "Text": "[A",
+          "Action": 10
+        },
+        "0x6a-0x80000": {
+          "Text": "[B",
+          "Action": 10
+        },
+        "0x6c-0x80000": {
+          "Text": "[C",
+          "Action": 10
+        },
+        "0x68-0x80000": {
+          "Text": "[D",
+          "Action": 10
+        },
+        "0x48-0xa0000": {
+          "Action": 11,
+          "Text": "0x01"
+        },
+        "0x4c-0xa0000": {
+          "Action": 11,
+          "Text": "0x05"
+        }
+      }
+    }
+  ]
+}

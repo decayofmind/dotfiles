@@ -36,18 +36,18 @@ function install_fonts() {
 }
 
 function install_defaults() {
-  # shellcheck source=../.macos/defaults
-  source "$HOME/.macos/defaults"
+  # shellcheck source=../.macos/defaults.sh
+  source "$HOME/.macos/defaults.sh"
 }
 
 function install_plists() {
   for plist in "$HOME"/.macos/*.plist; do
-    cp "$plist" "$HOME/Library/Preferences/"
+    \cp "$plist" "$HOME/Library/Preferences/"
   done
 }
 
 function export_plists() {
   for plist in "$HOME"/.macos/*.plist; do
-    cp "$HOME/Library/Preferences/${plist##*/}"  "$HOME/.macos/"
+    \cp "$HOME/Library/Preferences/${plist##*/}"  "$HOME/.macos/"
   done
 }

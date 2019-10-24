@@ -460,7 +460,7 @@ endfunction
 augroup vimrc
     autocmd!
     autocmd BufEnter * call s:CheckLeftBuffers()
-    autocmd BufRead,BufNewFile *.json setlocal conceallevel=0
+    autocmd BufRead,BufNewFile *.json setlocal conceallevel=0 foldmethod=syntax
     autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown
             \ setlocal spell ft=markdown colorcolumn=80 conceallevel=0
     autocmd BufRead,BufNewFile *.yml,*.yaml setlocal colorcolumn=160
