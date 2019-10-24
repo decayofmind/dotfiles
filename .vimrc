@@ -166,7 +166,9 @@ call plug#begin('~/.vim/bundle')
 
   " Languages {{{
   Plug 'liuchengxu/vista.vim'  " tagbar replacement
-  Plug 'ludovicchabant/vim-gutentags'
+  " Plug 'ludovicchabant/vim-gutentags'
+  " Use fork until https://github.com/ludovicchabant/vim-gutentags/pull/251 is not merged
+  Plug 'decayofmind/vim-gutentags'
   Plug 'sheerun/vim-polyglot'  " multilanguage
   Plug 'juliosueiras/vim-terraform-completion'  " ?
 
