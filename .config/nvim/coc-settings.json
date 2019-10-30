@@ -54,7 +54,7 @@
       ]
     }
   },
-  "git.addGlameToBufferVar": true,
+  "git.addGBlameToBufferVar": true,
   "diagnostic.displayByAle": true,
   "git.enableGutters": true,
   "git.realtimeGutters": false,
