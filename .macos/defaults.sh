@@ -29,6 +29,9 @@ defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandle
 defaults write com.googlecode.iterm2 SUEnableAutomaticChecks -bool true
 defaults write com.googlecode.iterm2 SUAutomaticallyUpdate -bool true
 defaults write com.googlecode.iterm2 TabStyleWithAutomaticOption -int 5
+defaults write com.googlecode.iterm2 TabsHaveCloseButton -bool false
+defaults write com.googlecode.iterm2 HideScrollbar -bool true
+defaults write com.googlecode.iterm2 HideTabNumber -bool true
 defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{
   LSHandlerContentType = "ssh";
   LSHandlerRoleAll = "com.googlecode.iterm2";
