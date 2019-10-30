@@ -112,8 +112,10 @@ endif
 call plug#begin('~/.vim/bundle')
   Plug 'tpope/vim-sleuth'
   Plug 'tpope/vim-dispatch'
+  Plug 'AdUki/vim-dispatch-neovim'
   Plug 'jszakmeister/vim-togglecursor'
   Plug 'svermeulen/vim-yoink'
+  Plug 'airblade/vim-rooter'
 
   Plug 'junegunn/vim-peekaboo'  " browse registers
 
@@ -166,9 +168,7 @@ call plug#begin('~/.vim/bundle')
 
   " Languages {{{
   Plug 'liuchengxu/vista.vim'  " tagbar replacement
-  " Plug 'ludovicchabant/vim-gutentags'
-  " Use fork until https://github.com/ludovicchabant/vim-gutentags/pull/251 is not merged
-  Plug 'decayofmind/vim-gutentags'
+  Plug 'ludovicchabant/vim-gutentags'
   Plug 'sheerun/vim-polyglot'  " multilanguage
   Plug 'juliosueiras/vim-terraform-completion'  " ?
 
@@ -361,6 +361,7 @@ let g:indentLine_char='⎸'
 let g:indentLine_faster = 1
 let g:indentLine_setConceal = 1
 let g:indentLine_fileTypeExclude = ['markdown']
+let g:indentLine_bufTypeExclude = ['help', 'terminal']
 
 let g:better_whitespace_filetypes_blacklist=['gitcommit']
 
@@ -395,6 +396,11 @@ nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 
 " }}}
+
+" Custom commands
+command! -nargs=+ S execute 'silent <args>' | redraw!
+command! -nargs=* T split | resize 15 | term <args>
+command! -nargs=* VT vsplit | term <args>
 
 " No arrows in Normal mode
 noremap <Up> <NOP>
@@ -439,6 +445,7 @@ cnoreabbrev Q q
 cnoreabbrev Qall qall
 
 nnoremap <Leader>D :Dispatch<SPACE>
+nnoremap <Leader>T :T<SPACE>
 
 " auto quit vim if main file is closed
 function! s:CheckLeftBuffers()
@@ -470,8 +477,7 @@ augroup vimrc
     autocmd BufWritePost ~/.vimrc source ~/.vimrc  | call lightline#functions#reload()
     autocmd FileType sh set et ts=4 sw=4
     autocmd FileType qf setlocal nobuflisted
+    autocmd TermOpen term://* setlocal scrolloff=0 nonumber norelativenumber | startinsert
 augroup END
-
-command! -nargs=+ S execute 'silent <args>' | redraw!
 
 " vim: set et fenc=utf-8 ft=vim sts=2 sw=2 ts=2 tw=120 :
