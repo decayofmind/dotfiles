@@ -44,7 +44,6 @@ zplg ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true" \
   atload"pyenv virtualenvwrapper_lazy"
 zplg light davidparsson/zsh-pyenv-lazy
 # zplg ice svn wait'2' silent; zplg snippet OMZ::plugins/pyenv
-zplg ice wait'2' silent; zplg snippet OMZ::plugins/pipenv/pipenv.plugin.zsh
 # }}}
 
 zplg ice silent; zplg snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
@@ -103,6 +102,9 @@ zplg ice lucid wait'0' \
 zplg light 'nicodebo/base16-fzf'
 # }}}
 
+# zsh-autosuggestions
+zplg ice lucid wait"1" lucid atload"!_zsh_autosuggest_start"
+zplg load "zsh-users/zsh-autosuggestions"
 zplg ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
 zplg light zdharma/fast-syntax-highlighting
 zplg light zsh-users/zsh-history-substring-search
