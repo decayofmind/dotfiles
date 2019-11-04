@@ -5,6 +5,22 @@
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+# Go lang settings
+export GOPATH="${HOME}/.go"
+
+# eliminates duplicates in *paths
+typeset -gU cdpath fpath path
+
+# Zsh search path for executable
+path=(
+  $HOME/.krew/bin
+  ${GOPATH}/bin
+  /usr/local/opt/node@10/bin
+  /usr/local/{bin,sbin}
+  $path
+)
+
+# Editor
 export VISUAL=vim
 if command -v nvim > /dev/null 2>&1; then
   export VISUAL=nvim
@@ -20,14 +36,3 @@ fi
 
 # set base16 theme
 export BASE16_THEME='chalk'
-
-# eliminates duplicates in *paths
-typeset -gU cdpath fpath path
-
-# Zsh search path for executable
-path=(
-  $HOME/.krew/bin
-  /usr/local/opt/node@10/bin
-  /usr/local/{bin,sbin}
-  $path
-)
