@@ -23,7 +23,9 @@ zplg snippet PZT::modules/osx/init.zsh
 zplg snippet PZT::modules/gpg/init.zsh
 
 zstyle ':prezto:module:editor' dot-expansion 'yes'
+zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:editor' ps-context 'yes'
+zstyle ':prezto:module:prompt' managed 'yes'
 zplg snippet PZT::modules/editor/init.zsh
 
 # zplg load "jreese/zsh-titles"
@@ -46,7 +48,6 @@ zplg light davidparsson/zsh-pyenv-lazy
 # zplg ice svn wait'2' silent; zplg snippet OMZ::plugins/pyenv
 # }}}
 
-zplg ice silent; zplg snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
 zplg ice wait'0' lucid atload"unalias d"
 zplg snippet OMZ::plugins/fasd/fasd.plugin.zsh
 
@@ -177,3 +178,4 @@ SPACESHIP_TERRAFORM_SYMBOL=' '
 # }}}
 
 export HOMEBREW_NO_ANALYTICS=1
+export KEYTIMEOUT=1
