@@ -116,6 +116,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'jszakmeister/vim-togglecursor'
   Plug 'svermeulen/vim-yoink'
   Plug 'airblade/vim-rooter'
+  Plug 'direnv/direnv.vim'
 
   Plug 'junegunn/vim-peekaboo'  " browse registers
 
@@ -170,7 +171,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'liuchengxu/vista.vim'  " tagbar replacement
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'sheerun/vim-polyglot'  " multilanguage
-  Plug 'juliosueiras/vim-terraform-completion'  " ?
+  Plug 'fatih/vim-go'
 
   Plug 'dense-analysis/ale'  " linting (requires async)
   Plug 'neoclide/coc.nvim', {'branch': 'release'}  " completion
@@ -181,6 +182,7 @@ call plug#begin('~/.vim/bundle')
 
   " Misc
   Plug 'ryanoasis/vim-devicons'
+  Plug 'vwxyutarooo/nerdtree-devicons-syntax'
 
 call plug#end()
 " }}}
@@ -340,6 +342,13 @@ let g:coc_filetype_map = {
     \ 'yaml.ansible': 'yaml'
 \ }
 
+nmap <leader>gc <Plug>(coc-git-commit)
+nmap <leader>gd :CocCommand git.diffCached<CR>
+nnoremap <leader>gf :CocCommand git.foldUnchanged<CR>
+nnoremap <leader>gs :CocCommand git.chunkStage<CR>
+nnoremap <leader>gu :CocCommand git.chunkUndo<CR>
+nnoremap <leader>gi :CocCommand git.chunkInfo<CR>
+
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 
@@ -410,7 +419,8 @@ noremap <Right> <NOP>
 
 inoremap jj <Esc>
 inoremap <C-space> <C-x><C-o>
-nmap <silent> <leader>ev :e ~/.vimrc<CR>
+nmap <silent> <leader>ve :e ~/.vimrc<CR>
+nnoremap <silent> <leader>vr :source $MYVIMRC<CR>
 
 nnoremap <F9> :set nu! nu?<CR>
 
@@ -421,13 +431,14 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+nnoremap <leader>w :w<CR>
 nnoremap <leader>x :bd<CR>
 nnoremap <leader>X :bd!<CR>
 
 nnoremap <M-Tab> <C-w>w
 
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprev<CR>
+nnoremap <expr> <Tab> (&buftype is# "quickfix" ? "" : ":bnext<CR>")
+nnoremap <expr> <S-Tab> (&buftype is# "quickfix" ? "" : ":bprev<CR>")
 
 nnoremap <leader>Tp :set ft=python<CR>
 nnoremap <leader>Ta :set ft=ansible<CR>
