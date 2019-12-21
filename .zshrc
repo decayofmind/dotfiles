@@ -83,6 +83,7 @@ zplg ice from"gh-r" as"program" bpick"krew.tar.gz" \
             atclone"rm -f krew-* && ./krew install krew" \
             atpull"%atclone" has"kubectl"
 zplg light kubernetes-sigs/krew
+zplg ice wait'0' lucid; zplg snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
 
 zplg ice from"gh-r" as"program" bpick"*darwin_amd64*" pick"terraform-lsp"
 zplg light juliosueiras/terraform-lsp
