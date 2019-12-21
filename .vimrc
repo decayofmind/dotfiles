@@ -1,3 +1,8 @@
+set encoding=utf-8 nobomb
+scriptencoding utf-8
+set fileencoding=utf-8
+set termencoding=utf-8
+
 let s:darwin = has('mac')
 let s:has_async = v:version >= 800 || has('nvim')
 
@@ -5,14 +10,10 @@ let s:has_async = v:version >= 800 || has('nvim')
 
 let g:mapleader = "\<SPACE>"
 
-set nocompatible
+" set nocompatible
 filetype plugin indent on
 syntax enable
 set shell=$SHELL
-
-set encoding=utf-8 nobomb
-set fenc=utf-8
-set termencoding=utf-8
 
 set autoread
 set backupdir=/tmp//
@@ -62,7 +63,7 @@ set splitright
 set switchbuf=useopen
 set synmaxcol=500
 set updatetime=100
-set vb t_vb=
+set visualbell t_vb=
 " }}}
 
 " Searching {{{
@@ -97,15 +98,16 @@ set listchars+=nbsp:%
 let vimplug_exists=expand('~/.vim/autoload/plug.vim')
 
 if !filereadable(vimplug_exists)
-  if !executable("curl")
-    echoerr "You have to install curl or first install vim-plug yourself!"
-    execute "q!"
+  if !executable('curl')
+    echoerr 'You have to install curl or first install vim-plug yourself!'
+    execute 'q!'
   endif
-  echo "Installing Vim-Plug..."
-  echo ""
-  silent exec "!\curl -fLo " . vimplug_exists . " --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-  let g:not_finish_vimplug = "yes"
+  echo 'Installing Vim-Plug...'
+  echo ''
+  silent exec '!\curl -fLo " . vimplug_exists . " --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  let g:not_finish_vimplug = 'yes'
 
+  " vint: next-line -ProhibitAutocmdWithNoGroup
   autocmd VimEnter * PlugInstall
 endif
 
@@ -134,13 +136,14 @@ call plug#begin('~/.vim/bundle')
   endif
   Plug 'Valloric/ListToggle'
   Plug 'scrooloose/nerdtree'
+  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 
   " Edit
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-endwise'
-  Plug 'jiangmiao/auto-pairs'
+  " Plug 'jiangmiao/auto-pairs'
   Plug 'scrooloose/nerdcommenter'
   Plug 'ntpeters/vim-better-whitespace'
   Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
@@ -148,7 +151,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'editorconfig/editorconfig-vim'
   Plug 'chrisbra/vim-diff-enhanced'
   Plug 'junegunn/vim-easy-align'
-  Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+  Plug 'SirVer/ultisnips', { 'tag': '3.2' } | Plug 'honza/vim-snippets' " Latest version with Py2 support
   Plug 'terryma/vim-multiple-cursors'
   Plug 'junegunn/goyo.vim'
   Plug 'mhinz/vim-grepper'
@@ -158,7 +161,7 @@ call plug#begin('~/.vim/bundle')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
   else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-  plug 'junegunn/fzf.vim'
+  Plug 'junegunn/fzf.vim'
   endif
 
   " Git {{{
@@ -188,7 +191,7 @@ call plug#end()
 " }}}
 
 " Terminal colors {{{
-if $TERM =~ '-256color'
+if $TERM =~? '-256color'
   set t_Co=256
 endif
 set t_md=
@@ -333,6 +336,7 @@ let g:coc_global_extensions = [
     \ 'coc-git',
     \ 'coc-json',
     \ 'coc-lists',
+    \ 'coc-pairs',
     \ 'coc-python',
     \ 'coc-snippets',
     \ 'coc-yaml',
@@ -342,29 +346,39 @@ let g:coc_filetype_map = {
     \ 'yaml.ansible': 'yaml'
 \ }
 
+nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gc <Plug>(coc-git-commit)
-nmap <leader>gd :CocCommand git.diffCached<CR>
-nnoremap <leader>gf :CocCommand git.foldUnchanged<CR>
-nnoremap <leader>gs :CocCommand git.chunkStage<CR>
-nnoremap <leader>gu :CocCommand git.chunkUndo<CR>
-nnoremap <leader>gi :CocCommand git.chunkInfo<CR>
+nmap <leader>gdc :CocCommand git.diffCached<CR>
+nnoremap <leader>gfu :CocCommand git.foldUnchanged<CR>
+nnoremap <leader>gcs :CocCommand git.chunkStage<CR>
+nnoremap <leader>gcu :CocCommand git.chunkUndo<CR>
+nnoremap <leader>gci :CocCommand git.chunkInfo<CR>
+nnoremap <silent><leader>K :call CocAction("doHover")<CR>
 
+nmap <silent> <leader>aj :ALENext<cr>
+nmap <silent> <leader>ak :ALEPrevious<cr>
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
+let g:ale_linters = {'gitcommit': ['languagetool']}
 
 nnoremap <silent> <leader>ft :Vista finder<CR>
 
 let g:vim_json_syntax_conceal = 0
 
-let g:gutentags_cache_dir = "~/.cache/ctags"
+let g:gutentags_cache_dir = '~/.cache/ctags'
+let g:gutentags_define_advanced_commands = 1
+let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git', 'yaml', 'yaml.ansible']
 
 " liuchengxu/vista.vim
 let g:vista_sidebar_width = 50
+let g:vista_finder_alternative_executives = ['coc']
+let g:vista_executive_for = {
+  \   'sh':         'coc',
+  \   'json':       'coc',
+  \   'yaml':       'coc',
+  \ }
 nnoremap <silent> <Leader>_ :Vista!!<CR>
-
-" easy-indent
-" Align GitHub-flavored Markdown tables
-au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
 
 let g:indentLine_char='⎸'
 let g:indentLine_faster = 1
@@ -398,7 +412,7 @@ let g:gist_show_privates = 1
 let g:gist_post_private = 1
 
 let g:grepper = {}
-let g:grepper.tools = ["git", "rg"]
+let g:grepper.tools = ['git', 'rg']
 nnoremap \ :GrepperRg<SPACE>
 nnoremap K :Grepper -cword -noprompt<CR>
 nmap gs <plug>(GrepperOperator)
@@ -418,6 +432,7 @@ noremap <Left> <NOP>
 noremap <Right> <NOP>
 
 inoremap jj <Esc>
+inoremap jk <Esc>
 inoremap <C-space> <C-x><C-o>
 nmap <silent> <leader>ve :e ~/.vimrc<CR>
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>
@@ -441,7 +456,7 @@ nnoremap <expr> <Tab> (&buftype is# "quickfix" ? "" : ":bnext<CR>")
 nnoremap <expr> <S-Tab> (&buftype is# "quickfix" ? "" : ":bprev<CR>")
 
 nnoremap <leader>Tp :set ft=python<CR>
-nnoremap <leader>Ta :set ft=ansible<CR>
+nnoremap <leader>Ta :set ft=yaml.ansible<CR>
 
 " Bypass capital letters
 cnoreabbrev W! w!
@@ -483,12 +498,14 @@ augroup vimrc
     autocmd BufRead,BufNewFile *.json setlocal conceallevel=0 foldmethod=syntax
     autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown
             \ setlocal spell ft=markdown colorcolumn=80 conceallevel=0
+    autocmd FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
     autocmd BufRead,BufNewFile *.yml,*.yaml setlocal colorcolumn=160
     autocmd BufWritePre * StripWhitespace
     autocmd BufWritePost ~/.vimrc source ~/.vimrc  | call lightline#functions#reload()
     autocmd FileType sh set et ts=4 sw=4
     autocmd FileType qf setlocal nobuflisted
     autocmd TermOpen term://* setlocal scrolloff=0 nonumber norelativenumber | startinsert
+
 augroup END
 
 " vim: set et fenc=utf-8 ft=vim sts=2 sw=2 ts=2 tw=120 :
