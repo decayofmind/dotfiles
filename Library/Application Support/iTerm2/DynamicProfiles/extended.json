@@ -26,14 +26,6 @@
       "Transparency": 0.2,
       "Unlimited Scrollback": true,
       "Normal Font": "MonacoNerdFontComplete- 12",
-      "Triggers": [
-        {
-          "action": "PasswordTrigger",
-          "parameter": "",
-          "regex": "(roman.*password)|(.*password.*roman)",
-          "partial": false
-        }
-      ],
       "Semantic History": {
         "editor": "com.github.atom",
         "text": "echo vim \\1 +\\2",

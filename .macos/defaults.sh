@@ -20,8 +20,6 @@ killall Finder
 
 # iTerm2
 
-\cp "$HOME/.macos/iterm_dynamic_extended.json" ~/Library/Application\ Support/iTerm2/DynamicProfiles/
-
 defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{
   LSHandlerContentType = "public.unix-executable";
   LSHandlerRoleShell = "com.googlecode.iterm2";
