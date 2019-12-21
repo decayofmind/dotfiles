@@ -22,6 +22,7 @@ function install_npm() {
     neovim
     prettier
     yaml-language-server
+    write-good
   )
 
   if command -v npm >/dev/null 2>&1; then
@@ -36,7 +37,7 @@ function install_fonts() {
 }
 
 function install_defaults() {
-  # shellcheck source=../.macos/defaults.sh
+  # shellcheck source=../../.macos/defaults.sh
   source "$HOME/.macos/defaults.sh"
 }
 
