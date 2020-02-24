@@ -151,7 +151,10 @@ call plug#begin('~/.vim/bundle')
   Plug 'editorconfig/editorconfig-vim'
   Plug 'chrisbra/vim-diff-enhanced'
   Plug 'junegunn/vim-easy-align'
-  Plug 'SirVer/ultisnips', { 'tag': '3.2' } | Plug 'honza/vim-snippets' " Latest version with Py2 support
+  " Plug 'SirVer/ultisnips', { 'tag': '3.2' }  " Latest version with Py2 support
+  Plug 'Shougo/neosnippet.vim'
+  Plug 'Shougo/neosnippet-snippets'
+  Plug 'honza/vim-snippets'
   Plug 'terryma/vim-multiple-cursors'
   Plug 'junegunn/goyo.vim'
   Plug 'mhinz/vim-grepper'
@@ -332,13 +335,16 @@ let g:AutoPairsMapCh = 0
 
 let g:rainbow_active = 0
 
+let g:neosnippet#snippets_directory = '~/.vim/bundle/neosnippet-snippets/neosnippets'
+let g:neosnippet#snippets_directory = '~/.vim/bundle/vim-snippets/snippets'
+
 let g:coc_global_extensions = [
     \ 'coc-git',
     \ 'coc-json',
     \ 'coc-lists',
     \ 'coc-pairs',
     \ 'coc-python',
-    \ 'coc-snippets',
+    \ 'coc-neosnippet',
     \ 'coc-yaml',
     \ 'coc-yank',
 \ ]
@@ -380,7 +386,7 @@ let g:vista_executive_for = {
   \ }
 nnoremap <silent> <Leader>_ :Vista!!<CR>
 
-let g:indentLine_char='⎸'
+let g:indentLine_char='▏'
 let g:indentLine_faster = 1
 let g:indentLine_setConceal = 1
 let g:indentLine_fileTypeExclude = ['markdown']
@@ -417,6 +423,9 @@ nnoremap \ :GrepperRg<SPACE>
 nnoremap K :Grepper -cword -noprompt<CR>
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
+
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " }}}
 
