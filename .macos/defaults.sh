@@ -7,9 +7,10 @@ defaults write -globalDomain AppleKeyboardUIMode -int 3
 
 # Dock
 defaults write com.apple.dock autohide -bool true;
+defaults write com.apple.dock autohide-time-modifier -float 1;
+defaults write com.apple.dock show-recents -bool FALSE
 defaults write com.apple.dock static-only -bool true;
 defaults write com.apple.dock tilesize -integer 32;
-defaults write com.apple.dock autohide-time-modifier -float 1;
 killall Dock
 
 # Finder
