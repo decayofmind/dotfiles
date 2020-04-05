@@ -6,7 +6,6 @@ tap "homebrew/core"
 tap "jzaleski/jzaleski"
 tap "universal-ctags/universal-ctags"
 cask "osxfuse"
-brew "python"
 brew "aws-shell"
 brew "awscli"
 brew "bash"
@@ -35,6 +34,7 @@ brew "kubespy"
 brew "languagetool"
 brew "lftp"
 brew "mas"
+brew "python"
 brew "ncdu"
 brew "neovim"
 brew "nmap"
@@ -57,6 +57,7 @@ brew "terraform"
 brew "tig"
 brew "tmux"
 brew "unrar"
+brew "vegeta"
 brew "vim"
 brew "watch"
 brew "wget"
@@ -112,6 +113,8 @@ mas "ApolloOne", id: 1044484672
 mas "Bear", id: 1091189122
 mas "DaisyDisk", id: 411643860
 mas "dDNS Broker", id: 1050307950
+mas "Drafts", id: 1435957248
+mas "GIPHY CAPTURE", id: 668208984
 mas "Grammarly for Safari", id: 1462114288
 mas "HazeOver", id: 430798174
 mas "iText", id: 1314980676
@@ -120,11 +123,15 @@ mas "Keymou", id: 449863619
 mas "Keynote", id: 409183694
 mas "Marked 2", id: 890031187
 mas "Moom", id: 419330170
+mas "Octotree Pro", id: 1457450145
 mas "PiPifier", id: 1160374471
 mas "Pixelmator", id: 407963104
+mas "QREncoder", id: 452695239
+mas "Raindrop.io for Safari", id: 957810159
 mas "Reeder", id: 1449412482
-mas "Roofs", id: 1449570266
 mas "RSS Button for Safari", id: 1437501942
+mas "SessionRestore", id: 1463334954
 mas "Speedtest", id: 1153157709
 mas "The Archive Browser", id: 510232205
+mas "Turn Off the Lights for Safari", id: 1273998507
 mas "Vimari", id: 1480933944
