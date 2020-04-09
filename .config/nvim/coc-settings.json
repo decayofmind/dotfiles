@@ -63,6 +63,7 @@
   "git.removedSign.hlGroup": "GitGutterDelete",
   "git.topRemovedSign.hlGroup": "GitGutterDelete",
   "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
+  "session.directory": "~/.cache/nvim/sessions",
   "yaml.trace.server": "verbose",
   "yaml.format.enable": true,
   "yaml.completion": true,
