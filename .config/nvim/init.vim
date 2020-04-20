@@ -204,7 +204,12 @@ if isdirectory(expand(s:plugged_path . '/base16-vim'))
     execute 'colorscheme base16-' . $BASE16_THEME
   endif
 endif
+
+highlight Comment gui=italic cterm=italic
+
 " }}}
+
+
 
 " Plugin settings {{{
 
@@ -467,6 +472,7 @@ nnoremap <silent> <leader>vr :source $MYVIMRC<CR>
 nnoremap <F9> :set nu! nu?<CR>
 
 nnoremap <Leader>h :set hlsearch! hlsearch?<CR>
+nmap <silent> <Leader>i :call <SID>ToggleInvisibles()<CR>
 
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -499,6 +505,17 @@ cnoreabbrev Qall qall
 
 nnoremap <Leader>D :Dispatch<SPACE>
 nnoremap <Leader>T :T<SPACE>
+
+" toggle invisible characters
+function s:ToggleInvisibles()
+  if !exists('g:old_listchars')
+    let g:old_listchars = &listchars
+    let &listchars = &listchars.",eol:¶,tab:→\ ,space:\u00b7"
+  else
+    let &listchars = g:old_listchars
+    unlet g:old_listchars
+  endif
+endfunction
 
 " auto quit vim if main file is closed
 function! s:CheckLeftBuffers()
