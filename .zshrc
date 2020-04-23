@@ -16,7 +16,7 @@ zinit snippet PZT::modules/environment/init.zsh
 zinit snippet PZT::modules/gnu-utility/init.zsh
 # zstyle ':prezto:module:utility' safe-ops 'no'
 zinit snippet PZT::modules/utility/init.zsh
-zinit ice wait'1' lucid; zplg snippet PZT::modules/directory/init.zsh
+zinit ice wait'1' lucid; zinit snippet PZT::modules/directory/init.zsh
 zinit snippet PZT::modules/history/init.zsh
 zinit snippet PZT::modules/completion/init.zsh
 zinit snippet PZT::modules/osx/init.zsh
@@ -33,22 +33,22 @@ zstyle ':prezto:module:terminal' auto-title 'yes'
 zinit snippet PZT::modules/terminal/init.zsh
 # }}}
 
-zinit ice wait'0' lucid; zplg snippet OMZ::plugins/git/git.plugin.zsh
+zinit ice wait'0' lucid; zinit snippet OMZ::plugins/git/git.plugin.zsh
 
-zinit ice wait'0' lucid; zplg light "akarzim/zsh-docker-aliases"
+zinit ice wait'0' lucid; zinit light "akarzim/zsh-docker-aliases"
 zinit ice wait'1' as"completion" lucid
 zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
 zinit ice wait'1' as"completion" lucid
 zinit snippet https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/terraform/_terraform
 
 zinit light mafredri/zsh-async
-zinit ice depth'1'; zplg light denysdovhan/spaceship-prompt
+zinit ice depth'1'; zinit light denysdovhan/spaceship-prompt
 
 # Python {{{
 zinit ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true" \
   atload"pyenv virtualenvwrapper_lazy"
 zinit light davidparsson/zsh-pyenv-lazy
-# zinit ice svn wait'2' silent; zplg snippet OMZ::plugins/pyenv
+# zinit ice svn wait'2' silent; zinit snippet OMZ::plugins/pyenv
 # }}}
 
 zinit ice wait'0' lucid atload"unalias d"
@@ -57,17 +57,17 @@ zinit snippet OMZ::plugins/fasd/fasd.plugin.zsh
 zinit ice wait'0' blockf lucid
 zinit light zsh-users/zsh-completions
 
-zinit ice wait"0" lucid; zplg load zdharma/history-search-multi-word
+zinit ice wait"0" lucid; zinit load zdharma/history-search-multi-word
 
 zinit ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-bindings.zsh" \
   atpull"%atclone" multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions" \
   pick"/dev/null"
 zinit light junegunn/fzf
 
-zinit ice wait"0" lucid; zplg light marzocchi/zsh-notify
+zinit ice wait"0" lucid; zinit light marzocchi/zsh-notify
 
 # iTerm2 integration {{{
-zinit ice silent if"[[ $+ITERM_PROFILE ]]"; zplg snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
+zinit ice silent if"[[ $+ITERM_PROFILE ]]"; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
 zinit ice as"command" pick"bin/*" \
   atclone'./_utils/download_files.sh' \
   atpull'%atclone' if"[[ $+ITERM_PROFILE ]]"
@@ -86,7 +86,7 @@ zinit ice from"gh-r" as"program" bpick"krew.tar.gz" \
             atclone"rm -f krew-* && ./krew install krew && ./krew update" \
             atpull"%atclone" has"kubectl"
 zinit light kubernetes-sigs/krew
-zinit ice wait'0' lucid; zplg snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
+zinit ice wait'0' lucid; zinit snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
 
 zinit ice from"gh-r" as"program" bpick"*darwin_amd64*" pick"terraform-lsp"
 zinit light juliosueiras/terraform-lsp
