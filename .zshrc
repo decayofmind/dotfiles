@@ -134,7 +134,7 @@ fi
 
 autoload -Uz compinit
 
-if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
+if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
   compinit;
 else
   compinit -C;
