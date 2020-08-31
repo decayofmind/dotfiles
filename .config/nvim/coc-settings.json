@@ -65,6 +65,7 @@
   "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
   "list.source.grep.command": "rg",
   "session.directory": "~/.cache/nvim/sessions",
+  "python.jediEnabled": false,
   "yaml.trace.server": "verbose",
   "yaml.format.enable": true,
   "yaml.completion": true,

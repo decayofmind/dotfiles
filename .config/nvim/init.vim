@@ -125,6 +125,7 @@ call plug#begin(s:plugged_path)
   Plug 'itspriddle/vim-marked'
   Plug 'darfink/vim-plist'
   Plug 'Valloric/ListToggle'
+  Plug 'skywind3000/asyncrun.vim'
   Plug 'mcchrish/nnn.vim'
   Plug 'scrooloose/nerdtree'
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -158,7 +159,7 @@ call plug#begin(s:plugged_path)
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim'
   endif
-  Plug 'yuki-ycino/fzf-preview.vim' | Plug 'Shougo/neomru.vim'
+  Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release', 'do': ':UpdateRemotePlugins' } | Plug 'Shougo/neomru.vim'
 
   " Git {{{
   Plug 'tpope/vim-fugitive'
@@ -167,6 +168,7 @@ call plug#begin(s:plugged_path)
   " }}}
 
   " Languages {{{
+  Plug 'rizzatti/dash.vim'
   Plug 'liuchengxu/vista.vim'  " tagbar replacement
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'sheerun/vim-polyglot'  " multilanguage
@@ -360,6 +362,7 @@ let g:neosnippet#snippets_directory = s:plugged_path . 'vim-snippets/snippets'
 
 let g:coc_global_extensions = [
     \ 'coc-git',
+    \ 'coc-fzf-preview',
     \ 'coc-json',
     \ 'coc-lists',
     \ 'coc-pairs',
@@ -388,13 +391,15 @@ let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 let g:ale_linters = {'gitcommit': ['languagetool']}
 
-nnoremap <silent> <leader>ft :Vista finder<CR>
-
 let g:vim_json_syntax_conceal = 0
 
 let g:gutentags_cache_dir = '~/.cache/ctags'
 let g:gutentags_define_advanced_commands = 1
 let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git', 'yaml', 'yaml.ansible']
+
+let g:terraform_align=1
+let g:terraform_fold_sections=1
+let g:terraform_fmt_on_save=1
 
 " liuchengxu/vista.vim
 let g:vista_sidebar_width = 50
@@ -405,6 +410,7 @@ let g:vista_executive_for = {
   \   'yaml':       'coc',
   \ }
 nnoremap <silent> <Leader>_ :Vista!!<CR>
+nnoremap <silent> <leader>ft :Vista finder<CR>
 
 let g:indentLine_char='▏'
 let g:indentLine_faster = 1
@@ -473,6 +479,7 @@ nnoremap <F9> :set nu! nu?<CR>
 
 nnoremap <Leader>h :set hlsearch! hlsearch?<CR>
 nmap <silent> <Leader>i :call <SID>ToggleInvisibles()<CR>
+nmap <silent> <leader>k <Plug>DashSearch
 
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -545,9 +552,12 @@ augroup vimrc
     autocmd FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
     autocmd BufRead,BufNewFile *.yml,*.yaml setlocal colorcolumn=160
     autocmd BufWritePre * StripWhitespace
-    autocmd BufWritePost ~/.vimrc source ~/.vimrc  | call lightline#functions#reload()
-    autocmd FileType sh set et ts=4 sw=4
+    autocmd BufWritePost ~/.config/nvim/init.vim source ~/.config/nvim/init.vim  | call lightline#functions#reload()
+    autocmd FileType sh setlocal et ts=4 sw=4
     autocmd FileType qf setlocal nobuflisted
+    autocmd FileType python nnoremap <buffer> <Leader>pi :CocCommand python.setInterpreter<CR>
+    autocmd FileType python nnoremap <buffer><silent> <Leader>pe :AsyncRun! -mode=term -pos=bottom -rows=15 python "%"<CR>
+    autocmd FileType python setlocal sw=4 sts=4 ts=4 et
     autocmd TermOpen term://* setlocal scrolloff=0 nonumber norelativenumber | startinsert
 
 augroup END
