@@ -173,6 +173,7 @@ call plug#begin(s:plugged_path)
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'sheerun/vim-polyglot'  " multilanguage
   Plug 'fatih/vim-go'
+  Plug 'pedrohdz/vim-yaml-folds'
 
   Plug 'dense-analysis/ale'  " linting (requires async)
   Plug 'neoclide/coc.nvim', {'branch': 'release'}  " completion
@@ -210,8 +211,6 @@ endif
 highlight Comment gui=italic cterm=italic
 
 " }}}
-
-
 
 " Plugin settings {{{
 

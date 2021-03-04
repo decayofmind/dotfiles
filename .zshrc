@@ -43,6 +43,10 @@ zinit snippet https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/terr
 
 zinit light mafredri/zsh-async
 zinit ice depth'1'; zinit light denysdovhan/spaceship-prompt
+# zinit ice lucid from"gh-r" \
+#   as"command" pick"starship" \
+#   atload"!eval \$(starship init zsh)"
+# zinit light starship/starship
 
 # Python {{{
 zinit ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true" \
