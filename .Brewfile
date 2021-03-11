@@ -136,7 +136,7 @@ cask "visualvm"
 cask "vlc"
 cask "vnc-viewer"
 cask "wraparound"
-mas "No Distractions" for YouTube", id: 1482507016
+mas "\"No Distractions\" for YouTube", id: 1482507016
 mas "1Blocker", id: 1107421413
 mas "Amphetamine", id: 937984704
 mas "ApolloOne", id: 1044484672
