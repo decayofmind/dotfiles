@@ -90,7 +90,6 @@ cask "bitbar"
 cask "carbon-copy-cloner"
 cask "clean-me"
 cask "clipy"
-cask "commandq"
 cask "dash", args: { appdir: "/Applications" }
 cask "dictionaries"
 cask "docker"
