@@ -49,9 +49,9 @@ zinit ice depth'1'; zinit light denysdovhan/spaceship-prompt
 # zinit light starship/starship
 
 # Python {{{
-zinit ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true" \
-  atload"pyenv virtualenvwrapper_lazy"
-zinit light davidparsson/zsh-pyenv-lazy
+# zinit ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true" \
+#   atload"pyenv virtualenvwrapper_lazy"
+# zinit light davidparsson/zsh-pyenv-lazy
 # zinit ice svn wait'2' silent; zinit snippet OMZ::plugins/pyenv
 # }}}
 
@@ -68,7 +68,7 @@ zinit ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-bindin
   pick"/dev/null"
 zinit light junegunn/fzf
 
-zinit ice wait"0" lucid; zinit light marzocchi/zsh-notify
+zinit ice wait"0" lucid if'[[ ! $TERM =~ ".*kitty" ]]'; zinit light marzocchi/zsh-notify
 
 # iTerm2 integration {{{
 zinit ice silent if"[[ $+ITERM_PROFILE ]]"; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
@@ -91,9 +91,6 @@ zinit ice from"gh-r" as"program" bpick"krew.tar.gz" \
             atpull"%atclone" has"kubectl"
 zinit light kubernetes-sigs/krew
 zinit ice wait'0' lucid; zinit snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
-
-zinit ice from"gh-r" as"program" bpick"*darwin_amd64*" pick"terraform-lsp"
-zinit light juliosueiras/terraform-lsp
 # }}}
 
 # Colors {{{
@@ -192,3 +189,6 @@ SPACESHIP_TERRAFORM_SYMBOL=' '
 
 export HOMEBREW_NO_ANALYTICS=1
 export KEYTIMEOUT=1
+
+. /usr/local/opt/asdf/asdf.sh
+eval "$(asdf exec direnv hook zsh)"

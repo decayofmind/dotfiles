@@ -37,11 +37,14 @@
       ]
     },
     "terraform": {
-      "command": "terraform-lsp",
+      "command": "terraform-ls",
+      "args": ["serve"],
       "filetypes": [
-        "terraform"
+        "terraform",
+        "tf"
       ],
-      "initializationOptions": {}
+      "initializationOptions": {},
+      "settings": {}
     },
     "yaml": {
       "command": "yaml-language-server",
