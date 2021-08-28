@@ -31,3 +31,5 @@ pyenv-brew-relink() {
     ln -s --force $i $HOME/.pyenv/versions/${i##/*/}-brew;
   done
 }
+
+direnv() { asdf exec direnv "$@"; }
