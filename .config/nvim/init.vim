@@ -159,7 +159,7 @@ call plug#begin(s:plugged_path)
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim'
   endif
-  Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release', 'do': ':UpdateRemotePlugins' } | Plug 'Shougo/neomru.vim'
+  Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release/remote', 'do': ':UpdateRemotePlugins' } | Plug 'Shougo/neomru.vim'
 
   " Git {{{
   Plug 'tpope/vim-fugitive'

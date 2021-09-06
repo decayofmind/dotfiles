@@ -33,7 +33,8 @@ zstyle ':prezto:module:terminal' auto-title 'yes'
 zinit snippet PZT::modules/terminal/init.zsh
 # }}}
 
-zinit ice wait'0' lucid; zinit snippet OMZ::plugins/git/git.plugin.zsh
+zinit ice lucid atload"unalias gcd"
+zinit snippet OMZ::plugins/git/git.plugin.zsh
 
 zinit ice wait'0' lucid; zinit light "akarzim/zsh-docker-aliases"
 zinit ice wait'1' as"completion" lucid
@@ -141,9 +142,7 @@ else
   compinit -C;
 fi
 
-for file in ${HOME}/.zsh/*.zsh; do
-  source $file
-done
+. $(brew --prefix asdf)/asdf.sh
 
 # FZF {{{
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" 2> /dev/null'
@@ -165,6 +164,7 @@ SPACESHIP_PROMPT_ORDER=(
 SPACESHIP_RPROMPT_ORDER=(
   terraform
   kubectl_context
+  aws
   venv
   git
   exit_code
@@ -175,6 +175,8 @@ SPACESHIP_VI_MODE_SUFFIX='❯'
 SPACESHIP_VI_MODE_INSERT='❯'
 SPACESHIP_VI_MODE_NORMAL='❮'
 SPACESHIP_VI_MODE_COLOR='magenta'
+SPACESHIP_AWS_SHOW=false
+SPACESHIP_AWS_SYMBOL='☁  '
 SPACESHIP_DIR_TRUNC_REPO=false
 SPACESHIP_KUBECONTEXT_SHOW=false
 SPACESHIP_KUBECONTEXT_SYMBOL='⎈  '
@@ -190,5 +192,6 @@ SPACESHIP_TERRAFORM_SYMBOL=' '
 export HOMEBREW_NO_ANALYTICS=1
 export KEYTIMEOUT=1
 
-. /usr/local/opt/asdf/asdf.sh
-eval "$(asdf exec direnv hook zsh)"
+for file in ${HOME}/.zsh/*.zsh; do
+  source $file
+done

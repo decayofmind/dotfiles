@@ -13,11 +13,17 @@ typeset -gU cdpath fpath path
 
 # Zsh search path for executable
 path=(
+  $HOME/.bin
   $HOME/.krew/bin
   ${GOPATH}/bin
   /usr/local/opt/node@10/bin
   /usr/local/{bin,sbin}
   $path
+)
+
+fpath=(
+  $HOME/.zsh/completions
+  $fpath
 )
 
 # Editor
