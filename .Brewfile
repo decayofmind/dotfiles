@@ -161,15 +161,17 @@ mas "JSONPeep", id: 1458969831
 mas "Keymou", id: 449863619
 mas "Keynote", id: 409183694
 mas "Marked 2", id: 890031187
+mas "Microsoft Word", id: 462054704
 mas "Moom", id: 419330170
 mas "Octotree", id: 1457450145
 mas "Pages", id: 409201541
 mas "PiPifier", id: 1160374471
 mas "Pixelmator", id: 407963104
+mas "Pixelmator Pro", id: 1289583905
 mas "QREncoder", id: 452695239
-mas "Raindrop.io for Safari", id: 957810159
 mas "Reeder", id: 1529448980
 mas "RSS Button for Safari", id: 1437501942
+mas "Save to Raindrop.io", id: 1549370672
 mas "SessionRestore", id: 1463334954
 mas "Speedtest", id: 1153157709
 mas "Tab Count", id: 1487406555
@@ -177,4 +179,5 @@ mas "Tab Suspender", id: 1495356253
 mas "Tampermonkey", id: 1482490089
 mas "The Archive Browser", id: 510232205
 mas "Turn Off the Lights for Safari", id: 1273998507
+mas "Vectornator", id: 1219074514
 mas "Vimari", id: 1480933944
