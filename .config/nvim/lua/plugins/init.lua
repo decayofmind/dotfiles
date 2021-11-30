@@ -18,7 +18,9 @@ lspconfig.terraformls.setup{
 --   root_dir = nvim_lsp.util.root_pattern(".terraform", ".git", ".tflint.hcl"),
 -- }
 
-lspconfig.ansiblels.setup{}
+lspconfig.ansiblels.setup{
+  filetypes={ "yaml.ansible" },
+}
 lspconfig.bashls.setup{}
 lspconfig.dockerls.setup{}
 lspconfig.jsonls.setup{}
