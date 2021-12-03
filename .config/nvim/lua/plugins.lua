@@ -14,7 +14,7 @@ end
 vim.cmd([[
   augroup packer
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
   augroup end
 ]])
 
@@ -47,6 +47,23 @@ return require("packer").startup(function(use)
 	})
 
 	use({ "akinsho/bufferline.nvim", requires = "kyazdani42/nvim-web-devicons" })
+
+	use({
+		"akinsho/toggleterm.nvim",
+		config = function()
+			require("toggleterm").setup({})
+		end,
+	})
+
+	use({
+		"kyazdani42/nvim-tree.lua",
+		requires = {
+			"kyazdani42/nvim-web-devicons"
+		},
+		config = function()
+			require("nvim-tree").setup({})
+		end,
+	})
 
 	use("tversteeg/registers.nvim")
 	use("direnv/direnv.vim")

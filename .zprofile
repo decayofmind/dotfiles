@@ -13,7 +13,7 @@ typeset -gU cdpath fpath path
 
 # Zsh search path for executable
 path=(
-  $HOME/.bin
+  $HOME/.local/bin
   $HOME/.krew/bin
   ${GOPATH}/bin
   /usr/local/opt/node@10/bin
@@ -41,4 +41,4 @@ if [[ ! -d "$ZSH_CACHE_DIR" ]]; then
 fi
 
 # set base16 theme
-export BASE16_THEME='chalk'
+export BASE16_THEME='black-metal-khold'

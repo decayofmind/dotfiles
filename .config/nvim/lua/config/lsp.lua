@@ -29,6 +29,46 @@ lspconfig.gopls.setup({
 	},
 })
 
+-- cd .config/nvim
+-- git clone https://github.com/sumneko/lua-language-server
+-- cd lua-language-server
+-- git submodule update --init --recursive
+-- cd 3rd/luamake
+-- ninja -f compile/ninja/macos.ninja
+-- cd ../..
+-- ./3rd/luamake/luamake rebuild
+local sumneko_root_path = "/Users/" .. vim.fn.expand("$USER") .. "/.config/nvim/lua-language-server"
+local sumneko_binary = sumneko_root_path .. "/bin/macOS/lua-language-server"
+
+local runtime_path = vim.split(package.path, ";")
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+
+lspconfig.sumneko_lua.setup({
+	cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
+	settings = {
+		Lua = {
+			runtime = {
+				version = "LuaJIT",
+				path = runtime_path,
+			},
+			diagnostics = {
+				globals = { "vim" },
+			},
+			workspace = {
+				library = {
+					-- vim.api.nvim_get_runtime_file("", true),
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+				},
+			},
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+})
+
 lspconfig.yamlls.setup({
 	capabilities = capabilities,
 	filetypes = { "yaml", "yaml.ansible" },
@@ -61,7 +101,7 @@ require("null-ls").config({
 	},
 })
 
-require("lspconfig")["null-ls"].setup({
+lspconfig["null-ls"].setup({
 	on_attach = function(client)
 		if client.resolved_capabilities.document_formatting then
 			vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
