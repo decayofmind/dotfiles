@@ -10,14 +10,28 @@ lspconfig.terraformls.setup({
 })
 
 lspconfig.ansiblels.setup({
+	capabilities = capabilities,
 	filetypes = { "yaml.ansible" },
 })
-lspconfig.bashls.setup({})
-lspconfig.dockerls.setup({})
-lspconfig.jsonls.setup({})
-lspconfig.pyright.setup({})
+
+lspconfig.bashls.setup({
+	capabilities = capabilities,
+})
+
+lspconfig.dockerls.setup({
+	capabilities = capabilities,
+})
+
+lspconfig.jsonls.setup({
+	capabilities = capabilities,
+})
+
+lspconfig.pyright.setup({
+	capabilities = capabilities,
+})
 
 lspconfig.gopls.setup({
+	capabilities = capabilities,
 	cmd = { "gopls", "serve" },
 	settings = {
 		gopls = {
@@ -29,6 +43,7 @@ lspconfig.gopls.setup({
 	},
 })
 
+-- brew install ninnja
 -- cd .config/nvim
 -- git clone https://github.com/sumneko/lua-language-server
 -- cd lua-language-server
@@ -45,6 +60,7 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 lspconfig.sumneko_lua.setup({
+	capabilities = capabilities,
 	cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
 	settings = {
 		Lua = {
@@ -102,6 +118,7 @@ require("null-ls").config({
 })
 
 lspconfig["null-ls"].setup({
+	capabilities = capabilities,
 	on_attach = function(client)
 		if client.resolved_capabilities.document_formatting then
 			vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")

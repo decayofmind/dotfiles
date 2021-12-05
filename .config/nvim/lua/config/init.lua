@@ -7,6 +7,20 @@ require("bufferline").setup({
 
 require("telescope").load_extension("fzf")
 
+require("telescope").setup({
+	defaults = {
+		vimgrep_arguments = {
+			"rg",
+			"--color=never",
+			"--no-heading",
+			"--with-filename",
+			"--line-number",
+			"--column",
+			"--smart-case",
+		},
+	},
+})
+
 -- require'lspconfig'.tflint.setup{
 --   cmd = { "tflint", "--langserver" },
 --   filetypes = { "terraform" },
@@ -59,12 +73,12 @@ cmp.setup({
 		format = lspkind.cmp_format({
 			with_text = false,
 			menu = {
-				buffer = "[B]",
+				buffer = "[Buf]",
 				nvim_lsp = "[LSP]",
-				luasnip = "[LuaSnip]",
+				luasnip = "[Snip]",
 				nvim_lua = "[Lua]",
-				path = "[P]",
-				rg = "[G]",
+				path = "[Path]",
+				rg = "[Grep]",
 			},
 		}),
 	},
