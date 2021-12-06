@@ -30,6 +30,10 @@ lspconfig.pyright.setup({
 	capabilities = capabilities,
 })
 
+lspconfig.solargraph.setup({
+	capabilities = capabilities,
+})
+
 lspconfig.gopls.setup({
 	capabilities = capabilities,
 	cmd = { "gopls", "serve" },

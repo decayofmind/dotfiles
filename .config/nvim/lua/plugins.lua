@@ -57,7 +57,8 @@ return require("packer").startup({
 						section_separators = { " ", " " },
 					},
 					sections = {
-						lualine_a = { "mode", "paste" },
+						lualine_a = { { "filename", path = 2 } },
+						lualine_c = {},
 					},
 				})
 			end,
@@ -202,7 +203,7 @@ return require("packer").startup({
 		use({
 			"simrat39/symbols-outline.nvim",
 			config = function()
-				require('symbols-outline').setup({
+				require("symbols-outline").setup({
 					auto_preview = false,
 				})
 			end,
