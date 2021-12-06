@@ -57,7 +57,7 @@ return require("packer").startup({
 						section_separators = { " ", " " },
 					},
 					sections = {
-						lualine_a = { { "filename", path = 2 } },
+						lualine_a = { { "filename", path = 1 } },
 						lualine_c = {},
 					},
 				})
