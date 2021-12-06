@@ -108,7 +108,7 @@ lspconfig.yamlls.setup({
 require("null-ls").config({
 	sources = {
 		require("null-ls").builtins.formatting.prettier.with({
-			disabled_filetypes = { "json", "yaml" },
+			disabled_filetypes = { "json" },
 		}),
 		require("null-ls").builtins.formatting.stylua.with({
 			filetypes = { "lua" },
