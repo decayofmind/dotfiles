@@ -135,19 +135,32 @@ lspconfig.yamlls.setup({
 	},
 })
 
--- local null_ls = require("null-ls")
--- null_ls.setup({
--- 	sources = {
--- 		null_ls.builtins.code_actions.gitsigns,
--- 		-- null_ls.builtins.formatting.trim_newlines,
--- 		-- null_ls.builtins.formatting.trim_whitespace,
--- 	},
--- })
-
-lspconfig.efm.setup({
+local null_ls = require("null-ls")
+null_ls.setup({
 	on_attach = on_attach,
-	init_options = { documentFormatting = true },
-	root_dir = vim.loop.cwd,
+	sources = {
+		null_ls.builtins.formatting.prettier.with({
+			disabled_filetypes = { "json" },
+		}),
+		null_ls.builtins.formatting.stylua.with({
+			filetypes = { "lua" },
+		}),
+		null_ls.builtins.formatting.shfmt,
+		null_ls.builtins.diagnostics.shellcheck,
+		null_ls.builtins.diagnostics.yamllint.with({
+			extra_args = { "-d", "relaxed" },
+		}),
+	},
+})
+
+-- Not working properly atm
+lspconfig.efm.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	-- filetypes = { "lua", "yaml" },
+	filetypes = { "" },
+	init_options = { documentFormatting = true, codeAction = true },
+	root_dir = lspconfig.util.root_pattern(".git") or vim.loop.cwd,
 	settings = {
 		rootMarkers = { vim.loop.cwd() },
 		-- lintDebounce = 100,
@@ -157,31 +170,31 @@ lspconfig.efm.setup({
 			},
 			sh = {
 				{
-					{
-						lintCommand = "shellcheck -f gcc -x -",
-						lintStdin = true,
-						lintFormats = {
-							"%f:%l:%c: %trror: %m",
-							"%f:%l:%c: %tarning: %m",
-							"%f:%l:%c: %tote: %m",
-						},
+					lintCommand = "shellcheck -f gcc -x -",
+					lintStdin = true,
+					lintFormats = {
+						"%f:%l:%c: %trror: %m",
+						"%f:%l:%c: %tarning: %m",
+						"%f:%l:%c: %tote: %m",
 					},
-					{
-						formatCommand = "shfmt -ci -s -bn",
-						formatStdin = true,
-					},
+				},
+				{
+					formatCommand = "shfmt -ci -s -bn",
+					formatStdin = true,
 				},
 			},
 			yaml = {
 				{
-					lintCommand = "yamllint -d relaxed -f parsable -",
+					lintCommand = "yamllint -f parsable -",
 					lintFormats = {
 						"%f:%l:%c: [%t%*[a-z]] %m",
 					},
 					lintStdin = true,
 				},
 				{
-					formatCommand = "prettier --stdin --stdin-filepath ${INPUT}",
+					formatCommand = ([[
+						prettier --stdin-filepath ${INPUT}
+					]]):gsub("\n", ""),
 					formatStdin = true,
 				},
 			},
@@ -189,9 +202,9 @@ lspconfig.efm.setup({
 	},
 })
 
-vim.cmd("autocmd BufWritePre *.go :silent! lua goimports(3000)")
+vim.cmd("autocmd BufWritePre *.go :silent! lua Goimports(3000)")
 
-function goimports(timeout_ms)
+function Goimports(timeout_ms)
 	local context = { only = { "source.organizeImports" } }
 	vim.validate({ context = { context, "t", true } })
 
