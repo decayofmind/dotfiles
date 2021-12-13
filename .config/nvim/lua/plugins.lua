@@ -33,6 +33,15 @@ return require("packer").startup({
 		})
 
 		use({
+			"kyazdani42/nvim-web-devicons",
+			config = function()
+				require("nvim-web-devicons").setup({
+					default = true,
+				})
+			end,
+		})
+
+		use({
 			"RRethy/nvim-base16",
 			-- config = function()
 			-- 	vim.cmd("colorscheme base16-chalk")
@@ -47,6 +56,7 @@ return require("packer").startup({
 			config = function()
 				require("lualine").setup({
 					extensions = {
+						"fugitive",
 						"nvim-tree",
 						"quickfix",
 						"symbols-outline",
@@ -136,7 +146,14 @@ return require("packer").startup({
 			},
 		})
 
-		use("mfussenegger/nvim-dap")
+		use({
+			"mfussenegger/nvim-dap",
+			requires = {
+				"theHamsta/nvim-dap-virtual-text",
+				"nvim-telescope/telescope-dap.nvim",
+				"leoluz/nvim-dap-go",
+			},
+		})
 
 		use("neovim/nvim-lspconfig")
 		use("jose-elias-alvarez/null-ls.nvim")
@@ -171,7 +188,9 @@ return require("packer").startup({
 			"nvim-treesitter/nvim-treesitter",
 			requires = {
 				"nvim-treesitter/nvim-treesitter-textobjects",
+				"nvim-treesitter/nvim-treesitter-refactor",
 			},
+			run = ":TSUpdate",
 		})
 
 		use({
@@ -210,6 +229,10 @@ return require("packer").startup({
 			cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
 		})
 
+		-- It's too young to use it now
+		-- use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
+		use("sindrets/diffview.nvim")
+
 		use({
 			"tpope/vim-fugitive",
 			opt = true,
@@ -237,14 +260,12 @@ return require("packer").startup({
 		use("itspriddle/vim-marked")
 
 		use({
-			"oberblastmeister/rooter.nvim",
+			"ahmedkhalf/project.nvim",
 			config = function()
-				require("rooter").setup({
-					manual = false,
-					echo = false,
-				})
+				require("project_nvim").setup({})
 			end,
 		})
+
 		use({
 			"folke/trouble.nvim",
 			requires = "kyazdani42/nvim-web-devicons",

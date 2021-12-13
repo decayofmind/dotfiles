@@ -43,7 +43,6 @@ opt.shiftround = true
 
 vim.g["vista#renderer#enable_icon"] = 1
 vim.g.vista_disable_statusline = 1
-vim.g.vista_default_executive = "ctags"
 vim.g.vista_default_executive = "nvim_lsp"
 vim.g.vista_echo_cursor_strategy = "floating_win"
 
@@ -54,13 +53,13 @@ require("keymaps")
 require("plugins")
 require("config")
 
-vim.api.nvim_exec(
-	[[
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-au InsertLeave * match ExtraWhitespace /\s\+$/
-]],
-	true
-)
+-- vim.api.nvim_exec(
+-- 	[[
+-- autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+-- au InsertLeave * match ExtraWhitespace /\s\+$/
+-- ]],
+-- 	true
+-- )
 
 vim.cmd("colorscheme base16-" .. vim.env.BASE16_THEME)
 
@@ -69,22 +68,40 @@ vim.api.nvim_exec(
 augroup vimrc
     autocmd!
     autocmd ColorScheme * highlight Comment cterm=italic gui=italic
-    autocmd BufRead,BufNewFile *.json setlocal conceallevel=0 foldmethod=syntax
     autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown
             \ setlocal spell ft=markdown colorcolumn=80 conceallevel=0
     autocmd FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
     autocmd BufRead,BufNewFile *.yml,*.yaml setlocal colorcolumn=160
     autocmd BufWritePost ~/.config/nvim/init.vim source ~/.config/nvim/init.vim
+    autocmd BufNewFile,BufRead */tasks/*.yml setfiletype yaml.ansible
+  autocmd BufNewFile,BufRead */handlers/*.yml setfiletype yaml.ansible
+    autocmd BufNewFile,BufRead */default/*.yml setfiletype yaml.ansible
     autocmd FileType gitcommit setlocal spell spelllang=en_us
     autocmd FileType sh setlocal et ts=4 sw=4
     autocmd FileType qf setlocal nobuflisted
-    autocmd FileType go setlocal noexpandtab shiftwidth=4 softtabstop=4 tabstop=4 nolist
+    autocmd FileType go setlocal noexpandtab shiftwidth=8 softtabstop=8 tabstop=8 nolist
+    autocmd FileType tf setlocal filetype=terraform
     autocmd FileType python nnoremap <buffer><silent> <Leader>pe :AsyncRun! -mode=term -pos=bottom -rows=15 python "%"<CR>
     autocmd FileType python setlocal sw=4 sts=4 ts=4 et
-    autocmd TermOpen term://* setlocal scrolloff=0 nonumber norelativenumber | startinsert
 augroup END
 ]],
 	true
+)
+
+vim.api.nvim_exec(
+	[[
+      cnoreabbrev W! w!
+      cnoreabbrev Q! q!
+      cnoreabbrev Qall! qall!
+      cnoreabbrev Wq wq
+      cnoreabbrev Wa wa
+      cnoreabbrev wQ wq
+      cnoreabbrev WQ wq
+      cnoreabbrev W w
+      cnoreabbrev Q q
+      cnoreabbrev Qall qall
+    ]],
+	false
 )
 
 local disabled_built_ins = {

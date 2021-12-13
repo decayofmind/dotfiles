@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-vim.opt.pastetoggle = "<F12>"
 
 local keymap = vim.api.nvim_set_keymap
 
@@ -25,10 +24,18 @@ keymap(
 	{ noremap = true, silent = true, expr = true }
 )
 keymap("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true })
+keymap("n", "<leader>bj", "<cmd>BufferLinePick<cr>", { noremap = true, silent = true })
+keymap("n", "<leader>bf", "<cmd>Telescope buffers<cr>", { noremap = true, silent = true })
+keymap("n", "<leader>/", "<cmd>Telescope live_grep<cr>", { noremap = true, silent = true })
+
 keymap("n", "<S-Tab>", "<C-w>w", { noremap = true, silent = true })
 
-keymap("", "<leader>M", "<cmd>MarkedOpen<cr>", {})
+keymap("", "<leader>M", "<cmd>MarkedOpen<cr>", { noremap = true, silent = true })
 keymap("n", "<leader>U", "<cmd>UndotreeToggle<cr>", { noremap = true, silent = true })
+keymap("n", "<leader>S", "<cmd>SymbolsOutline<cr>", { noremap = true, silent = true })
+
+keymap("n", "<leader>gg", "<cmd>Git<cr>", { noremap = true, silent = true })
+keymap("n", "<leader>gc", "<cmd>Git commit<cr>", { noremap = true, silent = true })
 
 keymap("n", "<Up>", "<NOP>", { noremap = true })
 keymap("n", "<Down>", "<NOP>", { noremap = true })
@@ -46,3 +53,5 @@ keymap("n", "<C-j>", "<C-w>j", { noremap = true })
 keymap("n", "<C-k>", "<C-w>k", { noremap = true })
 keymap("n", "<C-h>", "<C-w>h", { noremap = true })
 keymap("n", "<C-l>", "<C-w>l", { noremap = true })
+
+keymap("t", "<Esc><Esc>", "<C-\\><C-n>", { noremap = true })

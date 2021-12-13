@@ -1,3 +1,15 @@
+-- require("neogit").setup({
+-- 	kind = "floating",
+-- 	commit_popup = {
+-- 		kind = "floating",
+-- 	},
+-- 	disable_hint = true,
+-- 	disable_insert_on_commit = false,
+-- 	integrations = {
+-- 		diffview = true,
+-- 	},
+-- })
+
 require("bufferline").setup({
 	options = {
 		show_close_icon = false,
@@ -6,6 +18,7 @@ require("bufferline").setup({
 })
 
 require("telescope").load_extension("fzf")
+require("telescope").load_extension("projects")
 
 require("telescope").setup({
 	defaults = {
@@ -20,12 +33,6 @@ require("telescope").setup({
 		},
 	},
 })
-
--- require'lspconfig'.tflint.setup{
---   cmd = { "tflint", "--langserver" },
---   filetypes = { "terraform" },
---   root_dir = nvim_lsp.util.root_pattern(".terraform", ".git", ".tflint.hcl"),
--- }
 
 -- require'lspsaga'.init_lsp_saga()
 --
@@ -50,6 +57,16 @@ require("nvim-treesitter.configs").setup({
 		"vim",
 		"yaml",
 	},
+	refactor = {
+		highlight_current_scope = { enable = true },
+		highlight_definitions = { enable = true },
+		smart_rename = {
+			enable = true,
+			keymaps = {
+				smart_rename = "grr",
+			},
+		},
+	},
 	textobjects = {
 		select = {
 			enable = true,
@@ -65,20 +82,27 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+
 cmp.setup({
+	documentation = {
+		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+	},
 	formatting = {
 		format = lspkind.cmp_format({
 			with_text = false,
 			menu = {
-				buffer = "[Buf]",
-				nvim_lsp = "[LSP]",
-				luasnip = "[Snip]",
-				nvim_lua = "[Lua]",
-				path = "[Path]",
-				rg = "[Grep]",
+				buffer = " ﬘",
+				nvim_lsp = " ",
+				luasnip = " ",
+				nvim_lua = " ",
+				path = " ",
+				rg = " ",
+				treesitter = " ",
 			},
 		}),
 	},
@@ -106,13 +130,13 @@ cmp.setup({
 		end,
 	},
 	sources = cmp.config.sources({
-		{ name = "treesitter" },
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-		{ name = "nvim_lua" },
-		{ name = "path" },
-		{ name = "rg" },
-		{ name = "buffer" },
+		{ name = "treesitter", keyword_length = 2 },
+		{ name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
+		{ name = "nvim_lua", priority_weight = 90 },
+		{ name = "luasnip", priority_weight = 80 },
+		{ name = "path", priority_weight = 110 },
+		{ name = "rg", keyword_length = 5, max_item_count = 5, priority_weight = 60 },
+		{ name = "buffer", max_item_count = 5, priority_weight = 70 },
 	}),
 
 	experimental = {
@@ -138,4 +162,5 @@ cmp.setup.cmdline(":", {
 })
 
 local current_folder = (...):gsub("%.init$", "")
+require(current_folder .. ".dap")
 require(current_folder .. ".lsp")
