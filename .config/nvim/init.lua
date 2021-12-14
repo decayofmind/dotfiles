@@ -9,7 +9,6 @@ opt.clipboard = "unnamedplus"
 opt.wildmode = { "full", "list", "full" }
 opt.completeopt = { "menuone", "noselect" }
 
--- opt.foldmethod = "marker"
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.showmode = false
@@ -74,7 +73,7 @@ augroup vimrc
     autocmd BufRead,BufNewFile *.yml,*.yaml setlocal colorcolumn=160
     autocmd BufWritePost ~/.config/nvim/init.vim source ~/.config/nvim/init.vim
     autocmd BufNewFile,BufRead */tasks/*.yml setfiletype yaml.ansible
-  autocmd BufNewFile,BufRead */handlers/*.yml setfiletype yaml.ansible
+    autocmd BufNewFile,BufRead */handlers/*.yml setfiletype yaml.ansible
     autocmd BufNewFile,BufRead */default/*.yml setfiletype yaml.ansible
     autocmd FileType gitcommit setlocal spell spelllang=en_us
     autocmd FileType sh setlocal et ts=4 sw=4

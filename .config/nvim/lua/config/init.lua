@@ -34,8 +34,6 @@ require("telescope").setup({
 	},
 })
 
--- require'lspsaga'.init_lsp_saga()
---
 require("nvim-treesitter.configs").setup({
 	highlight = {
 		enable = true,
@@ -90,7 +88,7 @@ cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = 
 
 cmp.setup({
 	documentation = {
-		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+		border = "single",
 	},
 	formatting = {
 		format = lspkind.cmp_format({
@@ -138,10 +136,20 @@ cmp.setup({
 		{ name = "rg", keyword_length = 5, max_item_count = 5, priority_weight = 60 },
 		{ name = "buffer", max_item_count = 5, priority_weight = 70 },
 	}),
-
 	experimental = {
 		native_menu = false,
 		ghost_text = true,
+	},
+	sorting = {
+		comparators = {
+			cmp.config.compare.offset,
+			cmp.config.compare.exact,
+			cmp.config.compare.score,
+			cmp.config.compare.kind,
+			cmp.config.compare.sort_text,
+			cmp.config.compare.length,
+			cmp.config.compare.order,
+		},
 	},
 })
 
@@ -153,13 +161,13 @@ cmp.setup.cmdline("/", {
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(":", {
-	sources = cmp.config.sources({
-		{ name = "path" },
-	}, {
-		{ name = "cmdline" },
-	}),
-})
+-- cmp.setup.cmdline(":", {
+-- 	sources = cmp.config.sources({
+-- 		{ name = "path" },
+-- 	}, {
+-- 		{ name = "cmdline" },
+-- 	}),
+-- })
 
 local current_folder = (...):gsub("%.init$", "")
 require(current_folder .. ".dap")

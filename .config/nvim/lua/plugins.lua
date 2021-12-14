@@ -22,7 +22,7 @@ return require("packer").startup({
 	function(use)
 		use("wbthomason/packer.nvim")
 
-		-- speedup startup time
+		-- improve startup time
 		use("antoinemadec/FixCursorHold.nvim")
 		use({ "lewis6991/impatient.nvim", rocks = "mpack" })
 		use({
@@ -49,6 +49,8 @@ return require("packer").startup({
 		})
 
 		use("sheerun/vim-polyglot")
+
+		use("stevearc/dressing.nvim")
 
 		use({
 			"nvim-lualine/lualine.nvim",

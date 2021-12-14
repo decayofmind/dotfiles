@@ -237,3 +237,21 @@ function Goimports(timeout_ms)
 		vim.lsp.buf.execute_command(action)
 	end
 end
+
+local signs = { Error = "", Warn = "", Info = "כֿ", Hint = "" }
+for sign, icon in pairs(signs) do
+	vim.fn.sign_define(
+		"DiagnosticSign" .. sign,
+		{ text = icon, texthl = "Diagnostic" .. sign, linehl = false, numhl = "Diagnostic" .. sign }
+	)
+end
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+	-- border = "rounded",
+	border = "single",
+})
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+	border = "single",
+	-- border = "rounded",
+})
