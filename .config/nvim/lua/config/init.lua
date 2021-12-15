@@ -98,7 +98,7 @@ cmp.setup({
 				nvim_lsp = " ",
 				luasnip = " ",
 				nvim_lua = " ",
-				path = " ",
+				path = "",
 				rg = " ",
 				treesitter = " ",
 			},
