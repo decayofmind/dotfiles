@@ -3,7 +3,19 @@ local lspconfig = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local on_attach = function(client)
+local on_attach = function(client, bufnr)
+	local function buf_set_keymap(...)
+		vim.api.nvim_buf_set_keymap(bufnr, ...)
+	end
+
+	local opts = { noremap = true, silent = true }
+
+	buf_set_keymap("n", "<leader>lk", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+	buf_set_keymap("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+	buf_set_keymap("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+	buf_set_keymap("n", "<leader>ld", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+	buf_set_keymap("n", "<leader>lD", "<cmd>split | lua vim.lsp.buf.definition()<CR>", opts)
+
 	if client.resolved_capabilities.document_formatting then
 		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
 	end
@@ -203,6 +215,7 @@ lspconfig.efm.setup({
 })
 
 vim.cmd("autocmd BufWritePre *.go :silent! lua Goimports(3000)")
+vim.cmd("autocmd BufWritePost *.go lua vim.lsp.codelens.refresh()")
 
 function Goimports(timeout_ms)
 	local context = { only = { "source.organizeImports" } }
@@ -238,7 +251,7 @@ function Goimports(timeout_ms)
 	end
 end
 
-local signs = { Error = "", Warn = "", Info = "כֿ", Hint = "" }
+local signs = { Error = "", Warn = "", Info = "", Hint = "" }
 for sign, icon in pairs(signs) do
 	vim.fn.sign_define(
 		"DiagnosticSign" .. sign,

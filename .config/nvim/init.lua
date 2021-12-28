@@ -22,6 +22,7 @@ opt.lazyredraw = true
 opt.synmaxcol = 600
 opt.scrolloff = 5
 
+vim.o.smartindent = true
 opt.fillchars = { vert = "│", fold = "─" }
 vim.o.switchbuf = "useopen"
 opt.termguicolors = true
@@ -45,22 +46,11 @@ vim.g.vista_disable_statusline = 1
 vim.g.vista_default_executive = "nvim_lsp"
 vim.g.vista_echo_cursor_strategy = "floating_win"
 
--- autocmd BufEnter * call s:CheckLeftBuffers()
--- autocmd BufWritePre * StripWhitespace
-
 require("keymaps")
+require("impatient").enable_profile()
+require("packer_compiled")
 require("plugins")
 require("config")
-
--- vim.api.nvim_exec(
--- 	[[
--- autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
--- au InsertLeave * match ExtraWhitespace /\s\+$/
--- ]],
--- 	true
--- )
-
-vim.cmd("colorscheme base16-" .. vim.env.BASE16_THEME)
 
 vim.api.nvim_exec(
 	[[

@@ -33,6 +33,66 @@ return require("packer").startup({
 		})
 
 		use({
+			"max397574/better-escape.nvim",
+			event = "InsertEnter",
+			config = function()
+				require("better_escape").setup()
+			end,
+		})
+
+		use("famiu/bufdelete.nvim")
+		-- use("ojroques/nvim-bufdel")
+
+		-- UI enhancements
+		use("stevearc/dressing.nvim")
+		use({
+			"rcarriga/nvim-notify",
+			config = function()
+				require("notify").setup({
+					render = "minimal",
+					stages = "static",
+				})
+				vim.notify = require("notify")
+			end,
+		})
+
+		-- Colorschemes
+		use({
+			"NTBBloodbath/doom-one.nvim",
+			config = function()
+				-- require("doom-one").setup({
+				-- 	cursor_coloring = false,
+				-- 	terminal_colors = false,
+				-- 	italic_comments = true,
+				-- 	enable_treesitter = true,
+				-- 	transparent_background = true,
+				-- 	pumblend = {
+				-- 		enable = true,
+				-- 		transparency_amount = 20,
+				-- 	},
+				-- 	plugins_integrations = {
+				-- 		bufferline = true,
+				-- 		telescope = true,
+				-- 	},
+				-- })
+			end,
+		})
+		use({
+			"rebelot/kanagawa.nvim",
+			config = function()
+				require("kanagawa").setup({
+					transparent = true,
+				})
+			end,
+		})
+		use({
+			"RRethy/nvim-base16",
+			config = function()
+				vim.cmd("colorscheme base16-" .. vim.env.BASE16_THEME)
+			end,
+		})
+
+		use({
 			"kyazdani42/nvim-web-devicons",
 			config = function()
 				require("nvim-web-devicons").setup({
@@ -41,16 +101,7 @@ return require("packer").startup({
 			end,
 		})
 
-		use({
-			"RRethy/nvim-base16",
-			-- config = function()
-			-- 	vim.cmd("colorscheme base16-chalk")
-			-- end,
-		})
-
 		use("sheerun/vim-polyglot")
-
-		use("stevearc/dressing.nvim")
 
 		use({
 			"nvim-lualine/lualine.nvim",
@@ -80,6 +131,7 @@ return require("packer").startup({
 
 		use({
 			"akinsho/toggleterm.nvim",
+			cmd = { "ToggleTerm", "ToggleTermOpenAll", "ToggleTermCloseAll" },
 			config = function()
 				require("toggleterm").setup({})
 			end,
@@ -87,6 +139,7 @@ return require("packer").startup({
 
 		use({
 			"kyazdani42/nvim-tree.lua",
+			cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile" },
 			requires = {
 				"kyazdani42/nvim-web-devicons",
 			},
@@ -122,7 +175,14 @@ return require("packer").startup({
 			end,
 		})
 
-		use("tpope/vim-surround")
+		use({
+			"blackCauldron7/surround.nvim",
+			config = function()
+				require("surround").setup({ mappings_style = "sandwich" })
+			end,
+		})
+		-- use("tpope/vim-surround")
+
 		use("tpope/vim-endwise")
 		use("tpope/vim-sleuth")
 
@@ -148,12 +208,14 @@ return require("packer").startup({
 			},
 		})
 
+		use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 		use({
 			"mfussenegger/nvim-dap",
 			requires = {
 				"theHamsta/nvim-dap-virtual-text",
 				"nvim-telescope/telescope-dap.nvim",
 				"leoluz/nvim-dap-go",
+				"mfussenegger/nvim-dap-python",
 			},
 		})
 
@@ -198,7 +260,15 @@ return require("packer").startup({
 		use({
 			"numToStr/Comment.nvim",
 			config = function()
-				require("Comment").setup()
+				require("Comment").setup({
+					toggler = {
+						line = "gcc",
+						block = "gcb",
+					},
+					extra = {
+						eol = "gca",
+					},
+				})
 			end,
 		})
 
@@ -207,7 +277,7 @@ return require("packer").startup({
 			config = function()
 				require("indent_blankline").setup({
 					char = "▏",
-					buftype_exclude = { "terminal" },
+					buftype_exclude = { "terminal", "nofile" },
 					filetype_exclude = { "help", "packer", "lspinfo", "markdown" },
 					space_char_blankline = " ",
 					show_trailing_blankline_indent = false,
@@ -219,8 +289,8 @@ return require("packer").startup({
 			end,
 		})
 
+		-- Outline
 		use({ "liuchengxu/vista.vim", cmd = "Vista" })
-
 		use({
 			"simrat39/symbols-outline.nvim",
 			config = function()
@@ -231,10 +301,9 @@ return require("packer").startup({
 			cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
 		})
 
-		-- It's too young to use it now
-		-- use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
+		-- Git
+		-- use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" }) -- It's too young to use it now
 		use("sindrets/diffview.nvim")
-
 		use({
 			"tpope/vim-fugitive",
 			opt = true,
@@ -254,6 +323,7 @@ return require("packer").startup({
 				})
 			end,
 		})
+
 		use({
 			"mrjones2014/dash.nvim",
 			run = "make install",
@@ -280,8 +350,13 @@ return require("packer").startup({
 		end
 	end,
 	config = {
+		compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
 		display = {
 			open_fn = require("packer.util").float,
+		},
+		profile = {
+			enable = true,
+			threshold = 0,
 		},
 	},
 })
