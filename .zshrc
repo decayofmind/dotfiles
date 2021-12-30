@@ -1,15 +1,22 @@
 # vim:foldlevel=0
 # vim:foldmethod=marker
 
-# zmodload zsh/zprof && zprof
-
-# Zinit {{{
-if [[ ! -d ~/.zinit ]]; then
-  mkdir ~/.zinit
-  git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+# Start profiler
+if [[ "${ZSH_PROFILE}" == 1 ]]; then
+    zmodload zsh/zprof
+else
+    ZSH_PROFILE=0
 fi
 
-source ~/.zinit/bin/zinit.zsh
+# Zinit {{{
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME:-~/.local/share}}/zinit"
+
+if [[ ! -d $ZINIT_HOME ]]; then
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME/repo"
+fi
+
+source "${ZINIT_HOME}/repo/zinit.zsh"
 
 # Prezto {{{
 zinit snippet PZT::modules/environment/init.zsh
@@ -62,7 +69,7 @@ zinit snippet OMZ::plugins/fasd/fasd.plugin.zsh
 zinit ice wait'0' blockf lucid
 zinit light zsh-users/zsh-completions
 
-zinit ice wait"0" lucid; zinit load zdharma/history-search-multi-word
+zinit ice wait"0" lucid; zinit load zdharma-continuum/history-search-multi-word
 
 zinit ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-bindings.zsh" \
   atpull"%atclone" multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions" \
@@ -77,14 +84,15 @@ zinit ice as"command" pick"bin/*" \
   atclone'./_utils/download_files.sh' \
   atpull'%atclone' if"[[ $+ITERM_PROFILE ]]"
 zinit light decayofmind/zsh-iterm2-utilities
-zinit snippet 'https://raw.githubusercontent.com/gnachman/iterm2-website/master/source/shell_integration/zsh'
+zinit snippet 'https://raw.githubusercontent.com/gnachman/iTerm2-shell-integration/main/shell_integration/zsh'
 # }}}
 
 # Programs {{{
-zinit ice as"program" make'!' \
-            atclone'./direnv hook zsh > zhook.zsh' \
-            atpull'%atclone' src"zhook.zsh"
-zinit light direnv/direnv
+zinit wait lucid as"program" from"gh-r" \
+      mv"direnv* -> direnv" \
+      atclone"./direnv hook zsh > zhook.zsh" \
+      atpull"%atclone" pick"direnv" src"zhook.zsh" \
+      light-mode for direnv/direnv
 
 zinit ice from"gh-r" as"program" bpick"krew.tar.gz" \
             mv"krew-darwin_amd64 -> krew" pick"krew" \
@@ -118,7 +126,7 @@ zinit light sei40kr/zsh-fast-alias-tips
 zinit ice lucid wait"1" lucid atload"!_zsh_autosuggest_start"
 zinit load "zsh-users/zsh-autosuggestions"
 zinit ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
-zinit light zdharma/fast-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-history-substring-search
   zmodload zsh/terminfo
   [ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
@@ -130,7 +138,8 @@ zinit light zsh-users/zsh-history-substring-search
 
 # }}}
 
-if (which zprof > /dev/null) ;then
+# End Profiler
+if [[ "${ZSH_PROFILE}" == 1 ]]; then
   zprof | less
 fi
 

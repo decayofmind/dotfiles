@@ -40,5 +40,8 @@ if [[ ! -d "$ZSH_CACHE_DIR" ]]; then
   /bin/chmod 0700 "$ZSH_CACHE_DIR"
 fi
 
+# XDG
+export XDG_DATA_HOME="$HOME/.local/share"
+
 # set base16 theme
 export BASE16_THEME='black-metal-khold'
