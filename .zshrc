@@ -75,6 +75,7 @@ zinit ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-bindin
   atpull"%atclone" multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions" \
   pick"/dev/null"
 zinit light junegunn/fzf
+zinit light Aloxaf/fzf-tab
 
 zinit ice wait"0" lucid if'[[ ! $TERM =~ ".*kitty" ]]'; zinit light marzocchi/zsh-notify
 
@@ -102,7 +103,7 @@ zinit light kubernetes-sigs/krew
 zinit ice wait'0' lucid; zinit snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
 # }}}
 
-# Colors {{{
+# Colors and highlight {{{
 zinit light 'chrissicool/zsh-256color'
 zinit ice atclone"dircolors -b src/dir_colors > c.zsh" \
             atpull'%atclone' \
@@ -115,6 +116,8 @@ zinit ice lucid wait'0' \
             src"bash/base16-${BASE16_THEME}.config" \
             pick"bash/base16-${BASE16_THEME}.config" nocompile'!'
 zinit light 'nicodebo/base16-fzf'
+
+zinit light zdharma-continuum/fast-syntax-highlighting
 # }}}
 
 
@@ -126,7 +129,6 @@ zinit light sei40kr/zsh-fast-alias-tips
 zinit ice lucid wait"1" lucid atload"!_zsh_autosuggest_start"
 zinit load "zsh-users/zsh-autosuggestions"
 zinit ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
-zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-history-substring-search
   zmodload zsh/terminfo
   [ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
