@@ -72,9 +72,6 @@ zinit light romkatv/powerlevel10k
 zinit ice wait'0' lucid atload"unalias d"
 zinit snippet OMZ::plugins/fasd/fasd.plugin.zsh
 
-zinit ice pick'init.sh'
-zinit light "b4b4r07/enhancd"
-
 zinit ice wait'0' blockf lucid
 zinit light zsh-users/zsh-completions
 
@@ -91,14 +88,10 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 
 zinit ice wait"0" lucid if'[[ ! $TERM =~ ".*kitty" ]]'; zinit light marzocchi/zsh-notify
 
-# iTerm2 integration {{{
-# zinit ice silent if"[[ $+ITERM_PROFILE ]]"; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
-
 zinit ice depth"1" \
   pick"shell_integration/zsh" \
   sbin"utilities/*" if"[[ $+ITERM_PROFILE ]]"
-zinit light gnachman/iTerm2-shell-integration
-# }}}
+zinit load gnachman/iTerm2-shell-integration
 
 # Programs {{{
 zinit ice wait lucid from"gh-r" \
@@ -129,19 +122,16 @@ zinit ice lucid wait'0' \
             src"bash/base16-${BASE16_THEME}.config" \
             pick"bash/base16-${BASE16_THEME}.config" nocompile'!'
 zinit light 'nicodebo/base16-fzf'
-
-zinit light zdharma-continuum/fast-syntax-highlighting
 # }}}
 
 zinit ice from'gh-r' sbin'def-matcher'
 zinit light sei40kr/fast-alias-tips-bin
 zinit light sei40kr/zsh-fast-alias-tips
 
-# zsh-autosuggestions
-zinit ice lucid wait"1" lucid atload"!_zsh_autosuggest_start"
-zinit load "zsh-users/zsh-autosuggestions"
-zinit ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
-zinit light zdharma-continuum/fast-syntax-highlighting
+zinit wait lucid for \
+  atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
+  atinit"zpcompinit;zpcdreplay" zdharma-continuum/fast-syntax-highlighting
+
 zinit light zsh-users/zsh-history-substring-search
   zmodload zsh/terminfo
   [ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
