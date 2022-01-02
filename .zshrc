@@ -18,6 +18,14 @@ fi
 
 source "${ZINIT_HOME}/repo/zinit.zsh"
 
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    NICHOLAS85/z-a-eval
+
 # Prezto {{{
 zinit snippet PZT::modules/environment/init.zsh
 zinit snippet PZT::modules/gnu-utility/init.zsh
@@ -50,11 +58,9 @@ zinit ice wait'1' as"completion" lucid
 zinit snippet https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/terraform/_terraform
 
 zinit light mafredri/zsh-async
-zinit ice depth'1'; zinit light denysdovhan/spaceship-prompt
-# zinit ice lucid from"gh-r" \
-#   as"command" pick"starship" \
-#   atload"!eval \$(starship init zsh)"
-# zinit light starship/starship
+
+zinit ice depth=1 atload'!source ~/.p10k.zsh'
+zinit light romkatv/powerlevel10k
 
 # Python {{{
 # zinit ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true" \
@@ -66,6 +72,9 @@ zinit ice depth'1'; zinit light denysdovhan/spaceship-prompt
 zinit ice wait'0' lucid atload"unalias d"
 zinit snippet OMZ::plugins/fasd/fasd.plugin.zsh
 
+zinit ice pick'init.sh'
+zinit light "b4b4r07/enhancd"
+
 zinit ice wait'0' blockf lucid
 zinit light zsh-users/zsh-completions
 
@@ -75,31 +84,35 @@ zinit ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-bindin
   atpull"%atclone" multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions" \
   pick"/dev/null"
 zinit light junegunn/fzf
+
+zinit ice wait lucid blockf
 zinit light Aloxaf/fzf-tab
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 
 zinit ice wait"0" lucid if'[[ ! $TERM =~ ".*kitty" ]]'; zinit light marzocchi/zsh-notify
 
 # iTerm2 integration {{{
-zinit ice silent if"[[ $+ITERM_PROFILE ]]"; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
-zinit ice as"command" pick"bin/*" \
-  atclone'./_utils/download_files.sh' \
-  atpull'%atclone' if"[[ $+ITERM_PROFILE ]]"
-zinit light decayofmind/zsh-iterm2-utilities
-zinit snippet 'https://raw.githubusercontent.com/gnachman/iTerm2-shell-integration/main/shell_integration/zsh'
+# zinit ice silent if"[[ $+ITERM_PROFILE ]]"; zinit snippet OMZ::plugins/iterm2/iterm2.plugin.zsh
+
+zinit ice depth"1" \
+  pick"shell_integration/zsh" \
+  sbin"utilities/*" if"[[ $+ITERM_PROFILE ]]"
+zinit light gnachman/iTerm2-shell-integration
 # }}}
 
 # Programs {{{
-zinit wait lucid as"program" from"gh-r" \
-      mv"direnv* -> direnv" \
-      atclone"./direnv hook zsh > zhook.zsh" \
-      atpull"%atclone" pick"direnv" src"zhook.zsh" \
-      light-mode for direnv/direnv
+zinit ice wait lucid from"gh-r" \
+    mv="direnv* -> direnv" sbin="direnv" \
+    atclone="./direnv hook zsh > zhook.zsh" \
+    atpull="%atclone" \
+    src="zhook.zsh" nocompile="!"
+zinit load direnv/direnv
 
-zinit ice from"gh-r" as"program" bpick"krew.tar.gz" \
-            mv"krew-darwin_amd64 -> krew" pick"krew" \
-            atclone"rm -f krew-* && ./krew install krew && ./krew update" \
-            atpull"%atclone" has"kubectl"
-zinit light kubernetes-sigs/krew
+zinit ice wait lucid from"gh-r" bpick"krew.tar.gz" \
+            mv"krew-darwin_amd64 -> krew" \
+            sbin"krew" has"kubectl"
+zinit load kubernetes-sigs/krew
+
 zinit ice wait'0' lucid; zinit snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
 # }}}
 
@@ -120,8 +133,7 @@ zinit light 'nicodebo/base16-fzf'
 zinit light zdharma-continuum/fast-syntax-highlighting
 # }}}
 
-
-zinit ice from'gh-r' as'program'
+zinit ice from'gh-r' sbin'def-matcher'
 zinit light sei40kr/fast-alias-tips-bin
 zinit light sei40kr/zsh-fast-alias-tips
 
@@ -129,6 +141,7 @@ zinit light sei40kr/zsh-fast-alias-tips
 zinit ice lucid wait"1" lucid atload"!_zsh_autosuggest_start"
 zinit load "zsh-users/zsh-autosuggestions"
 zinit ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-history-substring-search
   zmodload zsh/terminfo
   [ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
@@ -161,43 +174,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d ."
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-# }}}
-
-# Spaceship prompt {{{
-SPACESHIP_PROMPT_SEPARATE_LINE=false
-SPACESHIP_PROMPT_ORDER=(
-  dir
-  host
-  vi_mode
-  jobs
-  char
-)
-SPACESHIP_RPROMPT_ORDER=(
-  terraform
-  kubectl_context
-  aws
-  venv
-  git
-  exit_code
-)
-SPACESHIP_PROMPT_ADD_NEWLINE=false
-SPACESHIP_CHAR_SYMBOL='❯ '
-SPACESHIP_VI_MODE_SUFFIX='❯'
-SPACESHIP_VI_MODE_INSERT='❯'
-SPACESHIP_VI_MODE_NORMAL='❮'
-SPACESHIP_VI_MODE_COLOR='magenta'
-SPACESHIP_AWS_SHOW=false
-SPACESHIP_AWS_SYMBOL='☁  '
-SPACESHIP_DIR_TRUNC_REPO=false
-SPACESHIP_KUBECONTEXT_SHOW=false
-SPACESHIP_KUBECONTEXT_SYMBOL='⎈  '
-SPACESHIP_PYENV_SHOW=false
-SPACESHIP_EXIT_CODE_SHOW=true
-SPACESHIP_EXIT_CODE_SYMBOL='✘ '
-SPACESHIP_GIT_STATUS_PREFIX=' '
-SPACESHIP_GIT_STATUS_SUFFIX=''
-SPACESHIP_GIT_STATUS_COLOR='magenta'
-SPACESHIP_TERRAFORM_SYMBOL=' '
 # }}}
 
 export HOMEBREW_NO_ANALYTICS=1

@@ -24,7 +24,7 @@ return require("packer").startup({
 
 		-- improve startup time
 		use("antoinemadec/FixCursorHold.nvim")
-		use({ "lewis6991/impatient.nvim", rocks = "mpack" })
+		use({ "lewis6991/impatient.nvim", rocks = "mpack" }) -- see: https://github.com/libmpack/libmpack-lua/pull/28
 		use({
 			"nathom/filetype.nvim",
 			config = function()
@@ -344,6 +344,7 @@ return require("packer").startup({
 			config = function()
 				require("trouble").setup()
 			end,
+			cmd = { "TroubleToggle" },
 		})
 		if packer_bootstrap then
 			require("packer").sync()

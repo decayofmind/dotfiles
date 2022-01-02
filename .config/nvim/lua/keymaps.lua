@@ -32,6 +32,7 @@ map("", "<leader>M", "<cmd>MarkedOpen<cr>", { noremap = true, silent = true })
 map("n", "<leader>U", "<cmd>UndotreeToggle<cr>", { noremap = true, silent = true })
 map("n", "<leader>S", "<cmd>SymbolsOutline<cr>", { noremap = true, silent = true })
 
+-- Git
 map("n", "<leader>Gbt", "<cmd>Gitsigns toggle_current_line_blame<cr>", { noremap = true, silent = true })
 map("n", "<leader>Gg", "<cmd>Git<cr>", { noremap = true, silent = true })
 map("n", "<leader>Gc", "<cmd>Git commit<cr>", { noremap = true, silent = true })

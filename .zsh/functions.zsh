@@ -46,3 +46,9 @@ pyenv-brew-relink() {
 }
 
 direnv() { asdf exec direnv "$@"; }
+
+ecd() {
+  fasdlist=$( fasd -d -l -r $1 | \
+    fzf --query="$1 " --select-1 --exit-0 --height=25% --reverse --tac --no-sort --cycle) &&
+    cd "$fasdlist"
+}
