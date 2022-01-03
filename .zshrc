@@ -29,8 +29,10 @@ zinit light-mode for \
 # Prezto {{{
 zinit snippet PZT::modules/environment/init.zsh
 zinit snippet PZT::modules/gnu-utility/init.zsh
-# zstyle ':prezto:module:utility' safe-ops 'no'
-zinit snippet PZT::modules/utility/init.zsh
+
+zstyle ':prezto:module:utility' safe-ops 'no'
+zinit snippet PZTM::utility
+
 zinit ice wait'1' lucid; zinit snippet PZT::modules/directory/init.zsh
 zinit snippet PZT::modules/history/init.zsh
 zinit snippet PZT::modules/completion/init.zsh
@@ -41,7 +43,7 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:editor' ps-context 'yes'
 zstyle ':prezto:module:prompt' managed 'yes'
-zinit snippet PZT::modules/editor/init.zsh
+zinit snippet PZTM::editor
 
 # zinit load "jreese/zsh-titles"
 zstyle ':prezto:module:terminal' auto-title 'yes'

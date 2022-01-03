@@ -65,6 +65,11 @@ augroup vimrc
     autocmd BufNewFile,BufRead */tasks/*.yml setfiletype yaml.ansible
     autocmd BufNewFile,BufRead */handlers/*.yml setfiletype yaml.ansible
     autocmd BufNewFile,BufRead */default/*.yml setfiletype yaml.ansible
+    autocmd BufNewFile,BufRead */templates/*.tpl setlocal modelines=0
+    " https://github.com/towolf/vim-helm
+    autocmd BufRead,BufNewFile */templates/*.yaml,*/templates/*.tpl,*.gotmpl,helmfile.yaml set ft=helm
+    autocmd FileType helm setlocal commentstring={{/*\ %s\ */}}
+
     autocmd FileType gitcommit setlocal spell spelllang=en_us
     autocmd FileType sh setlocal et ts=4 sw=4
     autocmd FileType qf setlocal nobuflisted

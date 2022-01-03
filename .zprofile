@@ -42,6 +42,7 @@ fi
 
 # XDG
 export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
 
 # set base16 theme
 export BASE16_THEME='black-metal-khold'
