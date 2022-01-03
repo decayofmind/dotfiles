@@ -49,7 +49,7 @@ zinit snippet PZT::modules/terminal/init.zsh
 # }}}
 
 zinit ice lucid atload"unalias gcd"
-zinit snippet OMZ::plugins/git/git.plugin.zsh
+zinit snippet OMZP::git
 
 zinit ice wait'0' lucid; zinit light "akarzim/zsh-docker-aliases"
 zinit ice wait'1' as"completion" lucid
@@ -70,7 +70,7 @@ zinit light romkatv/powerlevel10k
 # }}}
 
 zinit ice wait'0' lucid atload"unalias d"
-zinit snippet OMZ::plugins/fasd/fasd.plugin.zsh
+zinit snippet OMZP::fasd
 
 zinit ice wait'0' blockf lucid
 zinit light zsh-users/zsh-completions
@@ -85,6 +85,7 @@ zinit light junegunn/fzf
 zinit ice wait lucid blockf
 zinit light Aloxaf/fzf-tab
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+zstyle ':fzf-tab:*' switch-group ',' '.'
 
 zinit ice wait"0" lucid if'[[ ! $TERM =~ ".*kitty" ]]'; zinit light marzocchi/zsh-notify
 
@@ -98,7 +99,7 @@ zinit ice wait lucid from"gh-r" \
     mv="direnv* -> direnv" sbin="direnv" \
     atclone="./direnv hook zsh > zhook.zsh" \
     atpull="%atclone" \
-    src="zhook.zsh" nocompile="!"
+    src="zhook.zsh" nocompile'!'
 zinit load direnv/direnv
 
 zinit ice wait lucid from"gh-r" bpick"krew.tar.gz" \
