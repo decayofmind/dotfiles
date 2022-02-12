@@ -18,18 +18,28 @@ require("bufferline").setup({
 	highlights = { buffer_selected = { gui = "bold" } },
 })
 
-require("telescope").load_extension("fzf")
-require("telescope").load_extension("projects")
-require("telescope").load_extension("file_browser")
+local telescope_extensions = {
+	"fzf",
+	"projects",
+	"file_browser",
+}
+
+for _, ext in pairs(telescope_extensions) do
+	require("telescope").load_extension(ext)
+end
+
+local trouble = require("trouble.providers.telescope")
 
 require("telescope").setup({
 	defaults = {
 		prompt_prefix = " ",
+		dynamic_preview_title = true,
 		mappings = {
-			i = { ["<esc>"] = "close" },
+			i = { ["<esc>"] = "close", ["<c-t>"] = trouble.open_with_trouble },
+			n = { ["<c-t>"] = trouble.open_with_trouble },
 		},
 		file_ignore_patterns = {
-			".git/*",
+			"%.git/*",
 			"node%_modules/*",
 		},
 		vimgrep_arguments = {
@@ -43,6 +53,14 @@ require("telescope").setup({
 			"--hidden",
 		},
 		winblend = 15,
+	},
+	extensions = {
+		fzf = {
+			fuzzy = true,
+			override_generic_sorter = true,
+			override_file_sorter = true,
+			case_mode = "smart_case",
+		},
 	},
 })
 

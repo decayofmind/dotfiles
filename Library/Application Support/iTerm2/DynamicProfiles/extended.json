@@ -26,6 +26,8 @@
       "Transparency": 0.2,
       "Unlimited Scrollback": true,
       "Normal Font": "MonacoNerdFontComplete- 12",
+      "Option Key Sends": 2,
+      "Right Option Key Sends": 0,
       "Semantic History": {
         "editor": "com.github.atom",
         "text": "echo vim \\1 +\\2",

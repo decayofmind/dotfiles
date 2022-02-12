@@ -153,7 +153,7 @@ return require("packer").startup({
 
 		use({
 			"kyazdani42/nvim-tree.lua",
-			cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile" },
+			-- cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile" },
 			requires = {
 				"kyazdani42/nvim-web-devicons",
 			},
@@ -220,6 +220,7 @@ return require("packer").startup({
 				"nvim-lua/popup.nvim",
 				{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
 				"nvim-telescope/telescope-file-browser.nvim",
+				"nvim-telescope/telescope-symbols.nvim",
 			},
 		})
 
@@ -359,7 +360,7 @@ return require("packer").startup({
 			config = function()
 				require("trouble").setup()
 			end,
-			cmd = { "TroubleToggle" },
+			-- cmd = { "TroubleToggle" },
 		})
 		if packer_bootstrap then
 			require("packer").sync()
