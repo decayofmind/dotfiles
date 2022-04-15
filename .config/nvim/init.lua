@@ -50,7 +50,7 @@ require("keymaps")
 require("impatient").enable_profile()
 require("packer_compiled")
 require("plugins")
-require("config")
+-- require("config")
 
 vim.api.nvim_exec(
 	[[
