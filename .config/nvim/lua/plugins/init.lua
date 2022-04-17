@@ -474,6 +474,23 @@ return packer.startup({
       opt = true,
     })
 
+    use({
+      "CRAG666/code_runner.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require("code_runner").setup({
+          term = {
+            size = 15,
+            mode = "startinsert",
+          },
+          filetype = {
+            go = "cd $dir && go run $fileName",
+            python = "python3 $fileName",
+          },
+        })
+      end,
+    })
+
     use("itspriddle/vim-marked")
 
     use({

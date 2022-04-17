@@ -59,3 +59,5 @@ map("n", "<C-l>", "<C-w>l", { noremap = true })
 
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { noremap = true })
 map("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><Esc>", { noremap = true, silent = true })
+
+map("n", "<leader>cr", ":RunCode<CR>", { noremap = true, silent = true })
