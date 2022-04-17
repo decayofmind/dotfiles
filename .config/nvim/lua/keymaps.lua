@@ -1,27 +1,27 @@
 vim.g.mapleader = " "
 
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 
 map("n", "<leader>T", ":Telescope ", { noremap = true })
 map(
-	"n",
-	"<leader><leader>",
-	"<cmd>lua require('telescope.builtin').find_files()<cr>",
-	{ noremap = true, silent = true }
+  "n",
+  "<leader><leader>",
+  "<cmd>lua require('telescope.builtin').find_files()<cr>",
+  { noremap = true, silent = true }
 )
 map("n", "<leader><Enter>", "<cmd>lua require('telescope.builtin').buffers()<cr>", { noremap = true, silent = true })
 map(
-	"n",
-	"K",
-	"<cmd>lua require('telescope.builtin').grep_string({layout_strategy='vertical', search = vim.fn.expand('<cword>')})<cr>",
-	{ noremap = true, silent = true }
+  "n",
+  "K",
+  "<cmd>lua require('telescope.builtin').grep_string({layout_strategy='vertical', search = vim.fn.expand('<cword>')})<cr>",
+  { noremap = true, silent = true }
 )
 
 map(
-	"n",
-	"<Leader>tf",
-	":lua require('toggleterm.terminal').Terminal:new { direction = 'float', count = 1 }:toggle()<CR>",
-	{ noremap = true, silent = true }
+  "n",
+  "<Leader>tf",
+  ":lua require('toggleterm.terminal').Terminal:new { direction = 'float', count = 1 }:toggle()<CR>",
+  { noremap = true, silent = true }
 )
 
 map("n", "<leader>bj", "<cmd>BufferLinePick<cr>", { noremap = true, silent = true })
