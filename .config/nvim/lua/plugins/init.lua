@@ -106,27 +106,36 @@ return packer.startup({
 
     -- Colorschemes
     use({
-      "NTBBloodbath/doom-one.nvim",
+      "marko-cerovac/material.nvim",
       config = function()
-        -- require("doom-one").setup({
-        --  cursor_coloring = false,
-        --  terminal_colors = false,
-        --  italic_comments = true,
-        --  enable_treesitter = true,
-        --  transparent_background = true,
-        --  pumblend = {
-        --    enable = true,
-        --    transparency_amount = 20,
-        --  },
-        --  plugins_integrations = {
-        --    bufferline = true,
-        --    telescope = true,
-        --  },
-        -- })
+        vim.g.material_style = "darker"
+      end,
+    })
+
+    use({
+      "NTBBloodbath/doom-one.nvim",
+      disable = true,
+      config = function()
+        require("doom-one").setup({
+          cursor_coloring = false,
+          terminal_colors = false,
+          italic_comments = true,
+          enable_treesitter = true,
+          transparent_background = true,
+          pumblend = {
+            enable = true,
+            transparency_amount = 20,
+          },
+          plugins_integrations = {
+            bufferline = true,
+            telescope = true,
+          },
+        })
       end,
     })
     use({
       "rebelot/kanagawa.nvim",
+      disable = true,
       config = function()
         require("kanagawa").setup({
           transparent = true,
