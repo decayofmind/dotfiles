@@ -348,10 +348,16 @@ return packer.startup({
     use({
       "abecodes/tabout.nvim",
       config = function()
-        require("tabout").setup({})
+        require("tabout").setup({
+          tabkey = "<Tab>",
+          act_as_tab = true,
+          act_as_shift_tab = true,
+          enable_backwards = true,
+          completion = true,
+          ignore_beginning = true,
+        })
       end,
       wants = { "nvim-treesitter" },
-      after = { "nvim-cmp" },
     })
 
     use({
@@ -480,7 +486,6 @@ return packer.startup({
     use({
       "mrjones2014/dash.nvim",
       run = "make install",
-      opt = true,
     })
 
     use({
