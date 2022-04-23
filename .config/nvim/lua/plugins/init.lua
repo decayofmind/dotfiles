@@ -110,6 +110,7 @@ return packer.startup({
         vim.cmd([[
           silent call cyclist#set_eol("default", "")
           silent call cyclist#set_tab("default", "│ ")
+          silent call cyclist#set_trail("default", "·")
           silent call cyclist#add_listchar_option_set("clean", { 'eol': '', 'tab': '  ' }, v:true)
           silent call cyclist#add_listchar_option_set("debug", { 'space': '·' }, v:true)
         ]])
