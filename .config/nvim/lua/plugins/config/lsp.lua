@@ -61,6 +61,11 @@ function M.config()
   lspconfig.jsonls.setup({
     capabilities = capabilities,
     on_attach = on_attach,
+    settings = {
+      json = {
+        schemas = require("schemastore").json.schemas(),
+      },
+    },
   })
 
   lspconfig.pyright.setup({
@@ -143,7 +148,7 @@ function M.config()
         schemas = {
           ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
           ["http://json.schemastore.org/helmfile"] = "helmfile.{yml,yaml}",
-          ["http://json.schemastore.org/gitlab-ci"] = "/*lab-ci.{yml,yaml}",
+          ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = "*gitlab-ci.{yml,yaml}",
           ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
           -- ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.4-standalone/all.json"] = "kubectl-edit*.yaml",
           kubernetes = "kubectl-edit*.yaml",

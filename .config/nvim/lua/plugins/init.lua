@@ -35,7 +35,7 @@ return packer.startup({
 
     -- improve startup time
     use("antoinemadec/FixCursorHold.nvim")
-    use({ "lewis6991/impatient.nvim", rocks = "mpack" }) -- see: https://github.com/libmpack/libmpack-lua/pull/28
+    use({ "lewis6991/impatient.nvim" })
     use({
       "nathom/filetype.nvim",
       config = function()
@@ -175,6 +175,7 @@ return packer.startup({
 
     use({
       "nvim-lualine/lualine.nvim",
+      event = "VimEnter",
       requires = { "kyazdani42/nvim-web-devicons", opt = true },
       config = function()
         require("lualine").setup({
@@ -199,6 +200,8 @@ return packer.startup({
 
     use({
       "akinsho/bufferline.nvim",
+      requires = "kyazdani42/nvim-web-devicons",
+      event = "BufReadPre",
       config = function()
         require("bufferline").setup({
           options = {
@@ -208,7 +211,6 @@ return packer.startup({
           highlights = { buffer_selected = { gui = "bold" } },
         })
       end,
-      requires = "kyazdani42/nvim-web-devicons",
     })
 
     use({
@@ -225,9 +227,6 @@ return packer.startup({
       requires = {
         "kyazdani42/nvim-web-devicons",
       },
-      config = function()
-        require("nvim-tree").setup({})
-      end,
     })
 
     use({
@@ -298,6 +297,11 @@ return packer.startup({
     })
 
     use({
+      "theprimeagen/harpoon",
+      requires = "nvim-lua/plenary.nvim",
+    })
+
+    use({
       "mfussenegger/nvim-dap",
       opt = true,
       event = "VimEnter",
@@ -322,8 +326,8 @@ return packer.startup({
       "neovim/nvim-lspconfig",
       opt = true,
       event = "BufReadPre",
-      wants = { "null-ls.nvim" },
-      requires = { "jose-elias-alvarez/null-ls.nvim" },
+      wants = { "null-ls.nvim", "schemastore.nvim" },
+      requires = { "jose-elias-alvarez/null-ls.nvim", "b0o/schemastore.nvim" },
       config = function()
         require("plugins.config.lsp").config()
       end,
@@ -332,7 +336,7 @@ return packer.startup({
     use({
       "hrsh7th/nvim-cmp",
       -- opt = true,
-      event = "InsertEnter",
+      -- event = "InsertEnter",
       wants = { "LuaSnip", "lspkind-nvim" },
       config = function()
         require("plugins.config.cmp").config()
@@ -360,6 +364,9 @@ return packer.startup({
 
     use({
       "abecodes/tabout.nvim",
+      opt = true,
+      event = "InsertEnter",
+      after = "nvim-cmp",
       config = function()
         require("tabout").setup({
           tabkey = "<Tab>",
@@ -367,6 +374,15 @@ return packer.startup({
           act_as_shift_tab = true,
           enable_backwards = true,
           completion = true,
+          tabouts = {
+            { open = "'", close = "'" },
+            { open = '"', close = '"' },
+            { open = "`", close = "`" },
+            { open = "(", close = ")" },
+            { open = "[", close = "]" },
+            { open = "{", close = "}" },
+            { open = "<", close = ">" },
+          },
           ignore_beginning = true,
         })
       end,

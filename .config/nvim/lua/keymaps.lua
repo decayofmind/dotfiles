@@ -28,6 +28,8 @@ map("n", "<leader>bj", "<cmd>BufferLinePick<cr>", { noremap = true, silent = tru
 map("n", "<leader>bf", "<cmd>Telescope buffers<cr>", { noremap = true, silent = true })
 map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", { noremap = true, silent = true })
 
+map("n", "<leader>h", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", { noremap = true, silent = true })
+
 map("", "<leader>M", "<cmd>MarkedOpen<cr>", { noremap = true, silent = true })
 map("n", "<leader>U", "<cmd>UndotreeToggle<cr>", { noremap = true, silent = true })
 map("n", "<leader>S", "<cmd>SymbolsOutline<cr>", { noremap = true, silent = true })

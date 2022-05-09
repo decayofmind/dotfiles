@@ -52,10 +52,20 @@ vim.g.vista_disable_statusline = 1
 vim.g.vista_default_executive = "nvim_lsp"
 vim.g.vista_echo_cursor_strategy = "floating_win"
 
-require("keymaps")
+_G.__luacache_config = {
+  chunks = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/luacache_chunks',
+  },
+  modpaths = {
+    enable = true,
+    path = vim.fn.stdpath('cache')..'/luacache_modpaths',
+  }
+}
 require("impatient").enable_profile()
 require("packer_compiled")
 require("plugins")
+require("keymaps")
 
 augroup("VimInit", { clear = true })
 autocmd(

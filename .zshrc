@@ -61,6 +61,9 @@ zinit snippet https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/terr
 
 zinit light mafredri/zsh-async
 
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
+
 zinit ice depth=1 atload'!source ~/.p10k.zsh'
 zinit light romkatv/powerlevel10k
 
@@ -109,7 +112,7 @@ zinit ice wait lucid from"gh-r" bpick"krew.tar.gz" \
             sbin"krew" has"kubectl"
 zinit load kubernetes-sigs/krew
 
-zinit ice wait'0' lucid; zinit snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
+zinit ice wait'0' lucid; zinit snippet OMZP::kubectl
 # }}}
 
 # Colors and highlight {{{
@@ -168,6 +171,11 @@ export FZF_ALT_C_COMMAND="fd -t d ."
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 # }}}
+
+export ZVM_KEYTIMEOUT=0.1
+export ZVM_CURSOR_STYLE_ENABLED=false
+export ZVM_VI_HIGHLIGHT_BACKGROUND=gray 
+export ZVM_VI_HIGHLIGHT_FOREGROUND=gray
 
 export HOMEBREW_NO_ANALYTICS=1
 export KEYTIMEOUT=1
