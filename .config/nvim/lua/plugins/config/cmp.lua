@@ -1,16 +1,24 @@
 local M = {}
 
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+    return false
+  end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 function M.config()
   local cmp_autopairs = require("nvim-autopairs.completion.cmp")
   local cmp = require("cmp")
   local lspkind = require("lspkind")
 
-  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
   cmp.setup({
-    view = {
-      entries = "native",
-    },
+    -- view = {
+    --   entries = "native",
+    -- },
     formatting = {
       format = lspkind.cmp_format({
         with_text = false,
@@ -35,7 +43,7 @@ function M.config()
       end,
     },
     window = {
-      completion = cmp.config.window.bordered(),
+      -- completion = cmp.config.window.bordered(),
       documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
@@ -59,6 +67,8 @@ function M.config()
           cmp.select_next_item()
         elseif require("luasnip").expand_or_jumpable() then
           require("luasnip").expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
         else
           fallback()
         end
@@ -101,9 +111,26 @@ function M.config()
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline("/", {
-    sources = {
-      { name = "buffer" },
+    formatting = {
+      -- Only show the completion itself, no icon, no completion source
+      fields = { "abbr" },
     },
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = "nvim_lsp_document_symbol" },
+      { name = "buffer" },
+    }),
+  })
+
+  cmp.setup.cmdline(":", {
+    formatting = {
+      fields = { "abbr" },
+    },
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = "path" },
+      { name = "cmdline" },
+    }),
   })
 end
 

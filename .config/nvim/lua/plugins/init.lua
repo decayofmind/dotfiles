@@ -1,7 +1,8 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-vim.cmd("packadd packer.nvim")
+-- excplicit call due to impatient.nvim
+pcall(require, "packer_compiled")
 
 local present, packer = pcall(require, "packer")
 
@@ -10,12 +11,12 @@ if not present then
 
   print("Cloning packer..")
   vim.fn.delete(packer_path, "rf")
-  vim.fn.system({
+  PACKER_BOOTSTRAP = vim.fn.system({
     "git",
     "clone",
     "https://github.com/wbthomason/packer.nvim",
     "--depth",
-    "20",
+    "10",
     packer_path,
   })
 
@@ -26,10 +27,21 @@ end
 augroup("PackPacker", { clear = true })
 autocmd(
   "BufWritePost",
-  { pattern = "**/plugins/init.lua", command = "source <afile> | PackerCompile", group = "PackPacker" }
+  { pattern = "**/plugins/init.lua", command = "source <afile> | PackerSync", group = "PackPacker" }
 )
 
 return packer.startup({
+  config = {
+    compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
+    display = {
+      open_fn = require("packer.util").float,
+    },
+    max_jobs = 20,
+    profile = {
+      enable = true,
+      threshold = 0,
+    },
+  },
   function(use)
     use({ "wbthomason/packer.nvim", opt = true })
 
@@ -101,6 +113,14 @@ return packer.startup({
             },
           },
         })
+      end,
+    })
+
+    -- instead of nvim-telescope/telescope-symbols.nvim
+    use({
+      "ziontee113/icon-picker.nvim",
+      config = function()
+        require("icon-picker")
       end,
     })
 
@@ -292,7 +312,6 @@ return packer.startup({
         "nvim-telescope/telescope-dap.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
         "nvim-telescope/telescope-file-browser.nvim",
-        "nvim-telescope/telescope-symbols.nvim",
       },
     })
 
@@ -552,16 +571,8 @@ return packer.startup({
       end,
       -- cmd = { "TroubleToggle" },
     })
+    if PACKER_BOOTSTRAP then
+      require("packer").sync()
+    end
   end,
-  config = {
-    compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
-    display = {
-      open_fn = require("packer.util").float,
-    },
-    max_jobs = 20,
-    profile = {
-      enable = true,
-      threshold = 0,
-    },
-  },
 })
