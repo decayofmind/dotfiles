@@ -24,6 +24,11 @@ function M.config()
     if client.resolved_capabilities.document_formatting then
       autocmd("BufWritePre", { pattern = "<buffer>", command = "lua vim.lsp.buf.formatting_sync()" })
     end
+
+    if client.server_capabilities.documentSymbolProvider then
+      local navic = require("nvim-navic")
+      navic.attach(client, bufnr)
+    end
   end
 
   lspconfig.terraformls.setup({
@@ -161,6 +166,7 @@ function M.config()
   null_ls.setup({
     on_attach = on_attach,
     sources = {
+      null_ls.builtins.code_actions.gitsigns,
       null_ls.builtins.formatting.prettier.with({
         disabled_filetypes = { "json" },
       }),

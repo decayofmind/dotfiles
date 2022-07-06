@@ -2,14 +2,6 @@ vim.g.mapleader = " "
 
 local map = vim.keymap.set
 
-map("n", "<leader>T", ":Telescope ", { noremap = true })
-map(
-  "n",
-  "<leader><leader>",
-  "<cmd>lua require('telescope.builtin').find_files()<cr>",
-  { noremap = true, silent = true }
-)
-map("n", "<leader><Enter>", "<cmd>lua require('telescope.builtin').buffers()<cr>", { noremap = true, silent = true })
 map(
   "n",
   "K",
@@ -28,17 +20,8 @@ map("n", "<leader>bj", "<cmd>BufferLinePick<cr>", { noremap = true, silent = tru
 map("n", "<leader>bf", "<cmd>Telescope buffers<cr>", { noremap = true, silent = true })
 map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", { noremap = true, silent = true })
 
-map("n", "<leader>h", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", { noremap = true, silent = true })
-
 map("", "<leader>M", "<cmd>MarkedOpen<cr>", { noremap = true, silent = true })
-map("n", "<leader>U", "<cmd>UndotreeToggle<cr>", { noremap = true, silent = true })
 map("n", "<leader>S", "<cmd>SymbolsOutline<cr>", { noremap = true, silent = true })
-
--- Git
-map("n", "<leader>Gbt", "<cmd>Gitsigns toggle_current_line_blame<cr>", { noremap = true, silent = true })
-map("n", "<leader>Gg", "<cmd>Git<cr>", { noremap = true, silent = true })
-map("n", "<leader>Gc", "<cmd>Git commit<cr>", { noremap = true, silent = true })
-map("n", "<leader>GP", "<cmd>Git push<cr>", { noremap = true, silent = true })
 
 -- No arrows in normal mode!
 map("n", "<Up>", "<NOP>", { noremap = true })

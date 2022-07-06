@@ -1,14 +1,14 @@
 local M = {}
 
-local has_words_before = function()
-  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
-    return false
-  end
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
 function M.config()
+  local has_words_before = function()
+    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+      return false
+    end
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  end
+
   local cmp_autopairs = require("nvim-autopairs.completion.cmp")
   local cmp = require("cmp")
   local lspkind = require("lspkind")
@@ -16,9 +16,6 @@ function M.config()
   cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
   cmp.setup({
-    -- view = {
-    --   entries = "native",
-    -- },
     formatting = {
       format = lspkind.cmp_format({
         with_text = false,
@@ -86,6 +83,7 @@ function M.config()
     sources = cmp.config.sources({
       { name = "treesitter", keyword_length = 2 },
       { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
+      { name = "nvim_lsp_signature_help" },
       { name = "nvim_lua", priority_weight = 90 },
       { name = "copilot", priority_weight = 80 },
       { name = "luasnip", priority_weight = 60 },

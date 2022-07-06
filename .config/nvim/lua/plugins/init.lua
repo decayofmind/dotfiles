@@ -16,12 +16,11 @@ if not present then
     "clone",
     "https://github.com/wbthomason/packer.nvim",
     "--depth",
-    "10",
+    "1",
     packer_path,
   })
-
-  vim.cmd("packadd packer.nvim")
-  present, packer = pcall(require, "packer")
+  vim.cmd([[packadd packer.nvim]])
+  packer = require("packer")
 end
 
 augroup("PackPacker", { clear = true })
@@ -44,6 +43,8 @@ return packer.startup({
   },
   function(use)
     use({ "wbthomason/packer.nvim", opt = true })
+
+    use({ "nvim-lua/plenary.nvim", module = "plenary" })
 
     -- improve startup time
     use("antoinemadec/FixCursorHold.nvim")
@@ -104,21 +105,14 @@ return packer.startup({
     use({
       "folke/which-key.nvim",
       config = function()
-        require("which-key").setup({
-          plugins = {
-            marks = false,
-            registers = false,
-            spelling = {
-              enabled = true,
-            },
-          },
-        })
+        require("plugins.config.which-key").config()
       end,
     })
 
     -- instead of nvim-telescope/telescope-symbols.nvim
     use({
       "ziontee113/icon-picker.nvim",
+      cmd = { "PickEverything" },
       config = function()
         require("icon-picker")
       end,
@@ -145,6 +139,9 @@ return packer.startup({
       end,
     })
 
+    -- requires nvim 0.8+
+    -- use("kaiuri/nvim-mariana")
+
     use({
       "NTBBloodbath/doom-one.nvim",
       disable = true,
@@ -163,15 +160,6 @@ return packer.startup({
             bufferline = true,
             telescope = true,
           },
-        })
-      end,
-    })
-    use({
-      "rebelot/kanagawa.nvim",
-      disable = true,
-      config = function()
-        require("kanagawa").setup({
-          transparent = true,
         })
       end,
     })
@@ -198,9 +186,9 @@ return packer.startup({
       event = "VimEnter",
       requires = { "kyazdani42/nvim-web-devicons", opt = true },
       config = function()
+        local navic = require("nvim-navic")
         require("lualine").setup({
           extensions = {
-            "fugitive",
             "nvim-tree",
             "quickfix",
             "symbols-outline",
@@ -212,7 +200,7 @@ return packer.startup({
           },
           sections = {
             lualine_a = { { "filename", path = 1 } },
-            lualine_c = {},
+            lualine_c = { { navic.get_location, cond = navic.is_available } },
           },
         })
       end,
@@ -243,10 +231,21 @@ return packer.startup({
 
     use({
       "kyazdani42/nvim-tree.lua",
-      -- cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile" },
+      opt = true,
+      cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile" },
       requires = {
         "kyazdani42/nvim-web-devicons",
       },
+      config = function()
+        require("nvim-tree").setup({
+          respect_buf_cwd = true,
+          sync_root_with_cwd = true,
+          update_focused_file = {
+            enable = true,
+            update_root = true,
+          },
+        })
+      end,
     })
 
     use({
@@ -270,6 +269,10 @@ return packer.startup({
 
     use({
       "windwp/nvim-autopairs",
+      opt = true,
+      event = "InsertEnter",
+      wants = "nvim-treesitter",
+      module = { "nvim-autopairs.completion.cmp", "nvim-autopairs" },
       config = function()
         require("nvim-autopairs").setup({
           check_ts = true,
@@ -283,29 +286,33 @@ return packer.startup({
         require("surround").setup({ mappings_style = "sandwich" })
       end,
     })
-    -- use("tpope/vim-surround")
 
     use("tpope/vim-endwise")
-    use("tpope/vim-sleuth")
 
     use({
-      "mbbill/undotree",
-      cmd = { "UndotreeShow", "UndotreeToggle", "UndotreeHide", "UndotreeFocus" },
-    })
-
-    use({
-      "ibhagwan/fzf-lua",
-      requires = {
-        "vijaymarupudi/nvim-fzf",
-        "kyazdani42/nvim-web-devicons",
-      },
+      "nmac427/guess-indent.nvim",
+      config = function()
+        require("guess-indent").setup({})
+      end,
     })
 
     use({
       "nvim-telescope/telescope.nvim",
+      opt = true,
+      cmd = { "Telescope" },
+      module = { "telescope", "telescope.builtin" },
       config = function()
         require("plugins.config.telescope").config()
       end,
+      wants = {
+        "plenary.nvim",
+        "popup.nvim",
+        "telescope-fzf-native.nvim",
+        "telescope-file-browser.nvim",
+        "project.nvim",
+        "trouble.nvim",
+        "telescope-dap.nvim",
+      },
       requires = {
         "nvim-lua/plenary.nvim",
         "nvim-lua/popup.nvim",
@@ -317,13 +324,22 @@ return packer.startup({
 
     use({
       "theprimeagen/harpoon",
-      requires = "nvim-lua/plenary.nvim",
+      -- requires = "nvim-lua/plenary.nvim",
+      wants = { "telescope.nvim" },
+      config = function()
+        require("harpoon").setup({
+          global_settings = {
+            save_on_toggle = true,
+            enter_on_sendcmd = true,
+          },
+        })
+      end,
     })
 
     use({
       "mfussenegger/nvim-dap",
       opt = true,
-      event = "VimEnter",
+      module = { "dap" },
       wants = { "nvim-dap-virtual-text", "nvim-dap-go" },
       requires = {
         "theHamsta/nvim-dap-virtual-text",
@@ -335,6 +351,7 @@ return packer.startup({
             require("dapui").setup()
           end,
         },
+        "nvim-telescope/telescope-dap.nvim",
       },
       config = function()
         require("plugins.config.dap").config()
@@ -345,8 +362,24 @@ return packer.startup({
       "neovim/nvim-lspconfig",
       opt = true,
       event = "BufReadPre",
-      wants = { "null-ls.nvim", "schemastore.nvim" },
-      requires = { "jose-elias-alvarez/null-ls.nvim", "b0o/schemastore.nvim" },
+      wants = { "null-ls.nvim", "vim-illuminate", "schemastore.nvim", "cmp-nvim-lsp", "nvim-navic" },
+      requires = {
+        "jose-elias-alvarez/null-ls.nvim",
+        "RRethy/vim-illuminate",
+        {
+          "j-hui/fidget.nvim",
+          config = function()
+            require("fidget").setup({})
+          end,
+        },
+        "b0o/schemastore.nvim",
+        {
+          "SmiteshP/nvim-navic",
+          config = function()
+            require("nvim-navic").setup({})
+          end,
+        },
+      },
       config = function()
         require("plugins.config.lsp").config()
       end,
@@ -354,8 +387,6 @@ return packer.startup({
 
     use({
       "hrsh7th/nvim-cmp",
-      -- opt = true,
-      -- event = "InsertEnter",
       wants = { "LuaSnip", "lspkind-nvim" },
       config = function()
         require("plugins.config.cmp").config()
@@ -364,13 +395,13 @@ return packer.startup({
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-nvim-lsp-signature-help",
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-cmdline",
         "ray-x/cmp-treesitter",
         "lukas-reineke/cmp-rg",
         "saadparwaiz1/cmp_luasnip",
         "onsails/lspkind-nvim",
-        "rafamadriz/friendly-snippets",
         {
           "L3MON4D3/LuaSnip",
           wants = { "friendly-snippets" },
@@ -378,6 +409,8 @@ return packer.startup({
             require("luasnip/loaders/from_vscode").lazy_load()
           end,
         },
+        "rafamadriz/friendly-snippets",
+        "honza/vim-snippets",
       },
     })
 
@@ -446,6 +479,7 @@ return packer.startup({
 
     use({
       "numToStr/Comment.nvim",
+      event = { "CursorMoved" },
       config = function()
         require("Comment").setup({
           toggler = {
@@ -458,6 +492,8 @@ return packer.startup({
         })
       end,
     })
+
+    use("tpope/vim-repeat")
 
     use({
       "lukas-reineke/indent-blankline.nvim",
@@ -477,8 +513,38 @@ return packer.startup({
       end,
     })
 
+    use({
+      "kevinhwang91/nvim-ufo",
+      wants = "nvim-treesitter",
+      config = function()
+        require("ufo").setup({
+          provider_selector = function(bufnr, filetype)
+            return { "treesitter", "indent" }
+          end,
+          open_fold_hl_timeout = 0,
+          preview = {
+            win_config = {
+              border = "single",
+              winblend = 0,
+              winhighlight = "Normal:Normal",
+            },
+          },
+        })
+      end,
+      requires = "kevinhwang91/promise-async",
+    })
+
     -- Outline
-    use({ "liuchengxu/vista.vim", cmd = "Vista" })
+    use({
+      "liuchengxu/vista.vim",
+      cmd = "Vista",
+      config = function()
+        vim.g["vista#renderer#enable_icon"] = 1
+        vim.g.vista_disable_statusline = 1
+        vim.g.vista_default_executive = "nvim_lsp"
+        vim.g.vista_echo_cursor_strategy = "floating_win"
+      end,
+    })
     use({
       "simrat39/symbols-outline.nvim",
       config = function()
@@ -492,31 +558,27 @@ return packer.startup({
     -- Git
 
     -- It's too young to use it now
-    -- use({
-    --  "TimUntersberger/neogit",
-    --  config = function()
-    --    require("neogit").setup({
-    --      kind = "floating",
-    --      commit_popup = {
-    --        kind = "floating",
-    --      },
-    --      disable_hint = true,
-    --      disable_insert_on_commit = false,
-    --      integrations = {
-    --        diffview = true,
-    --      },
-    --    })
-    --  end,
-    --  requires = "nvim-lua/plenary.nvim",
-    -- })
-
-    use("sindrets/diffview.nvim")
     use({
-      "tpope/vim-fugitive",
-      opt = true,
-      cmd = "Git",
+      "TimUntersberger/neogit",
+      cmd = "Neogit",
+      config = function()
+        require("neogit").setup({
+          disable_hint = true,
+          disable_insert_on_commit = false,
+          integrations = {
+            diffview = true,
+          },
+        })
+      end,
+      requires = "nvim-lua/plenary.nvim",
     })
-    use("tpope/vim-rhubarb")
+
+    use({
+      "sindrets/diffview.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles" },
+    })
+
     use({
       "lewis6991/gitsigns.nvim",
       requires = {
@@ -527,13 +589,52 @@ return packer.startup({
           yadm = {
             enable = true,
           },
+          on_attach = function(bufnr)
+            local gs = package.loaded.gitsigns
+
+            local function map(mode, l, r, opts)
+              opts = opts or {}
+              opts.buffer = bufnr
+              vim.keymap.set(mode, l, r, opts)
+            end
+
+            map("n", "]c", function()
+              if vim.wo.diff then
+                return "]c"
+              end
+              vim.schedule(function()
+                gs.next_hunk()
+              end)
+              return "<Ignore>"
+            end, { expr = true })
+
+            map("n", "[c", function()
+              if vim.wo.diff then
+                return "[c"
+              end
+              vim.schedule(function()
+                gs.prev_hunk()
+              end)
+              return "<Ignore>"
+            end, { expr = true })
+
+            map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+          end,
         })
+      end,
+    })
+    use({
+      "akinsho/git-conflict.nvim",
+      config = function()
+        require("git-conflict").setup()
       end,
     })
 
     use({
       "mrjones2014/dash.nvim",
       run = "make install",
+      cmd = { "Dash", "DashWord" },
+      requires = { "nvim-telescope/telescope.nvim" },
     })
 
     use({
@@ -564,13 +665,34 @@ return packer.startup({
     })
 
     use({
+      "https://gitlab.com/yorickpeterse/nvim-pqf",
+      event = "BufReadPre",
+      config = function()
+        require("pqf").setup()
+      end,
+    })
+
+    use({
       "folke/trouble.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
+      wants = "nvim-web-devicons",
+      module = { "trouble" },
+      cmd = { "TroubleToggle", "Trouble" },
       config = function()
         require("trouble").setup()
       end,
-      -- cmd = { "TroubleToggle" },
     })
+
+    use({
+      "anuvyklack/hydra.nvim",
+      config = function()
+        require("plugins.config.hydra").config()
+      end,
+      requires = "anuvyklack/keymap-layer.nvim",
+      module = { "hydra" },
+      event = { "BufReadPre" },
+      disable = true,
+    })
+
     if PACKER_BOOTSTRAP then
       require("packer").sync()
     end
