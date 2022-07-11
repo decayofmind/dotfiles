@@ -116,6 +116,7 @@ function M.config()
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
       { name = "nvim_lsp_document_symbol" },
+      { name = "cmp-cmdline-history" },
       { name = "buffer" },
     }),
   })
@@ -126,8 +127,9 @@ function M.config()
     },
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-      { name = "path" },
+      { name = "cmp-cmdline-history" },
       { name = "cmdline" },
+      { name = "path" },
     }),
   })
 end

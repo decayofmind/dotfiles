@@ -47,7 +47,13 @@ return packer.startup({
     use({ "nvim-lua/plenary.nvim", module = "plenary" })
 
     -- improve startup time
-    use("antoinemadec/FixCursorHold.nvim")
+    use({
+      "antoinemadec/FixCursorHold.nvim",
+      event = "BufReadPre",
+      config = function()
+        vim.g.cursorhold_updatetime = 100
+      end,
+    })
     use({ "lewis6991/impatient.nvim" })
     use({
       "nathom/filetype.nvim",
@@ -139,8 +145,10 @@ return packer.startup({
       end,
     })
 
+    use({ "projekt0n/github-nvim-theme" })
+
     -- requires nvim 0.8+
-    -- use("kaiuri/nvim-mariana")
+    use({ "kaiuri/nvim-juliana", disable = true })
 
     use({
       "NTBBloodbath/doom-one.nvim",
@@ -184,7 +192,8 @@ return packer.startup({
     use({
       "nvim-lualine/lualine.nvim",
       event = "VimEnter",
-      requires = { "kyazdani42/nvim-web-devicons", opt = true },
+      requires = { "kyazdani42/nvim-web-devicons", "SmiteshP/nvim-navic" },
+      wants = { "nvim-navic" },
       config = function()
         local navic = require("nvim-navic")
         require("lualine").setup({
@@ -230,19 +239,26 @@ return packer.startup({
     })
 
     use({
-      "kyazdani42/nvim-tree.lua",
-      opt = true,
-      cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFindFile" },
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v2.x",
+      cmd = { "Neotree" },
+      module = "neo-tree",
       requires = {
-        "kyazdani42/nvim-web-devicons",
+        "nvim-lua/plenary.nvim",
+        "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+        "MunifTanjim/nui.nvim",
       },
       config = function()
-        require("nvim-tree").setup({
-          respect_buf_cwd = true,
-          sync_root_with_cwd = true,
-          update_focused_file = {
-            enable = true,
-            update_root = true,
+        require("neo-tree").setup({
+          filesystem = {
+            follow_current_file = true,
+            hijack_netrw_behavior = "open_current",
+            use_libuv_file_watcher = true,
+          },
+          git_status = {
+            window = {
+              position = "float",
+            },
           },
         })
       end,
@@ -362,14 +378,29 @@ return packer.startup({
       "neovim/nvim-lspconfig",
       opt = true,
       event = "BufReadPre",
-      wants = { "null-ls.nvim", "vim-illuminate", "schemastore.nvim", "cmp-nvim-lsp", "nvim-navic" },
+      wants = {
+        "null-ls.nvim",
+        "vim-illuminate",
+        "schemastore.nvim",
+        "cmp-nvim-lsp",
+        "nvim-navic",
+        "lsp-format.nvim",
+      },
       requires = {
         "jose-elias-alvarez/null-ls.nvim",
-        "RRethy/vim-illuminate",
+        {
+          "RRethy/vim-illuminate",
+          config = function()
+            vim.g.Illuminate_ftblacklist = {
+              "vista_kind",
+              "toggleterm",
+            }
+          end,
+        },
         {
           "j-hui/fidget.nvim",
           config = function()
-            require("fidget").setup({})
+            require("fidget").setup({ text = { spinner = "arc" } })
           end,
         },
         "b0o/schemastore.nvim",
@@ -379,6 +410,7 @@ return packer.startup({
             require("nvim-navic").setup({})
           end,
         },
+        "lukas-reineke/lsp-format.nvim",
       },
       config = function()
         require("plugins.config.lsp").config()
@@ -398,6 +430,7 @@ return packer.startup({
         "hrsh7th/cmp-nvim-lsp-signature-help",
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-cmdline",
+        "dmitmel/cmp-cmdline-history",
         "ray-x/cmp-treesitter",
         "lukas-reineke/cmp-rg",
         "saadparwaiz1/cmp_luasnip",
@@ -466,14 +499,26 @@ return packer.startup({
     use({
       "nvim-treesitter/nvim-treesitter",
       opt = true,
-      event = "BufRead",
+      event = "BufReadPre",
       run = ":TSUpdate",
       config = function()
         require("plugins.config.treesitter").config()
       end,
       requires = {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        "nvim-treesitter/nvim-treesitter-refactor",
+        {
+          "lewis6991/spellsitter.nvim",
+          config = function()
+            require("spellsitter").setup({
+              hl = "SpellBad",
+              captures = { "comment", "string" },
+            })
+          end,
+        },
+        { "nvim-treesitter/nvim-treesitter-textobjects", event = "BufReadPre" },
+        { "JoosepAlviste/nvim-ts-context-commentstring", event = "BufReadPre" },
+        { "nvim-treesitter/nvim-treesitter-refactor", event = "BufReadPre" },
+        { "p00f/nvim-ts-rainbow", event = "BufReadPre" },
+        { "andymass/vim-matchup", event = "BufReadPre" },
       },
     })
 
@@ -482,6 +527,21 @@ return packer.startup({
       event = { "CursorMoved" },
       config = function()
         require("Comment").setup({
+          pre_hook = function(ctx)
+            local U = require("Comment.utils")
+
+            local location = nil
+            if ctx.ctype == U.ctype.block then
+              location = require("ts_context_commentstring.utils").get_cursor_location()
+            elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
+              location = require("ts_context_commentstring.utils").get_visual_start_location()
+            end
+
+            return require("ts_context_commentstring.internal").calculate_commentstring({
+              key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
+              location = location,
+            })
+          end,
           toggler = {
             line = "gcc",
             block = "gcb",
@@ -537,6 +597,7 @@ return packer.startup({
     -- Outline
     use({
       "liuchengxu/vista.vim",
+      opt = true,
       cmd = "Vista",
       config = function()
         vim.g["vista#renderer#enable_icon"] = 1
@@ -556,8 +617,12 @@ return packer.startup({
     })
 
     -- Git
-
-    -- It's too young to use it now
+    use({
+      "ThePrimeagen/git-worktree.nvim",
+      config = function()
+        require("git-worktree").setup({})
+      end,
+    })
     use({
       "TimUntersberger/neogit",
       cmd = "Neogit",
@@ -632,8 +697,10 @@ return packer.startup({
 
     use({
       "mrjones2014/dash.nvim",
+      opt = true,
       run = "make install",
       cmd = { "Dash", "DashWord" },
+      wants = { "telescope.nvim" },
       requires = { "nvim-telescope/telescope.nvim" },
     })
 

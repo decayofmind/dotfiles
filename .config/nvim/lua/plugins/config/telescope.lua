@@ -13,6 +13,7 @@ end
 function M.config()
   local telescope_extensions = {
     "fzf",
+    "git_worktree",
     "harpoon",
     "projects",
     "file_browser",

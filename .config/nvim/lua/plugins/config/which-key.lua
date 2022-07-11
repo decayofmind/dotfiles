@@ -38,7 +38,7 @@ function M.config()
         "Blame current line",
       },
       d = { "<cmd>DiffviewOpen<CR>", "Diff this file" },
-      x = { gs.toggle_deleted, "Show deleted lines" },
+      x = { require("gitsigns").toggle_deleted, "Show deleted lines" },
       C = { "<cmd>Neogit commit<cr>", "Commit" },
       p = { gs.preview_hunk, "Preview hunk" },
       r = { "<cmd>Gitsigns reset_hunk<CR>", "Reset hunk" },
@@ -47,6 +47,18 @@ function M.config()
       S = { gs.stage_buffer, "Stage buffer" },
       u = { gs.undo_stage_hunk, "Undo stage hunk" },
       ["<cr>"] = { "<cmd>Neogit<cr>", "Neogit" },
+      w = {
+        name = "+Worktree",
+        c = {
+          function()
+            local ts, ok = pcall("require", "telescope")
+            if ok then
+              ts.extensions.git_worktree.create_git_worktree()
+            end
+          end,
+          "Create worktree",
+        },
+      },
     },
     j = {
       name = "+Jump",

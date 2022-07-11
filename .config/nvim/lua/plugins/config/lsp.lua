@@ -4,6 +4,7 @@ local autocmd = vim.api.nvim_create_autocmd
 
 function M.config()
   local lspconfig = require("lspconfig")
+  local lspformat = require("lsp-format")
 
   local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -22,7 +23,8 @@ function M.config()
     buf_set_keymap("n", "<leader>lD", "<cmd>split | lua vim.lsp.buf.definition()<CR>", opts)
 
     if client.resolved_capabilities.document_formatting then
-      autocmd("BufWritePre", { pattern = "<buffer>", command = "lua vim.lsp.buf.formatting_sync()" })
+      lspformat.setup({})
+      lspformat.on_attach(client)
     end
 
     if client.server_capabilities.documentSymbolProvider then
@@ -127,6 +129,7 @@ function M.config()
           globals = { "vim" },
         },
         workspace = {
+          preloadFileSize = 1024,
           library = {
             -- vim.api.nvim_get_runtime_file("", true),
             [vim.fn.expand("$VIMRUNTIME/lua")] = true,
@@ -284,6 +287,9 @@ function M.config()
     border = "single",
     -- border = "rounded",
   })
+
+  -- Format on save
+  vim.cmd([[cabbrev wq execute "Format sync" <bar> wq]])
 end
 
 return M

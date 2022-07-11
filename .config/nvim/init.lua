@@ -4,7 +4,7 @@ _G.__luacache_config = {
     path = vim.fn.stdpath("cache") .. "/luacache_chunks",
   },
   modpaths = {
-    enable = true,
+    enable = false,
     path = vim.fn.stdpath("cache") .. "/luacache_modpaths",
   },
 }
