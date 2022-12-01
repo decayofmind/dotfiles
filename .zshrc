@@ -55,9 +55,10 @@ zinit snippet OMZP::git
 
 zinit ice wait'0' lucid; zinit light "akarzim/zsh-docker-aliases"
 zinit ice wait'1' as"completion" lucid
-zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
-zinit ice wait'1' as"completion" lucid
-zinit snippet https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/terraform/_terraform
+zinit snippet OMZP::docker/_docker
+
+zinit ice wait'1' lucid atload"zicompinit; zicdreplay"
+zinit snippet OMZP::terraform
 
 zinit light mafredri/zsh-async
 
@@ -91,6 +92,8 @@ zinit ice wait lucid blockf
 zinit light Aloxaf/fzf-tab
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle -d ':completion:*' format
+zstyle ':completion:*:descriptions' format '[%d]'
 
 zinit ice wait"0" lucid if'[[ ! $TERM =~ ".*kitty" ]]'; zinit light marzocchi/zsh-notify
 
@@ -107,7 +110,7 @@ zinit ice wait lucid from"gh-r" \
     src="zhook.zsh" nocompile'!'
 zinit load direnv/direnv
 
-zinit ice wait lucid from"gh-r" bpick"krew.tar.gz" \
+zinit ice wait lucid from"gh-r" bpick"krew-darwin_amd64.tar.gz" \
             mv"krew-darwin_amd64 -> krew" \
             sbin"krew" has"kubectl"
 zinit load kubernetes-sigs/krew
@@ -162,7 +165,7 @@ else
   compinit -C;
 fi
 
-. $(brew --prefix asdf)/asdf.sh
+. $(brew --prefix asdf)/libexec/asdf.sh
 
 # FZF {{{
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" 2> /dev/null'

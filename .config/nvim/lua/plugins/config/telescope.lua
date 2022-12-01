@@ -1,7 +1,5 @@
 local M = {}
 
-local trouble = require("trouble.providers.telescope")
-
 function M.find_dotfiles()
   require("telescope.builtin").find_files({
     cwd = "~",
@@ -11,28 +9,31 @@ function M.find_dotfiles()
 end
 
 function M.config()
-  local telescope_extensions = {
+  local telescope = require("telescope")
+
+  local extensions = {
+    "file_browser",
     "fzf",
     "git_worktree",
     "harpoon",
+    "live_grep_args",
     "projects",
-    "file_browser",
   }
 
-  for _, ext in pairs(telescope_extensions) do
-    require("telescope").load_extension(ext)
+  for _, ext in pairs(extensions) do
+    telescope.load_extension(ext)
   end
 
-  require("telescope").setup({
+  telescope.setup({
     defaults = {
       prompt_prefix = " ",
       dynamic_preview_title = true,
       mappings = {
-        i = { ["<esc>"] = "close", ["<c-t>"] = trouble.open_with_trouble },
-        n = { ["<c-t>"] = trouble.open_with_trouble },
+        i = { ["<esc>"] = "close", ["<c-t>"] = require("trouble.providers.telescope").open_with_trouble },
+        n = { ["<c-t>"] = require("trouble.providers.telescope").open_with_trouble },
       },
       file_ignore_patterns = {
-        "%.git//*",
+        "%.git/*",
         "node%_modules/*",
       },
       vimgrep_arguments = {
@@ -56,6 +57,9 @@ function M.config()
       },
       file_browser = {
         hijack_netrw = false,
+      },
+      live_grep_args = {
+        auto_quoting = true,
       },
     },
   })

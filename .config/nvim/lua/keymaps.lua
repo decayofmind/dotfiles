@@ -2,12 +2,14 @@ vim.g.mapleader = " "
 
 local map = vim.keymap.set
 
+-- Finding references
 map(
   "n",
   "K",
   "<cmd>lua require('telescope.builtin').grep_string({layout_strategy='vertical', search = vim.fn.expand('<cword>')})<cr>",
   { noremap = true, silent = true }
 )
+map("n", "<leader>K", "<cmd>DashWord<cr>", { noremap = true, silent = true })
 
 map(
   "n",
@@ -16,9 +18,16 @@ map(
   { noremap = true, silent = true }
 )
 
+map({ "n", "v" }, "gtt", require("nvim-toggler").toggle)
+
 map("n", "<leader>bj", "<cmd>BufferLinePick<cr>", { noremap = true, silent = true })
 map("n", "<leader>bf", "<cmd>Telescope buffers<cr>", { noremap = true, silent = true })
-map("n", "<leader>/", "<cmd>Telescope live_grep<cr>", { noremap = true, silent = true })
+map(
+  "n",
+  "<leader>/",
+  "<cmd>:lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
+  { noremap = true, silent = true }
+)
 
 map("", "<leader>M", "<cmd>MarkedOpen<cr>", { noremap = true, silent = true })
 map("n", "<leader>S", "<cmd>SymbolsOutline<cr>", { noremap = true, silent = true })
@@ -46,3 +55,7 @@ map("t", "<Esc><Esc>", "<C-\\><C-n>", { noremap = true })
 map("n", "<Esc><Esc>", "<Esc>:nohlsearch<CR><Esc>", { noremap = true, silent = true })
 
 map("n", "<leader>cr", ":RunCode<CR>", { noremap = true, silent = true })
+
+map("n", "<C-/>", "<cmd>ToggleTerm<CR>", { noremap = true, silent = true })
+map("i", "<C-/>", "<C-o><cmd>ToggleTerm<CR>", { noremap = true, silent = true })
+map("v", "<C-/>", "<esc><cmd>ToggleTerm<CR>", { noremap = true, silent = true })

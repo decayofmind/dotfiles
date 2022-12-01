@@ -4,9 +4,22 @@ local autocmd = vim.api.nvim_create_autocmd
 
 function M.config()
   local lspconfig = require("lspconfig")
-  local lspformat = require("lsp-format")
+  local configs = require("lspconfig.configs")
 
-  local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local mason = require("mason")
+  local mason_lspconfig = require("mason-lspconfig")
+
+  mason.setup({})
+
+  mason_lspconfig.setup({
+    ensure_installed = { "bashls", "dockerls", "pyright", "sumneko_lua", "yamlls" },
+  })
+
+  require("mason-null-ls").setup({
+    ensure_installed = { "luacheck", "prettier", "yamllint" },
+  })
+
+  local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
   local on_attach = function(client, bufnr)
@@ -22,7 +35,11 @@ function M.config()
     buf_set_keymap("n", "<leader>ld", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
     buf_set_keymap("n", "<leader>lD", "<cmd>split | lua vim.lsp.buf.definition()<CR>", opts)
 
-    if client.resolved_capabilities.document_formatting then
+    if
+      client.server_capabilities.documentFormattingProvider
+      or client.server_capabilities.documentRangeFormattingProvider
+    then
+      local lspformat = require("lsp-format")
       lspformat.setup({})
       lspformat.on_attach(client)
     end
@@ -99,45 +116,17 @@ function M.config()
     },
   })
 
-  -- brew install ninnja
-  -- cd .config/nvim
-  -- git clone https://github.com/sumneko/lua-language-server
-  -- cd lua-language-server
-  -- git submodule update --init --recursive
-  -- cd 3rd/luamake
-  -- ninja -f compile/ninja/macos.ninja
-  -- cd ../..
-  -- ./3rd/luamake/luamake rebuild
-  local sumneko_root_path = "/Users/" .. vim.fn.expand("$USER") .. "/.config/nvim/lua-language-server"
-  local sumneko_binary = sumneko_root_path .. "/bin/macOS/lua-language-server"
-
-  local runtime_path = vim.split(package.path, ";")
-  table.insert(runtime_path, "lua/?.lua")
-  table.insert(runtime_path, "lua/?/init.lua")
-
+  require("neodev").setup({})
   lspconfig.sumneko_lua.setup({
     capabilities = capabilities,
     on_attach = on_attach,
-    cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
     settings = {
       Lua = {
-        runtime = {
-          version = "LuaJIT",
-          path = runtime_path,
+        completion = {
+          callSnippet = "Both",
         },
         diagnostics = {
           globals = { "vim" },
-        },
-        workspace = {
-          preloadFileSize = 1024,
-          library = {
-            -- vim.api.nvim_get_runtime_file("", true),
-            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-          },
-        },
-        telemetry = {
-          enable = false,
         },
       },
     },
@@ -176,6 +165,9 @@ function M.config()
       null_ls.builtins.formatting.stylua.with({
         filetypes = { "lua" },
       }),
+      null_ls.builtins.diagnostics.luacheck.with({
+        extra_args = { "--globals", "vim" },
+      }),
       null_ls.builtins.formatting.shfmt,
       null_ls.builtins.diagnostics.shellcheck,
       null_ls.builtins.diagnostics.yamllint.with({
@@ -184,54 +176,21 @@ function M.config()
     },
   })
 
-  -- Not working properly atm
-  lspconfig.efm.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
-    -- filetypes = { "lua", "yaml" },
-    filetypes = { "" },
-    init_options = { documentFormatting = true, codeAction = true },
-    root_dir = lspconfig.util.root_pattern(".git") or vim.loop.cwd,
-    settings = {
-      rootMarkers = { vim.loop.cwd() },
-      -- lintDebounce = 100,
-      languages = {
-        lua = {
-          { formatCommand = "stylua -s --stdin-filepath ${INPUT} -", formatStdin = true },
-        },
-        sh = {
-          {
-            lintCommand = "shellcheck -f gcc -x -",
-            lintStdin = true,
-            lintFormats = {
-              "%f:%l:%c: %trror: %m",
-              "%f:%l:%c: %tarning: %m",
-              "%f:%l:%c: %tote: %m",
-            },
-          },
-          {
-            formatCommand = "shfmt -ci -s -bn",
-            formatStdin = true,
-          },
-        },
-        yaml = {
-          {
-            lintCommand = "yamllint -f parsable -",
-            lintFormats = {
-              "%f:%l:%c: [%t%*[a-z]] %m",
-            },
-            lintStdin = true,
-          },
-          {
-            formatCommand = ([[
-						prettier --stdin-filepath ${INPUT}
-					]]):gsub("\n", ""),
-            formatStdin = true,
-          },
-        },
-      },
-    },
-  })
+  --[[ if not configs.snyk then ]]
+  --[[   configs.snyk = { ]]
+  --[[     default_config = { ]]
+  --[[       cmd = { "/usr/local/bin/snyk-ls" }, ]]
+  --[[       root_dir = function(name) ]]
+  --[[         return lspconfig.util.find_git_ancestor(name) or vim.loop.os_homedir() ]]
+  --[[       end, ]]
+  --[[       init_options = {}, ]]
+  --[[     }, ]]
+  --[[   } ]]
+  --[[ end ]]
+  --[[ lspconfig.snyk.setup({ ]]
+  --[[   on_attach = on_attach, ]]
+  --[[   capabilities = capabilities, ]]
+  --[[ }) ]]
 
   autocmd("BufWritePre", { pattern = "*.go", command = ":silent! lua Goimports(3000)" })
   autocmd("BufWritePost", { pattern = "*.go", command = "lua vim.lsp.codelens.refresh()" })
@@ -270,12 +229,10 @@ function M.config()
     end
   end
 
-  local signs = { Error = "", Warn = "", Info = "", Hint = "" }
-  for sign, icon in pairs(signs) do
-    vim.fn.sign_define(
-      "DiagnosticSign" .. sign,
-      { text = icon, texthl = "Diagnostic" .. sign, linehl = false, numhl = "Diagnostic" .. sign }
-    )
+  local signs = { Error = " ", Warn = " ", Info = " ", Hint = " " }
+  for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
   end
 
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {

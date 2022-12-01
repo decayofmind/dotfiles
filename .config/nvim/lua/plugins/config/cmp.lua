@@ -90,6 +90,7 @@ function M.config()
       { name = "path", priority_weight = 110 },
       { name = "rg", keyword_length = 5, max_item_count = 5, priority_weight = 60 },
       { name = "buffer", max_item_count = 5, priority_weight = 70 },
+      { name = "spell" },
     }),
     experimental = {
       ghost_text = true,

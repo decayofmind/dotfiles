@@ -1,7 +1,6 @@
 local M = {}
 
 local wk = require("which-key")
-local gs = require("gitsigns")
 
 local conf = {
   plugins = {
@@ -20,45 +19,38 @@ function M.config()
       name = "+Find",
       b = { "<cmd>Telescope buffers<cr>", "Buffers" },
       c = { "<cmd>Telescope colorscheme<cr>", "Colorschemes" },
+      D = { require("plugins.config.telescope").find_dotfiles, "Dotfiles" },
       f = { "<cmd>Telescope find_files<cr>", "Files" },
       F = { "<cmd>Telescope file_browser<cr>", "File Browser" },
       h = { "<cmd>Telescope help_tags<cr>", "Help" },
       I = { "<cmd>PickEverything<cr>", "Icons" },
       r = { "<cmd>Telescope oldfiles<cr>", "Recent Files" },
+      T = { "<cmd>Neotree<cr>", "Neotree" },
       ["<cr>"] = { "<cmd>Telescope<cr>", "Pickers" },
       [";"] = { "<cmd>Telescope command_history<cr>", "Command History" },
     },
     G = {
       name = "+Git",
-      b = { gs.toggle_current_line_blame, "Toggle blame for current line" },
+      b = { require("gitsigns").toggle_current_line_blame, "Toggle blame for current line" },
       B = {
         function()
-          gs.blame_line({ full = true })
+          require("gitsigns").blame_line({ full = true })
         end,
         "Blame current line",
       },
-      d = { "<cmd>DiffviewOpen<CR>", "Diff this file" },
-      x = { require("gitsigns").toggle_deleted, "Show deleted lines" },
       C = { "<cmd>Neogit commit<cr>", "Commit" },
-      p = { gs.preview_hunk, "Preview hunk" },
+      d = { "<cmd>DiffviewOpen<CR>", "Diff this file" },
+      h = { "<cmd>Telescope git_branches<cr>", "Branches" },
+      p = { require("gitsigns").preview_hunk, "Preview hunk" },
       r = { "<cmd>Gitsigns reset_hunk<CR>", "Reset hunk" },
-      R = { gs.reset_buffer, "Reset buffer" },
-      s = { "Gitsigns stage_hunk<CR>", "Stage hunk" },
-      S = { gs.stage_buffer, "Stage buffer" },
-      u = { gs.undo_stage_hunk, "Undo stage hunk" },
+      R = { require("gitsigns").reset_buffer, "Reset buffer" },
+      s = { "<cmd>Gitsigns stage_hunk<CR>", "Stage hunk" },
+      S = { require("gitsigns").stage_buffer, "Stage buffer" },
+      u = { require("gitsigns").undo_stage_hunk, "Undo stage hunk" },
+      W = { "<cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>", "Create worktree" },
+      w = { "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>", "List worktrees" },
+      x = { require("gitsigns").toggle_deleted, "Show deleted lines" },
       ["<cr>"] = { "<cmd>Neogit<cr>", "Neogit" },
-      w = {
-        name = "+Worktree",
-        c = {
-          function()
-            local ts, ok = pcall("require", "telescope")
-            if ok then
-              ts.extensions.git_worktree.create_git_worktree()
-            end
-          end,
-          "Create worktree",
-        },
-      },
     },
     j = {
       name = "+Jump",

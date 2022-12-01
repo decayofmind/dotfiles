@@ -46,14 +46,17 @@ return packer.startup({
 
     use({ "nvim-lua/plenary.nvim", module = "plenary" })
 
-    -- improve startup time
     use({
-      "antoinemadec/FixCursorHold.nvim",
-      event = "BufReadPre",
+      "AckslD/messages.nvim",
       config = function()
-        vim.g.cursorhold_updatetime = 100
+        require("messages").setup()
+        Msg = function(...)
+          require("messages.api").capture_thing(...)
+        end
       end,
     })
+
+    -- improve startup time
     use({ "lewis6991/impatient.nvim" })
     use({
       "nathom/filetype.nvim",
@@ -145,10 +148,7 @@ return packer.startup({
       end,
     })
 
-    use({ "projekt0n/github-nvim-theme" })
-
-    -- requires nvim 0.8+
-    use({ "kaiuri/nvim-juliana", disable = true })
+    use({ "kaiuri/nvim-juliana", disable = false })
 
     use({
       "NTBBloodbath/doom-one.nvim",
@@ -198,7 +198,6 @@ return packer.startup({
         local navic = require("nvim-navic")
         require("lualine").setup({
           extensions = {
-            "nvim-tree",
             "quickfix",
             "symbols-outline",
             "toggleterm",
@@ -209,6 +208,14 @@ return packer.startup({
           },
           sections = {
             lualine_a = { { "filename", path = 1 } },
+            lualine_b = {
+              "branch",
+              {
+                "diagnostics",
+                sources = { "nvim_lsp" },
+                symbols = { error = " ", warn = " ", info = " ", hint = "" },
+              },
+            },
             lualine_c = { { navic.get_location, cond = navic.is_available } },
           },
         })
@@ -225,7 +232,7 @@ return packer.startup({
             show_close_icon = false,
             show_buffer_close_icons = false,
           },
-          highlights = { buffer_selected = { gui = "bold" } },
+          highlights = { buffer_selected = { bold = true } },
         })
       end,
     })
@@ -234,7 +241,9 @@ return packer.startup({
       "akinsho/toggleterm.nvim",
       cmd = { "ToggleTerm", "ToggleTermOpenAll", "ToggleTermCloseAll" },
       config = function()
-        require("toggleterm").setup({})
+        require("toggleterm").setup({
+          size = 30,
+        })
       end,
     })
 
@@ -325,6 +334,7 @@ return packer.startup({
         "popup.nvim",
         "telescope-fzf-native.nvim",
         "telescope-file-browser.nvim",
+        "telescope-live-grep-args.nvim",
         "project.nvim",
         "trouble.nvim",
         "telescope-dap.nvim",
@@ -335,6 +345,7 @@ return packer.startup({
         "nvim-telescope/telescope-dap.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
         "nvim-telescope/telescope-file-browser.nvim",
+        "nvim-telescope/telescope-live-grep-args.nvim",
       },
     })
 
@@ -383,11 +394,19 @@ return packer.startup({
         "vim-illuminate",
         "schemastore.nvim",
         "cmp-nvim-lsp",
+        "neodev.nvim",
         "nvim-navic",
         "lsp-format.nvim",
+        "mason.nvim",
+        "mason-lspconfig.nvim",
+        "mason-null-ls.nvim",
       },
       requires = {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
         "jose-elias-alvarez/null-ls.nvim",
+        "jayp0521/mason-null-ls.nvim",
+        "folke/neodev.nvim",
         {
           "RRethy/vim-illuminate",
           config = function()
@@ -435,6 +454,7 @@ return packer.startup({
         "lukas-reineke/cmp-rg",
         "saadparwaiz1/cmp_luasnip",
         "onsails/lspkind-nvim",
+        "f3fora/cmp-spell",
         {
           "L3MON4D3/LuaSnip",
           wants = { "friendly-snippets" },
@@ -569,6 +589,17 @@ return packer.startup({
           show_current_context = true,
           show_current_context_start = true,
           use_treesitter = true,
+        })
+      end,
+    })
+
+    use({
+      "nguyenvukhang/nvim-toggler",
+      event = "BufRead",
+      config = function()
+        require("nvim-toggler").setup({
+          inverses = { ["!="] = "==" },
+          remove_default_keybinds = true,
         })
       end,
     })

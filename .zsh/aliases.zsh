@@ -25,15 +25,16 @@ alias hrl='h repo list'
 alias hid='h install --debug --dry-run'
 
 # Kubectl
-alias k='kubectl'
 alias kctx='kubectx'
 alias kns='kubens'
 alias kx='kctx'
 alias kn='kns'
+alias kgjs='k get jobs'
 
 if command -v nvim > /dev/null 2>&1; then
   alias vim='nvim'
+  alias vi='nvim'
   alias vimdiff='nvim -d'
 fi
 
-unalias sl
+# unalias sl
