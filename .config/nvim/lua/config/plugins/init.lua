@@ -205,7 +205,7 @@ local M = {
   "junegunn/vim-easy-align",
   "direnv/direnv.vim",
   "editorconfig/editorconfig-vim",
-  "itspriddle/vim-marked",
+  { "itspriddle/vim-marked", ft = { "md", "markdown" } },
   {
     "tjdevries/cyclist.vim",
     config = function()

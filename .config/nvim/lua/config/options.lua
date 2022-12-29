@@ -1,28 +1,25 @@
 -- vim:foldmethod=marker
 
-local o = vim.opt
-local wo = vim.wo
-
-o.secure = true
-o.swapfile = false
-o.clipboard = "unnamedplus"
-o.history = 100
+vim.opt.secure = true
+vim.opt.swapfile = false
+vim.opt.clipboard = "unnamedplus"
+vim.opt.history = 100
 
 -- UI {{{
-o.updatetime = 300
-o.showmode = false
-o.showtabline = 2
-o.number = true
-o.relativenumber = true
-o.cursorline = true
-o.scrolloff = 5
-o.sidescrolloff = 5
-o.splitbelow = true
-o.splitright = true
-o.termguicolors = true
-o.wrap = false
+vim.opt.updatetime = 300
+vim.opt.showmode = false
+vim.opt.showtabline = 2
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.cursorline = true
+vim.opt.scrolloff = 5
+vim.opt.sidescrolloff = 5
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.termguicolors = true
+vim.opt.wrap = false
 
-o.fillchars = {
+vim.opt.fillchars = {
   vert = "┃",
   fold = " ",
   foldopen = "",
@@ -31,22 +28,24 @@ o.fillchars = {
 }
 
 -- UI:Fold
-o.foldlevelstart = 4
-o.foldcolumn = "1"
-o.foldlevel = 99
-o.foldenable = true
+vim.opt.foldlevelstart = 4
+vim.opt.foldcolumn = "1"
+vim.opt.foldlevel = 99
+vim.opt.foldenable = true
 -- }}}
 
-o.tabstop = 2
-o.shiftwidth = 2
-o.softtabstop = 2
-o.expandtab = true
-o.shiftround = true
-o.smartindent = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
+vim.opt.shiftround = true
+vim.opt.smartindent = true
 
-o.wildmode = { "full", "list", "full" }
-o.wildoptions = "pum"
-o.pumblend = 10
-o.pumheight = 10
+vim.opt.wildmode = { "full", "list", "full" }
+vim.opt.wildoptions = "pum"
+vim.opt.wildignorecase = true
+vim.opt.pumblend = 10
 
-o.completeopt = { "menuone", "noselect" }
+vim.opt.pumheight = 10
+
+vim.opt.completeopt = { "menuone", "noselect" }

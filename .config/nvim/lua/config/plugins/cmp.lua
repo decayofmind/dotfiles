@@ -1,14 +1,13 @@
 local M = {
   "hrsh7th/nvim-cmp",
+  event = "InsertEnter",
   dependencies = {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-nvim-lsp-signature-help",
-    "hrsh7th/cmp-nvim-lua",
     "hrsh7th/cmp-cmdline",
     "dmitmel/cmp-cmdline-history",
-    "ray-x/cmp-treesitter",
     "lukas-reineke/cmp-rg",
     "zbirenbaum/copilot-cmp",
     "saadparwaiz1/cmp_luasnip",
@@ -49,10 +48,10 @@ function M.config()
           copilot = " ",
           nvim_lsp = " ",
           luasnip = " ",
-          nvim_lua = " ",
+          --[[ nvim_lua = " ", ]]
           path = "",
           rg = " ",
-          treesitter = " ",
+          --[[ treesitter = " ", ]]
         },
       }),
     },
@@ -63,10 +62,6 @@ function M.config()
       expand = function(args)
         require("luasnip").lsp_expand(args.body)
       end,
-    },
-    window = {
-      -- completion = cmp.config.window.bordered(),
-      documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
       ["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -106,30 +101,17 @@ function M.config()
       end,
     }),
     sources = cmp.config.sources({
-      { name = "treesitter", keyword_length = 2 },
-      { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
+      { name = "nvim_lsp", priority_weight = 100 },
       { name = "nvim_lsp_signature_help", priority_weight = 120 },
-      { name = "nvim_lua", priority_weight = 90 },
-      { name = "copilot", priority_weight = 80 },
       { name = "luasnip", priority_weight = 60 },
+      { name = "buffer", max_item_count = 5, priority_weight = 60 },
       { name = "path", priority_weight = 110 },
-      { name = "rg", keyword_length = 5, max_item_count = 5, priority_weight = 60 },
-      { name = "buffer", max_item_count = 5, priority_weight = 70 },
+      { name = "rg", keyword_length = 5, max_item_count = 5, priority_weight = 40 },
       { name = "spell" },
+      { name = "copilot", priority_weight = 20 },
     }),
     experimental = {
       ghost_text = true,
-    },
-    sorting = {
-      comparators = {
-        cmp.config.compare.offset,
-        cmp.config.compare.exact,
-        cmp.config.compare.score,
-        cmp.config.compare.kind,
-        cmp.config.compare.sort_text,
-        cmp.config.compare.length,
-        cmp.config.compare.order,
-      },
     },
   })
 

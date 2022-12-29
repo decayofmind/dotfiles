@@ -1,6 +1,6 @@
 local M = {
   "nvim-lualine/lualine.nvim",
-  event = "VimEnter",
+  event = "VeryLazy",
   dependencies = { "kyazdani42/nvim-web-devicons", "SmiteshP/nvim-navic" },
 }
 
@@ -17,7 +17,7 @@ function M.config()
       section_separators = { " ", " " },
     },
     sections = {
-      lualine_a = { { "filename", path = 1 } },
+      lualine_a = { { "filename", path = 1, symbols = { modified = "", readonly = "", unnamed = "" } } },
       lualine_b = {
         "branch",
         {

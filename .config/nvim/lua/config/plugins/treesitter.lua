@@ -55,6 +55,7 @@ function M.config()
       "ruby",
       "vim",
       "yaml",
+      "terraform"
     },
     rainbow = {
       enable = true,
