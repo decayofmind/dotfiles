@@ -1,4 +1,16 @@
-local M = {}
+local M = {
+  "nvim-treesitter/nvim-treesitter",
+  build = ":TSUpdate",
+  event = "BufReadPost",
+  dependencies = {
+    "p00f/nvim-ts-rainbow",
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    "nvim-treesitter/nvim-treesitter-refactor",
+    "RRethy/nvim-treesitter-endwise",
+    "andymass/vim-matchup",
+  },
+}
 
 function M.config()
   local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
@@ -15,6 +27,9 @@ function M.config()
     context_commentstring = {
       enable = true,
       enable_autocmd = false,
+    },
+    endwise = {
+      enable = true,
     },
     highlight = {
       enable = true,

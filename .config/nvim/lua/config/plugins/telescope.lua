@@ -1,4 +1,17 @@
-local M = {}
+local M = {
+  "nvim-telescope/telescope.nvim",
+  cmd = { "Telescope" },
+  lazy = false,
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-lua/popup.nvim",
+    "nvim-telescope/telescope-dap.nvim",
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    "nvim-telescope/telescope-file-browser.nvim",
+    "nvim-telescope/telescope-live-grep-args.nvim",
+    "ThePrimeagen/git-worktree.nvim",
+  },
+}
 
 function M.find_dotfiles()
   require("telescope.builtin").find_files({

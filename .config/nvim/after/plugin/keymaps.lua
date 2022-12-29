@@ -1,6 +1,17 @@
-vim.g.mapleader = " "
-
 local map = vim.keymap.set
+local cnoreabbrev = vim.cmd.cnoreabbrev
+
+-- Permissive commands
+cnoreabbrev({ "W!", "w!" })
+cnoreabbrev({ "Q!", "q!" })
+cnoreabbrev({ "Qall!", "qall!" })
+cnoreabbrev({ "Wq", "wq" })
+cnoreabbrev({ "Wa", "wa" })
+cnoreabbrev({ "wQ", "wq" })
+cnoreabbrev({ "WQ", "wq" })
+cnoreabbrev({ "W", "w" })
+cnoreabbrev({ "Q", "q" })
+cnoreabbrev({ "Qall", "qall" })
 
 -- Finding references
 map(
@@ -18,14 +29,14 @@ map(
   { noremap = true, silent = true }
 )
 
-map({ "n", "v" }, "gtt", require("nvim-toggler").toggle)
+map({ "n", "v" }, "gtt", "<cmd>lua require('nvim-toggler').toggle()<cr>")
 
 map("n", "<leader>bj", "<cmd>BufferLinePick<cr>", { noremap = true, silent = true })
 map("n", "<leader>bf", "<cmd>Telescope buffers<cr>", { noremap = true, silent = true })
 map(
   "n",
   "<leader>/",
-  "<cmd>:lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
+  "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
   { noremap = true, silent = true }
 )
 

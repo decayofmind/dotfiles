@@ -1,10 +1,45 @@
-local M = {}
-
 local autocmd = vim.api.nvim_create_autocmd
 
+local M = {
+  "neovim/nvim-lspconfig",
+  event = "BufReadPre",
+  dependencies = {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "jose-elias-alvarez/null-ls.nvim",
+    "jayp0521/mason-null-ls.nvim",
+    "folke/neodev.nvim",
+    {
+      "RRethy/vim-illuminate",
+      config = function()
+        vim.g.Illuminate_ftblacklist = {
+          "vista_kind",
+          "toggleterm",
+        }
+      end,
+    },
+    {
+      "j-hui/fidget.nvim",
+      config = function()
+        require("fidget").setup({ text = { spinner = "arc" } })
+      end,
+    },
+    "b0o/schemastore.nvim",
+    {
+      "SmiteshP/nvim-navic",
+      config = function()
+        require("nvim-navic").setup({})
+      end,
+    },
+    "lukas-reineke/lsp-format.nvim",
+  },
+}
+
 function M.config()
+  require("neodev").setup({})
+
   local lspconfig = require("lspconfig")
-  local configs = require("lspconfig.configs")
+  --[[ local configs = require("lspconfig.configs") ]]
 
   local mason = require("mason")
   local mason_lspconfig = require("mason-lspconfig")
@@ -116,18 +151,22 @@ function M.config()
     },
   })
 
-  require("neodev").setup({})
   lspconfig.sumneko_lua.setup({
     capabilities = capabilities,
     on_attach = on_attach,
+    single_file_support = true,
     settings = {
       Lua = {
+        workspace = {
+          checkThirdParty = false,
+        },
         completion = {
+          workspaceWord = true,
           callSnippet = "Both",
         },
-        diagnostics = {
-          globals = { "vim" },
-        },
+        --[[ diagnostics = { ]]
+        --[[   globals = { "vim" }, ]]
+        --[[ }, ]]
       },
     },
   })

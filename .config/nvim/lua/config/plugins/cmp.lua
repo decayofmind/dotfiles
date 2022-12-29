@@ -1,4 +1,29 @@
-local M = {}
+local M = {
+  "hrsh7th/nvim-cmp",
+  dependencies = {
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-nvim-lsp-signature-help",
+    "hrsh7th/cmp-nvim-lua",
+    "hrsh7th/cmp-cmdline",
+    "dmitmel/cmp-cmdline-history",
+    "ray-x/cmp-treesitter",
+    "lukas-reineke/cmp-rg",
+    "zbirenbaum/copilot-cmp",
+    "saadparwaiz1/cmp_luasnip",
+    "onsails/lspkind-nvim",
+    "f3fora/cmp-spell",
+    {
+      "L3MON4D3/LuaSnip",
+      config = function()
+        require("luasnip/loaders/from_vscode").lazy_load()
+      end,
+    },
+    "rafamadriz/friendly-snippets",
+    "honza/vim-snippets",
+  },
+}
 
 function M.config()
   local has_words_before = function()
@@ -83,7 +108,7 @@ function M.config()
     sources = cmp.config.sources({
       { name = "treesitter", keyword_length = 2 },
       { name = "nvim_lsp", max_item_count = 20, priority_weight = 100 },
-      { name = "nvim_lsp_signature_help" },
+      { name = "nvim_lsp_signature_help", priority_weight = 120 },
       { name = "nvim_lua", priority_weight = 90 },
       { name = "copilot", priority_weight = 80 },
       { name = "luasnip", priority_weight = 60 },

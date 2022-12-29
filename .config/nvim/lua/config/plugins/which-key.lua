@@ -1,25 +1,25 @@
-local M = {}
-
-local wk = require("which-key")
-
-local conf = {
-  plugins = {
-    marks = false,
-    registers = false,
-    spelling = {
-      enabled = true,
-    },
-  },
+local M = {
+  "folke/which-key.nvim",
+  lazy = false,
 }
 
 function M.config()
-  wk.setup(conf)
+  local wk = require("which-key")
+  wk.setup({
+    plugins = {
+      marks = false,
+      registers = false,
+      spelling = {
+        enabled = true,
+      },
+    },
+  })
   wk.register({
     f = {
       name = "+Find",
       b = { "<cmd>Telescope buffers<cr>", "Buffers" },
       c = { "<cmd>Telescope colorscheme<cr>", "Colorschemes" },
-      D = { require("plugins.config.telescope").find_dotfiles, "Dotfiles" },
+      D = { require("config.plugins.telescope").find_dotfiles, "Dotfiles" },
       f = { "<cmd>Telescope find_files<cr>", "Files" },
       F = { "<cmd>Telescope file_browser<cr>", "File Browser" },
       h = { "<cmd>Telescope help_tags<cr>", "Help" },
