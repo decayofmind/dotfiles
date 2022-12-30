@@ -22,12 +22,15 @@ local M = {
     "rcarriga/nvim-notify",
     event = "VeryLazy",
     config = function()
-      require("notify").setup({
-        render = "minimal",
-        stages = "static",
-      })
-      vim.notify = require("notify")
-    end,
+      local notify = require("notify")
+      notify.setup(
+        {
+          render = "minimal",
+          stages = "fade",
+          timeout = 3000,
+        })
+      vim.notify = notify
+    end
   },
   {
     "famiu/bufdelete.nvim",
@@ -45,15 +48,11 @@ local M = {
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
-    config = function()
-      require("better_escape").setup()
-    end,
+    config = true
   },
   {
     "nmac427/guess-indent.nvim",
-    config = function()
-      require("guess-indent").setup({})
-    end,
+    config = true
   },
   {
     "decayofmind/surround.nvim",
@@ -69,12 +68,12 @@ local M = {
   },
   {
     "simrat39/symbols-outline.nvim",
+    cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
     config = function()
       require("symbols-outline").setup({
         auto_preview = false,
       })
     end,
-    cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
   },
   {
     "folke/trouble.nvim",
@@ -111,9 +110,7 @@ local M = {
   },
   {
     "akinsho/git-conflict.nvim",
-    config = function()
-      require("git-conflict").setup()
-    end,
+    config = true
   },
   {
     "CRAG666/code_runner.nvim",

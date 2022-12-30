@@ -11,7 +11,6 @@ local M = {
       "RRethy/vim-illuminate",
       config = function()
         vim.g.Illuminate_ftblacklist = {
-          "vista_kind",
           "toggleterm",
         }
       end,

@@ -1,13 +1,13 @@
 local M = {
   "lukas-reineke/indent-blankline.nvim",
-  event = { "BufWinEnter" },
+  event = { "BufReadPre" },
 }
 
 function M.config()
   require("indent_blankline").setup({
     char = "▏",
     buftype_exclude = { "terminal", "nofile" },
-    filetype_exclude = { "help", "packer", "lspinfo", "markdown" },
+    filetype_exclude = { "help", "Trouble", "lspinfo", "markdown" },
     space_char_blankline = " ",
     show_trailing_blankline_indent = false,
     show_first_indent_level = false,
