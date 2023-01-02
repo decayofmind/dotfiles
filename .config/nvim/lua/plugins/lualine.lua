@@ -17,7 +17,11 @@ function M.config()
       section_separators = { " ", " " },
     },
     sections = {
-      lualine_a = { { "filename", path = 1, symbols = { modified = "", readonly = "", unnamed = "" } } },
+      lualine_a = { {
+        "filename",
+        path = 1,
+        symbols = { modified = "", readonly = "", unnamed = "" },
+      } },
       lualine_b = {
         "branch",
         {
@@ -28,6 +32,14 @@ function M.config()
       },
       lualine_c = { { navic.get_location, cond = navic.is_available } },
     },
+    inactive_sections = {
+      lualine_a = { {
+        "filename",
+        path = 1,
+        symbols = { modified = "", readonly = "", unnamed = "" },
+      } },
+      lualine_c = {},
+    }
   })
 end
 

@@ -21,7 +21,6 @@ function M.config()
   vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "LspDiagnosticsSignError", linehl = "", numhl = "" })
   -- vim.fn.sign_define("DapStopped", { text = " ", texthl = "", linehl = "", numhl = "" })
 
-  require("dap-go").setup()
   require("telescope").load_extension("dap")
   require("nvim-dap-virtual-text").setup({
     commented = true,

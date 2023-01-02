@@ -15,12 +15,13 @@ local M = {
     "f3fora/cmp-spell",
     {
       "L3MON4D3/LuaSnip",
+      dependencies = {
+        "rafamadriz/friendly-snippets",
+      },
       config = function()
         require("luasnip/loaders/from_vscode").lazy_load()
       end,
     },
-    "rafamadriz/friendly-snippets",
-    "honza/vim-snippets",
   },
 }
 

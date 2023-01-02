@@ -1,8 +1,9 @@
--- vim:foldmethod=marker
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 vim.opt.secure = true
 vim.opt.swapfile = false
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamedplus" -- TODO: "d" and "x" should NOT use system clipboard
 vim.opt.history = 100
 
 -- UI {{{
@@ -30,7 +31,9 @@ vim.opt.fillchars = {
 -- UI:Fold
 vim.opt.foldlevelstart = 4
 vim.opt.foldcolumn = "1"
+vim.opt.foldnestmax = 1
 vim.opt.foldlevel = 99
+-- vim:foldmethod=marker
 vim.opt.foldenable = true
 -- }}}
 
@@ -49,3 +52,6 @@ vim.opt.pumblend = 10
 vim.opt.pumheight = 10
 
 vim.opt.completeopt = { "menuone", "noselect" }
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1

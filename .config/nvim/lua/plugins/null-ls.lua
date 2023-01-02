@@ -25,7 +25,10 @@ function M.config()
       nls.builtins.formatting.shfmt,
       nls.builtins.diagnostics.shellcheck,
       nls.builtins.diagnostics.yamllint.with({
-        extra_args = { "-d", "relaxed" },
+        extra_args = {
+          "-d",
+          "{extends: relaxed, rules: {line-length: {max: 120}}}",
+        },
       }),
     },
   })

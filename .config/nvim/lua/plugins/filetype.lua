@@ -7,7 +7,7 @@ function M.config()
     overrides = {
       extensions = {
         tf = "terraform",
-        gotmpl = "helm",
+        gotmpl = "gotmpl",
       },
       complex = {
         -- ansible

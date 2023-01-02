@@ -6,6 +6,7 @@ local M = {
     "nvim-lua/popup.nvim",
     "nvim-telescope/telescope-dap.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    "debugloop/telescope-undo.nvim",
     "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope-live-grep-args.nvim",
     "ThePrimeagen/git-worktree.nvim",
@@ -30,6 +31,7 @@ function M.config()
     "harpoon",
     "live_grep_args",
     "projects",
+    "undo"
   }
 
   for _, ext in pairs(extensions) do
@@ -73,6 +75,14 @@ function M.config()
       live_grep_args = {
         auto_quoting = true,
       },
+      undo = {
+        use_delta = false,
+        side_by_side = true,
+        layout_strategy = "horizontal",
+        layout_config = {
+          preview_height = 0.8,
+        },
+      }
     },
   })
 end

@@ -1,4 +1,14 @@
 local M = {
+  "rmehri01/onenord.nvim",
+  {
+    "navarasu/onedark.nvim",
+    config = function()
+      require("onedark").setup {
+        style = "darker"
+      }
+    end
+  },
+  { "shaunsingh/oxocarbon.nvim" },
   {
     "RRethy/nvim-base16",
     lazy = false,

@@ -8,14 +8,6 @@ local M = {
     "hrsh7th/cmp-nvim-lsp",
     { "folke/neodev.nvim", config = true },
     {
-      "RRethy/vim-illuminate",
-      config = function()
-        vim.g.Illuminate_ftblacklist = {
-          "toggleterm",
-        }
-      end,
-    },
-    {
       "j-hui/fidget.nvim",
       config = function()
         require("fidget").setup({ text = { spinner = "arc" } })
@@ -140,6 +132,9 @@ function M.config()
         },
         diagnostics = {
           globals = { 'vim' },
+        },
+        workspace = {
+          checkThirdParty = false,
         },
       },
     },

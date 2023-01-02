@@ -1,7 +1,7 @@
 local M = {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v2.x",
-  cmd = { "Neotree" },
+  cmd = { "Neotree", "NeoTreeRevealToggle" },
   dependencies = {
     "nvim-lua/plenary.nvim",
     "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
@@ -11,6 +11,8 @@ local M = {
 
 function M.config()
   require("neo-tree").setup({
+    sync_root_with_cwd = true,
+    respect_buf_cwd = true,
     filesystem = {
       follow_current_file = true,
       hijack_netrw_behavior = "open_current",
@@ -20,6 +22,10 @@ function M.config()
       window = {
         position = "float",
       },
+    },
+    update_focused_file = {
+      enable = true,
+      update_root = true
     },
   })
 end

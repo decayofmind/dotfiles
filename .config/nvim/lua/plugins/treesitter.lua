@@ -1,6 +1,8 @@
 local M = {
   "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate",
+  build = function()
+    require("nvim-treesitter.install").update()
+  end,
   event = "BufReadPost",
   dependencies = {
     "p00f/nvim-ts-rainbow",
@@ -9,19 +11,22 @@ local M = {
     "nvim-treesitter/nvim-treesitter-refactor",
     "RRethy/nvim-treesitter-endwise",
     "andymass/vim-matchup",
+    "nvim-treesitter/playground"
   },
 }
 
 function M.config()
   local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
+  local ft_to_parser = require "nvim-treesitter.parsers".filetype_to_parsername
+
   parser_configs.gotmpl = {
     install_info = {
       url = "https://github.com/ngalaiko/tree-sitter-go-template",
       files = { "src/parser.c" },
     },
-    filetype = "gotmpl",
-    used_by = { "gohtmltmpl", "gotexttmpl", "gotmpl", "yaml" },
   }
+
+  ft_to_parser.helm = "gotmpl"
 
   require("nvim-treesitter.configs").setup({
     context_commentstring = {
@@ -48,14 +53,15 @@ function M.config()
       "go",
       "gotmpl",
       "hcl",
+      "http",
       "json",
       "lua",
       "python",
       "regex",
       "ruby",
+      "terraform",
       "vim",
       "yaml",
-      "terraform"
     },
     rainbow = {
       enable = true,
@@ -85,6 +91,24 @@ function M.config()
     textobjects = {
       select = {
         enable = true,
+        keymaps = {
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ao"] = "@class.outer",
+          ["io"] = "@class.inner",
+          ["ac"] = "@conditional.outer",
+          ["ic"] = "@conditional.inner",
+          ["ae"] = "@block.outer",
+          ["ie"] = "@block.inner",
+          ["al"] = "@loop.outer",
+          ["il"] = "@loop.inner",
+          ["is"] = "@statement.inner",
+          ["as"] = "@statement.outer",
+          ["ad"] = "@comment.outer",
+          ["id"] = "@comment.inner",
+          ["am"] = "@call.outer",
+          ["im"] = "@call.inner",
+        },
       },
       lsp_interop = {
         enable = true,
