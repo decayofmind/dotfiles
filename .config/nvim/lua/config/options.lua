@@ -44,6 +44,8 @@ vim.opt.expandtab = true
 vim.opt.shiftround = true
 vim.opt.smartindent = true
 
+vim.opt.iskeyword:append { "-", "_" }
+
 vim.opt.wildmode = { "full", "list", "full" }
 vim.opt.wildoptions = "pum"
 vim.opt.wildignorecase = true
