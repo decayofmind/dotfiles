@@ -1,4 +1,8 @@
 local M = {
+  {
+    "ramojus/mellifluous.nvim",
+    dependencies = { "rktjmp/lush.nvim" },
+  },
   "rmehri01/onenord.nvim",
   {
     "navarasu/onedark.nvim",

@@ -249,7 +249,20 @@ local M = {
         ]])
     end,
   },
-  { "drybalka/tree-climber.nvim" }
+  "drybalka/tree-climber.nvim",
+  { "tversteeg/registers.nvim",
+    cmd = { 'Registers' },
+    keys = {
+      { '<c-r>', mode = { 'i' } },
+      { '"', mode = { 'n', 'v' } },
+    },
+    opts = {
+      window = {
+        border = "single",
+        transparency = 20,
+      },
+    }
+  }
 }
 
 return M
