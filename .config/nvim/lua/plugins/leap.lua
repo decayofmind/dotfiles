@@ -7,6 +7,7 @@ local M = {
   },
 
   config = function()
+    -- TODO: Resolve conflicts with nvim-surround keybinds
     require("leap").add_default_mappings()
   end,
 }

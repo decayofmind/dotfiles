@@ -198,6 +198,9 @@ local M = {
     cmd = { "ToggleTerm", "ToggleTermOpenAll", "ToggleTermCloseAll" },
     opts = {
       size = 30,
+      float_opts = {
+        winblend = 8,
+      },
     },
   },
   {
