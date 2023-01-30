@@ -1,6 +1,8 @@
 local M = {
   "kevinhwang91/nvim-ufo",
   dependencies = "kevinhwang91/promise-async",
+  -- INFO: Enable after https://github.com/kevinhwang91/nvim-ufo/issues/4 is resolved, or on nvim >= 0.9.x
+  enabled = false
 }
 
 function M.config()

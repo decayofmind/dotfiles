@@ -51,7 +51,9 @@ local M = {
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
-    config = true
+    opts = {
+      mapping = { "jk", "jj", "kk" },
+    }
   },
   {
     "nmac427/guess-indent.nvim",
