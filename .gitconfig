@@ -1,0 +1,110 @@
+[core]
+	excludesfile = ~/.gitignore
+	editor = nvim
+	pager = delta
+
+[commit]
+	verbose = true
+	gpgsign = true
+
+[alias]
+	co = checkout
+	s = status -s -b
+	b = branch
+	f = fetch
+	; fixup = "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && COMMIT=$(git rev-parse $1) && git commit --fixup=$COMMIT && EDITOR=true git rebase -i --autosquash $COMMIT~1' -"
+	fixup = "!f() { TARGET=$(git rev-parse "$1"); git commit --fixup=$TARGET ${@:2} && EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
+	fixprev = "!f() { SHA=$(git rev-parse HEAD) && REV=$(git rev-parse $SHA) && git commit --fixup $SHA && EDITOR=true git rebase -i --autosquash $REV^; }; f -"
+	c = commit
+	mt = mergetool
+	mr = !sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -
+	ps = push
+	pst = push --tags
+	pl = pull
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	sa = stash apply
+	sl = stash list --pretty=format:'%Cblue%h %Cred* %C(yellow)%s'
+	in = "!git remote update -p; git log ..@{u}"
+	out = log @{u}..
+	sh = describe --always
+	undo = checkout --
+	unstage = reset -q HEAD --
+	d = difftool
+
+[push]
+	default = current
+	followTags = true
+
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+
+[diff]
+	colorMoved = default
+	prompt = true
+	tool = nvimdiff2
+[merge]
+	prompt = true
+	tool = diffview.nvim
+	keepBackup = false
+[github]
+	user = decayofmind
+[difftool]
+	prompt = false
+[diff "sopsdiffer"]
+	textconv = sops -d
+; [mergetool "diffview.nvim"]
+; 	cmd = nvim \"+DiffviewOpen\"
+[mergetool "diffview.nvim"]
+	cmd = nvim -f -c \"DiffviewOpen\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
+	# trustExitCode = true
+	prompt = false
+; [mergetool "nvimdiff4"]
+; 	cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+; [mergetool "nfugitive"]
+; 	cmd = nvim -f -c "Gdiff" "$MERGED"
+[mergetool "gitconflict"]
+	cmd = nvim \"$MERGED\"
+	trustExitCode = true
+	prompt = false
+[diff]
+	tool = nvimdiff2
+[difftool "nvimdiff2"]
+	cmd = nvim -d $LOCAL $REMOTE
+[diff "plist"]
+	textconv = plutil -convert xml1 -o -
+[init]
+	templateDir = /Users/roman.komkov/.git-template
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[interactive]
+	diffFilter = delta --color-only --features=interactive
+
+[delta]
+	features = decorations
+
+[delta "interactive"]
+	keep-plus-minus-markers = false
+
+[delta "decorations"]
+	commit-decoration-style = blue ol
+	commit-style = raw
+	file-style = omit
+	hunk-header-decoration-style = blue box
+	hunk-header-file-style = red
+	hunk-header-line-number-style = "#067a00"
+	hunk-header-style = file line-number syntax
+
+[include]
+	path = ~/.gitconfig.local
