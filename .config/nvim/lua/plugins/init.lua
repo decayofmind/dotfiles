@@ -204,20 +204,6 @@ local M = {
     },
   },
   {
-    "samjwill/nvim-unception",
-    init = function()
-      vim.g.unception_delete_replaced_buffer = true
-    end,
-    config = function()
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "UnceptionEditRequestReceived",
-        callback = function()
-          vim.cmd(":ToggleTerm")
-        end,
-      })
-    end,
-  },
-  {
     -- instead of nvim-telescope/telescope-symbols.nvim
     "ziontee113/icon-picker.nvim",
     cmd = { "PickEverything" },
@@ -267,6 +253,12 @@ local M = {
         transparency = 20,
       },
     }
+  },
+  {
+    "allaman/kustomize.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    ft = "yaml",
+    opts = { defaults = true },
   }
 }
 

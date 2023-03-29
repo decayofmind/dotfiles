@@ -14,8 +14,25 @@ local M = {
       end,
     },
     "b0o/schemastore.nvim",
-    "SmiteshP/nvim-navic",
+    { "SmiteshP/nvim-navic", lazy = true },
     "lukas-reineke/lsp-format.nvim",
+    { "lvimuser/lsp-inlayhints.nvim",
+      event = "LspAttach",
+      opts = {},
+      config = function(_, opts)
+        require("lsp-inlayhints").setup(opts)
+        vim.api.nvim_create_autocmd("LspAttach", {
+          group = vim.api.nvim_create_augroup("LspAttach_inlayhints", {}),
+          callback = function(args)
+            if not (args.data and args.data.client_id) then
+              return
+            end
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            require("lsp-inlayhints").on_attach(client, args.buf)
+          end,
+        })
+      end,
+    },
   },
 }
 
@@ -122,7 +139,7 @@ function M.config()
     },
   })
 
-  lspconfig.sumneko_lua.setup({
+  lspconfig.lua_ls.setup({
     capabilities = capabilities,
     on_attach = on_attach,
     settings = {
@@ -131,7 +148,10 @@ function M.config()
           callSnippet = "Replace",
         },
         diagnostics = {
-          globals = { 'vim' },
+          globals = { "require", "vim" },
+        },
+        hint = {
+          enable = true,
         },
         workspace = {
           checkThirdParty = false,

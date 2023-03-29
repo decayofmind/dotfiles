@@ -27,6 +27,7 @@ local M = {
       vim.g.material_style = "darker"
     end,
   },
+  "kaiuri/nvim-juliana"
 }
 
 return M

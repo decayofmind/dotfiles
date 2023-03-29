@@ -4,8 +4,8 @@ local M = {
   cmd = { "Neotree", "NeoTreeRevealToggle" },
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-    "MunifTanjim/nui.nvim",
+    { "kyazdani42/nvim-web-devicons", lazy = true }, -- not strictly required, but recommended
+    { "MunifTanjim/nui.nvim", lazy = true },
   },
 }
 

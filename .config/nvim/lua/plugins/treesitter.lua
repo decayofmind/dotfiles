@@ -56,6 +56,7 @@ function M.config()
       "http",
       "json",
       "lua",
+      "luap",
       "python",
       "regex",
       "ruby",

@@ -10,7 +10,9 @@ local M = {
 function M.config()
   local nls = require("null-ls")
   nls.setup({
+    debug = true,
     sources = {
+      nls.builtins.diagnostics.hadolint,
       nls.builtins.code_actions.gitsigns,
       nls.builtins.formatting.goimports,
       nls.builtins.formatting.prettier.with({
@@ -34,7 +36,9 @@ function M.config()
   })
 
   require("mason-null-ls").setup({
-    ensure_installed = nil,
+    ensure_installed = {
+      "hadolint@v2.12.1-beta",
+    },
     automatic_installation = true,
     automatic_setup = false,
   })

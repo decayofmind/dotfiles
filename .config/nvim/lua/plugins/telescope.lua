@@ -9,6 +9,7 @@ local M = {
     "debugloop/telescope-undo.nvim",
     "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope-live-grep-args.nvim",
+    "nvim-telescope/telescope-symbols.nvim",
     "ThePrimeagen/git-worktree.nvim",
   },
 }
@@ -23,6 +24,7 @@ end
 
 function M.config()
   local telescope = require("telescope")
+  local vimgrep_arguments = { unpack(require("telescope.config").values.vimgrep_arguments) }
 
   local extensions = {
     "file_browser",
@@ -33,6 +35,9 @@ function M.config()
     "projects",
     "undo"
   }
+
+  table.insert(vimgrep_arguments, "--hidden")
+  table.insert(vimgrep_arguments, "--trim")
 
   for _, ext in pairs(extensions) do
     telescope.load_extension(ext)
@@ -50,16 +55,7 @@ function M.config()
         "%.git/*",
         "node%_modules/*",
       },
-      vimgrep_arguments = {
-        "rg",
-        "--color=never",
-        "--no-heading",
-        "--with-filename",
-        "--line-number",
-        "--column",
-        "--smart-case",
-        "--hidden",
-      },
+      vimgrep_arguments = vimgrep_arguments,
       winblend = 15,
     },
     extensions = {

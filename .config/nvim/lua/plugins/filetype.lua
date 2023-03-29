@@ -8,6 +8,7 @@ function M.config()
       extensions = {
         tf = "terraform",
         gotmpl = "gotmpl",
+        http = "http",
       },
       complex = {
         -- ansible
@@ -18,6 +19,7 @@ function M.config()
         [".*/templates/.*%.yaml"] = "helm",
         [".*/templates/.*%.tpl"] = "helm",
         ["helmfile.yaml"] = "helm",
+        ["Dockerfile%..*"] = "dockerfile",
       },
       shebang = {
         dash = "sh",
