@@ -30,7 +30,16 @@ function M.config()
           symbols = { error = " ", warn = " ", info = " ", hint = "" },
         },
       },
-      lualine_c = { { navic.get_location, cond = navic.is_available } },
+      lualine_c = {
+        {
+          function()
+            return navic.get_location()
+          end,
+          cond = function()
+            return navic.is_available()
+          end
+        },
+      }
     },
     inactive_sections = {
       lualine_a = { {
