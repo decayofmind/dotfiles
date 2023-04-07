@@ -17,7 +17,6 @@ local M = {
 
 function M.config()
   local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
-  local ft_to_parser = require "nvim-treesitter.parsers".filetype_to_parsername
 
   parser_configs.gotmpl = {
     install_info = {
@@ -26,7 +25,7 @@ function M.config()
     },
   }
 
-  ft_to_parser.helm = "gotmpl"
+  vim.treesitter.language.register("gotmpl", "helm")
 
   require("nvim-treesitter.configs").setup({
     context_commentstring = {

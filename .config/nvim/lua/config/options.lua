@@ -29,7 +29,7 @@ vim.opt.fillchars = {
 }
 
 -- UI:Fold
-vim.opt.foldlevelstart = 4
+vim.opt.foldlevelstart = -1
 vim.opt.foldcolumn = "1"
 vim.opt.foldnestmax = 1
 vim.opt.foldlevel = 99

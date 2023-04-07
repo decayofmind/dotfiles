@@ -1,8 +1,25 @@
 local M = {
   "kevinhwang91/nvim-ufo",
-  dependencies = "kevinhwang91/promise-async",
-  -- INFO: Enable after https://github.com/kevinhwang91/nvim-ufo/issues/4 is resolved, or on nvim >= 0.9.x
-  enabled = false
+  dependencies = {
+    { "kevinhwang91/promise-async" },
+    {
+      "luukvbaal/statuscol.nvim",
+      config = function()
+        local builtin = require("statuscol.builtin")
+        require("statuscol").setup({
+          relculright = true,
+          segments = {
+            { sign = { name = { "Diagnostic" }, maxwidth = 1, auto = true }, click = "v:lua.ScSa" },
+            { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+            { text = { builtin.lnumfunc, " " }, condition = { true, builtin.not_empty }, click = "v:lua.ScLa" },
+            { sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true }, click = "v:lua.ScSa" },
+            { sign = { name = { "GitSigns" }, maxwidth = 1, colwidth = 1, auto = true }, click = "v:lua.ScSa" },
+          },
+        })
+      end,
+    },
+  },
+  enabled = true
 }
 
 function M.config()
