@@ -1,5 +1,6 @@
 local M = {
-  { "rest-nvim/rest.nvim",
+  {
+    "rest-nvim/rest.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim"
     },
@@ -226,7 +227,6 @@ local M = {
   },
   "junegunn/vim-easy-align",
   "direnv/direnv.vim",
-  "gpanders/editorconfig.nvim",
   "sheerun/vim-polyglot",
   {
     "tjdevries/cyclist.vim",
@@ -241,11 +241,12 @@ local M = {
     end,
   },
   "drybalka/tree-climber.nvim",
-  { "tversteeg/registers.nvim",
+  {
+    "tversteeg/registers.nvim",
     cmd = { 'Registers' },
     keys = {
       { '<c-r>', mode = { 'i' } },
-      { '"', mode = { 'n', 'v' } },
+      { '"',     mode = { 'n', 'v' } },
     },
     opts = {
       window = {

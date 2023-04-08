@@ -6,7 +6,7 @@ local M = {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
-    { "folke/neodev.nvim", config = true },
+    { "folke/neodev.nvim",   config = true },
     {
       "j-hui/fidget.nvim",
       config = function()
@@ -16,7 +16,8 @@ local M = {
     "b0o/schemastore.nvim",
     { "SmiteshP/nvim-navic", lazy = true },
     "lukas-reineke/lsp-format.nvim",
-    { "lvimuser/lsp-inlayhints.nvim",
+    {
+      "lvimuser/lsp-inlayhints.nvim",
       event = "LspAttach",
       opts = {},
       config = function(_, opts)
@@ -133,6 +134,14 @@ function M.config()
       gopls = {
         analyses = {
           unusedparams = true,
+        },
+        hints = {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          parameterNames = true,
+          rangeVariableTypes = true
         },
         staticcheck = true,
       },
