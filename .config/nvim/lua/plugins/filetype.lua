@@ -9,6 +9,8 @@ function M.config()
         tf = "terraform",
         gotmpl = "gotmpl",
         http = "http",
+        --[[ TODO: Remove after https://github.com/nathom/filetype.nvim/issues/94 is fixed ]]
+        sh = "sh",
       },
       complex = {
         -- ansible
