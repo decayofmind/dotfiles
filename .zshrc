@@ -50,16 +50,6 @@ zstyle ':prezto:module:terminal' auto-title 'yes'
 zinit snippet PZT::modules/terminal/init.zsh
 # }}}
 
-zinit ice lucid atload"unalias gcd"
-zinit snippet OMZP::git
-
-zinit ice wait'0' lucid; zinit light "akarzim/zsh-docker-aliases"
-zinit ice wait'1' as"completion" lucid
-zinit snippet OMZP::docker/_docker
-
-zinit ice wait'1' lucid atload"zicompinit; zicdreplay"
-zinit snippet OMZP::terraform
-
 zinit light mafredri/zsh-async
 
 zinit ice depth=1
@@ -102,6 +92,9 @@ zinit ice depth"1" \
   sbin"utilities/*" if"[[ $+ITERM_PROFILE ]]"
 zinit load gnachman/iTerm2-shell-integration
 
+zinit ice lucid atload"unalias gcd"
+zinit snippet OMZP::git
+
 # Programs {{{
 zinit ice wait lucid from"gh-r" \
     mv="direnv* -> direnv" sbin="direnv" \
@@ -110,12 +103,20 @@ zinit ice wait lucid from"gh-r" \
     src="zhook.zsh" nocompile'!'
 zinit load direnv/direnv
 
+zinit ice wait'0' lucid; zinit light "akarzim/zsh-docker-aliases"
+zinit ice wait'1' as"completion" lucid
+zinit snippet OMZP::docker/_docker
+
+zinit ice wait'1' as"completion" lucid
+zinit snippet OMZP::terraform/_terraform
+
 zinit ice wait lucid from"gh-r" bpick"krew-darwin_amd64.tar.gz" \
             mv"krew-darwin_amd64 -> krew" \
             sbin"krew" has"kubectl"
 zinit load kubernetes-sigs/krew
 
-zinit ice wait'0' lucid; zinit snippet OMZP::kubectl
+# zinit ice wait'0' lucid
+zinit snippet OMZP::kubectl
 # }}}
 
 # Colors and highlight {{{
@@ -167,6 +168,8 @@ fi
 
 . $(brew --prefix asdf)/libexec/asdf.sh
 
+zinit cdreplay -q
+
 # FZF {{{
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -177,7 +180,7 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap 
 
 export ZVM_KEYTIMEOUT=0.1
 export ZVM_CURSOR_STYLE_ENABLED=false
-export ZVM_VI_HIGHLIGHT_BACKGROUND=gray 
+export ZVM_VI_HIGHLIGHT_BACKGROUND=gray
 export ZVM_VI_HIGHLIGHT_FOREGROUND=gray
 
 export HOMEBREW_NO_ANALYTICS=1

@@ -5,11 +5,19 @@
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+# XDG
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# Setup ZSH cache directory
+export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+if [[ ! -d "$ZSH_CACHE_DIR" ]]; then
+  /bin/mkdir -p "$ZSH_CACHE_DIR"
+  /bin/chmod 0700 "$ZSH_CACHE_DIR"
+fi
+
 # Go lang settings
 export GOPATH="${HOME}/.go"
-
-# eliminates duplicates in *paths
-typeset -gU cdpath fpath path
 
 # Zsh search path for executable
 path=(
@@ -23,8 +31,12 @@ path=(
 
 fpath=(
   $HOME/.zsh/completions
+  $ZSH_CACHE_DIR/completions
   $fpath
 )
+
+# Eliminates duplicates in *paths
+typeset -gU cdpath fpath path
 
 # Editor
 export VISUAL=vim
@@ -33,16 +45,5 @@ if command -v nvim > /dev/null 2>&1; then
 fi
 export EDITOR=$VISUAL
 
-# Setup ZSH cache directory
-export ZSH_CACHE_DIR="$HOME/.cache/zsh"
-if [[ ! -d "$ZSH_CACHE_DIR" ]]; then
-  /bin/mkdir -p "$ZSH_CACHE_DIR"
-  /bin/chmod 0700 "$ZSH_CACHE_DIR"
-fi
-
-# XDG
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
-
-# set base16 theme
+# Set base16 theme
 export BASE16_THEME='black-metal-khold'
