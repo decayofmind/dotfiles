@@ -60,6 +60,7 @@ function M.config()
       m = { "<Cmd>lua require('harpoon.ui').toggle_quick_menu()<Cr>", "UI Menu" },
       c = { "<Cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<Cr>", "Command Menu" },
     },
+    L = { "<Cmd>SessionLoadLast<Cr>", "Load Last Session" }
   }, {
     mode = "n",
     prefix = "<leader>",

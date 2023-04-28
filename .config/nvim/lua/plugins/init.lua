@@ -212,9 +212,10 @@ local M = {
   },
   {
     "axieax/urlview.nvim",
+    cmd = { "UrlView" },
     keys = {
       {
-        "<leader>fu",
+        "<leader>fL",
         "<cmd>UrlView buffer action=clipboard<cr>",
         desc = "URLs",
       }
@@ -246,7 +247,7 @@ local M = {
     cmd = { 'Registers' },
     keys = {
       { '<c-r>', mode = { 'i' } },
-      { '"',     mode = { 'n', 'v' } },
+      { '"', mode = { 'n', 'v' } },
     },
     opts = {
       window = {
@@ -260,7 +261,9 @@ local M = {
     requires = "nvim-lua/plenary.nvim",
     ft = "yaml",
     opts = { defaults = true },
-  }
+  },
+  { "anuvyklack/fold-preview.nvim", dependencies = "anuvyklack/keymap-amend.nvim", config = true },
+  { "olimorris/persisted.nvim", config = true }
 }
 
 return M

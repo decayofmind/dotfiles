@@ -6,7 +6,7 @@ local M = {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
-    { "folke/neodev.nvim",   config = true },
+    { "folke/neodev.nvim", config = true },
     {
       "j-hui/fidget.nvim",
       config = function()
@@ -29,7 +29,7 @@ local M = {
               return
             end
             local client = vim.lsp.get_client_by_id(args.data.client_id)
-            require("lsp-inlayhints").on_attach(client, args.buf)
+            require("lsp-inlayhints").on_attach(client, args.buf, false)
           end,
         })
       end,
@@ -66,6 +66,12 @@ function M.config()
       local lspformat = require("lsp-format")
       lspformat.setup({})
       lspformat.on_attach(client)
+
+      -- Format on save
+      vim.cmd([[
+              cabbrev wq execute "Format sync" <bar> wq
+              cabbrev wqa bufdo execute "Format sync" <bar> wa <bar> q
+            ]])
     end
 
     if client.server_capabilities.documentSymbolProvider then
@@ -208,9 +214,6 @@ function M.config()
     border = "single",
     -- border = "rounded",
   })
-
-  -- Format on save
-  vim.cmd([[cabbrev wq execute "Format sync" <bar> wq]])
 end
 
 return M

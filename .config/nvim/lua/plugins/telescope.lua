@@ -32,6 +32,7 @@ function M.config()
     "git_worktree",
     "harpoon",
     "live_grep_args",
+    "persisted",
     "projects",
     "undo"
   }

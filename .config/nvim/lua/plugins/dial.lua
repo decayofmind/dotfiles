@@ -36,6 +36,11 @@ function M.config()
         word = true,
         cyclic = true,
       }),
+      augend.constant.new({
+        elements = { "disable", "enable" },
+        word = true,
+        cyclic = true,
+      }),
       augend.semver.alias.semver,
     },
   })
