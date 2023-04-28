@@ -30,6 +30,7 @@ alias kns='kubens'
 alias kx='kctx'
 alias kn='kns'
 alias kgjs='k get jobs'
+alias kb='kustomize build --load-restrictor=LoadRestrictionsNone ./ --stack-trace'
 
 if command -v nvim > /dev/null 2>&1; then
   alias vim='nvim'
