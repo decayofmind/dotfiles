@@ -80,10 +80,13 @@ zinit light junegunn/fzf
 
 zinit ice wait lucid blockf
 zinit light Aloxaf/fzf-tab
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-zstyle ':fzf-tab:*' switch-group ',' '.'
-zstyle -d ':completion:*' format
-zstyle ':completion:*:descriptions' format '[%d]'
+  zstyle ':completion:*:git-checkout:*' sort false
+  zstyle ':completion:*:descriptions' format '[%d]'
+  zstyle ':fzf-tab:*' prefix ''
+  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+  zstyle ':fzf-tab:*' switch-group ',' '.'
+  zstyle -d ':completion:*' format
 
 zinit ice wait"0" lucid if'[[ ! $TERM =~ ".*kitty" ]]'; zinit light marzocchi/zsh-notify
 
@@ -138,7 +141,7 @@ zinit ice from'gh-r' sbin'def-matcher'
 zinit light sei40kr/fast-alias-tips-bin
 zinit light sei40kr/zsh-fast-alias-tips
 
-zinit wait lucid for \
+zinit wait"1" lucid for \
   atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
   atinit"zpcompinit;zpcdreplay" zdharma-continuum/fast-syntax-highlighting
 
