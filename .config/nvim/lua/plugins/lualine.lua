@@ -8,9 +8,12 @@ function M.config()
   local navic = require("nvim-navic")
   require("lualine").setup({
     extensions = {
+      "neo-tree",
+      "nvim-dap-ui",
       "quickfix",
       "symbols-outline",
       "toggleterm",
+      "trouble",
     },
     options = {
       component_separators = { " ", " " },

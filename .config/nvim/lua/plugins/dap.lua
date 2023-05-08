@@ -36,6 +36,7 @@ function M.config()
   vim.api.nvim_set_keymap("n", "<leader>do", "<cmd>lua require'dap'.step_over()<cr>", { noremap = true })
   vim.api.nvim_set_keymap("n", "<leader>dq", "<cmd>lua require'dap'.close()<cr>", { noremap = true })
   vim.api.nvim_set_keymap("n", "<leader>dh", "<cmd>lua require'dap.ui.widgets'.hover()<cr>", { noremap = true })
+  vim.api.nvim_set_keymap("n", "<leader>dU", "<cmd>lua require'dapui'.toggle()<cr>", { noremap = true })
   vim.api.nvim_set_keymap(
     "n",
     "<leader>d?",
