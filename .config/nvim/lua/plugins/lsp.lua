@@ -85,6 +85,8 @@ function M.config()
   if not configs.helm_ls then
     configs.helm_ls = {
       default_config = {
+        capabilities = capabilities,
+        on_attach = on_attach,
         cmd = { "helm_ls", "serve" },
         filetypes = { "helm" },
         root_dir = function(fname)

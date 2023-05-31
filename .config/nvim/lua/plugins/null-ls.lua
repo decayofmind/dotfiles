@@ -15,6 +15,7 @@ function M.config()
       nls.builtins.diagnostics.hadolint,
       nls.builtins.code_actions.gitsigns,
       nls.builtins.formatting.goimports,
+      nls.builtins.diagnostics.golangci_lint,
       nls.builtins.formatting.prettier.with({
         disabled_filetypes = { "json" },
       }),
