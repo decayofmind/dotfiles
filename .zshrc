@@ -100,10 +100,8 @@ zinit snippet OMZP::git
 
 # Programs {{{
 zinit ice wait lucid from"gh-r" \
-    mv="direnv* -> direnv" sbin="direnv" \
-    atclone="./direnv hook zsh > zhook.zsh" \
-    atpull="%atclone" \
-    src="zhook.zsh" nocompile'!'
+    mv"direnv* -> direnv" sbin"direnv" \
+    eval"./direnv hook zsh"
 zinit load direnv/direnv
 
 zinit ice wait'0' lucid; zinit light "akarzim/zsh-docker-aliases"
@@ -124,22 +122,21 @@ zinit snippet OMZP::kubectl
 
 # Colors and highlight {{{
 zinit light 'chrissicool/zsh-256color'
-zinit ice atclone"dircolors -b src/dir_colors > c.zsh" \
-            atpull'%atclone' \
-            pick"c.zsh" \
-            nocompile'!'
+zinit ice wait"2" lucid eval"dircolors -b src/dir_colors" \
 zinit light arcticicestudio/nord-dircolors
+
 zinit ice atload"base16_${BASE16_THEME}"
 zinit light "chriskempson/base16-shell"
-zinit ice lucid wait'0' \
-            src"bash/base16-${BASE16_THEME}.config" \
-            pick"bash/base16-${BASE16_THEME}.config" nocompile'!'
+zinit ice lucid wait'1' \
+            eval"bash/base16-${BASE16_THEME}.config"
 zinit light 'nicodebo/base16-fzf'
 # }}}
 
 zinit ice from'gh-r' sbin'def-matcher'
 zinit light sei40kr/fast-alias-tips-bin
 zinit light sei40kr/zsh-fast-alias-tips
+
+# zinit light djui/alias-tips
 
 zinit wait"1" lucid for \
   atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
