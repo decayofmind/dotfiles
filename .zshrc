@@ -126,17 +126,15 @@ zinit ice wait"2" lucid eval"dircolors -b src/dir_colors" \
 zinit light arcticicestudio/nord-dircolors
 
 zinit ice atload"base16_${BASE16_THEME}"
-zinit light "chriskempson/base16-shell"
+zinit light chriskempson/base16-shell
 zinit ice lucid wait'1' \
             eval"bash/base16-${BASE16_THEME}.config"
-zinit light 'nicodebo/base16-fzf'
+zinit light nicodebo/base16-fzf
 # }}}
 
-zinit ice from'gh-r' sbin'def-matcher'
-zinit light sei40kr/fast-alias-tips-bin
-zinit light sei40kr/zsh-fast-alias-tips
-
-# zinit light djui/alias-tips
+zinit ice from"gh-r"
+# zinit ice atclone"make build" atpull"%atclone"
+zinit light decayofmind/zsh-fast-alias-tips
 
 zinit wait"1" lucid for \
   atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
@@ -182,6 +180,8 @@ export ZVM_KEYTIMEOUT=0.1
 export ZVM_CURSOR_STYLE_ENABLED=false
 export ZVM_VI_HIGHLIGHT_BACKGROUND=gray
 export ZVM_VI_HIGHLIGHT_FOREGROUND=gray
+
+export ZSH_FAST_ALIAS_TIPS_EXCLUDES="_ sl l"
 
 export HOMEBREW_NO_ANALYTICS=1
 export KEYTIMEOUT=1

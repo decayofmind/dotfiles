@@ -1,5 +1,13 @@
 local M = {
   {
+    "Mofiqul/adwaita.nvim",
+    config = function()
+      vim.g.adwaita_darker = true
+      vim.g.adwaita_disable_cursorline = true
+      vim.g.adwaita_transparent = true
+    end
+  },
+  {
     "ramojus/mellifluous.nvim",
     dependencies = { "rktjmp/lush.nvim" },
   },
