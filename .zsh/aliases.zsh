@@ -1,12 +1,12 @@
 alias bootstrap='$HOME/.yadm/bootstrap'
 alias brewdump='brew bundle dump --force --global'
 alias ap='aws-profile'
-alias c='zz'
+alias c='z'
+alias ci='zi'
 alias cdp='cdproject'
-alias cat='bat -np --paging=never --theme base16'
+alias cat='bat -pp --theme base16'
 alias diff='icdiff -N'
 alias dmesg='sudo dmesg'
-alias helm2='/usr/local/opt/helm@2/bin/helm'
 alias htop='sudo htop'
 alias ls='exa'
 alias l='ls'
@@ -37,5 +37,3 @@ if command -v nvim > /dev/null 2>&1; then
   alias vi='nvim'
   alias vimdiff='nvim -d'
 fi
-
-# unalias sl
