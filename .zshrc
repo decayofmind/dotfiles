@@ -65,8 +65,8 @@ zinit light romkatv/powerlevel10k
 # zinit ice svn wait'2' silent; zinit snippet OMZ::plugins/pyenv
 # }}}
 
-zinit ice wait'0' lucid atload"unalias d"
-zinit snippet OMZP::fasd
+zinit ice wait'0' lucid
+zinit light ajeetdsouza/zoxide
 
 zinit ice wait'0' blockf lucid
 zinit light zsh-users/zsh-completions
@@ -106,7 +106,7 @@ zinit load direnv/direnv
 
 zinit ice wait'0' lucid; zinit light "akarzim/zsh-docker-aliases"
 zinit ice wait'1' as"completion" lucid
-zinit snippet OMZP::docker/_docker
+zinit snippet OMZP::docker
 
 zinit ice wait'1' as"completion" lucid
 zinit snippet OMZP::terraform/_terraform
@@ -184,8 +184,11 @@ export ZVM_VI_HIGHLIGHT_FOREGROUND=gray
 export ZSH_FAST_ALIAS_TIPS_EXCLUDES="_ sl l"
 
 export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_ENV_HINTS=1
 export KEYTIMEOUT=1
 
 for file in ${HOME}/.zsh/*.zsh; do
   source $file
 done
+
+export PATH="$PATH:$HOME/.local/bin"

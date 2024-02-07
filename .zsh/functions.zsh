@@ -47,8 +47,19 @@ pyenv-brew-relink() {
 
 direnv() { asdf exec direnv "$@"; }
 
-ecd() {
-  fasdlist=$( fasd -d -l -r $1 | \
-    fzf --query="$1 " --select-1 --exit-0 --height=25% --reverse --tac --no-sort --cycle) &&
-    cd "$fasdlist"
+git-clone-bare-for-worktrees() {
+  url=$1
+  basename=${url##*/}
+  name=${2:-${basename%.*}}
+
+  mkdir $name
+  cd "$name"
+
+  git clone --bare "$url" .bare
+  echo "gitdir: ./.bare" > .git
+
+  # Explicitly sets the remote origin fetch so we can fetch remote branches
+  git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+
+  git fetch origin
 }
