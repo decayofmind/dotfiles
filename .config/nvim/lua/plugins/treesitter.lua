@@ -28,10 +28,6 @@ function M.config()
   vim.treesitter.language.register("gotmpl", "helm")
 
   require("nvim-treesitter.configs").setup({
-    context_commentstring = {
-      enable = true,
-      enable_autocmd = false,
-    },
     endwise = {
       enable = true,
     },

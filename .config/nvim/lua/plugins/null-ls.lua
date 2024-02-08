@@ -1,5 +1,5 @@
 local M = {
-  "jose-elias-alvarez/null-ls.nvim",
+  "nvimtools/none-ls.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
     "williamboman/mason.nvim",
@@ -40,7 +40,7 @@ function M.config()
     ensure_installed = {
       "hadolint@v2.12.1-beta",
     },
-    automatic_installation = true,
+    automatic_installation = false,
     automatic_setup = false,
   })
 end

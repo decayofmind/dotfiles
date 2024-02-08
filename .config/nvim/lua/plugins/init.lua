@@ -64,22 +64,41 @@ local M = {
     "ahmedkhalf/project.nvim",
     config = function()
       require("project_nvim").setup({
-        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "stylua.toml" },
+        -- neo-tree integration
+        sync_root_with_cwd = true,
+        respect_buf_cwd = true,
+        update_focused_file = {
+          enable = true,
+          update_root = true,
+        },
+        patterns = {
+          ".git",
+          ".terraform",
+          "Makefile",
+          "package.json",
+          "stylua.toml",
+        },
       })
     end,
   },
   {
-    "simrat39/symbols-outline.nvim",
-    cmd = { "SymbolsOutline", "SymbolsOutlineOpen" },
+    "hedyhli/outline.nvim",
+    cmd = { "Outline", "OutlineOpen" },
     keys = {
       {
         "<leader>S",
-        "<cmd>SymbolsOutline<cr>",
+        "<cmd>Outline<cr>",
         desc = "Symbols",
       }
     },
     opts = {
       auto_preview = false,
+      symbol_folding = {
+        autofold_depth = 1,
+        auto_unfold = {
+          hovered = true,
+        },
+      },
     }
   },
   {
@@ -96,7 +115,7 @@ local M = {
   },
   -- Git
   {
-    "TimUntersberger/neogit",
+    "NeogitOrg/neogit",
     dependencies = "nvim-lua/plenary.nvim",
     cmd = "Neogit",
     opts = {
@@ -247,7 +266,7 @@ local M = {
     cmd = { 'Registers' },
     keys = {
       { '<c-r>', mode = { 'i' } },
-      { '"', mode = { 'n', 'v' } },
+      { '"',     mode = { 'n', 'v' } },
     },
     opts = {
       window = {
@@ -263,7 +282,7 @@ local M = {
     opts = { defaults = true },
   },
   { "anuvyklack/fold-preview.nvim", dependencies = "anuvyklack/keymap-amend.nvim", config = true },
-  { "olimorris/persisted.nvim", config = true }
+  { "olimorris/persisted.nvim",     config = true }
 }
 
 return M

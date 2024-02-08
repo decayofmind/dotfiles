@@ -60,8 +60,6 @@ map(
   { noremap = true, silent = true }
 )
 
-map("n", "<leader>F", "<cmd>NeoTreeRevealToggle<cr>", { noremap = true, silent = true })
-
 -- Window management
 map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true })
 map("n", "<S-Tab>", "<C-w>w", { noremap = true, silent = true })

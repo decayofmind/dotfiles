@@ -6,14 +6,17 @@ local M = {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
-    { "folke/neodev.nvim", config = true },
+    { "folke/neodev.nvim",   config = true },
     {
       "j-hui/fidget.nvim",
+      tag = "legacy",
       config = function()
         require("fidget").setup({ text = { spinner = "arc" } })
       end,
     },
     "b0o/schemastore.nvim",
+    -- TODO: try out with 0.10.x
+    --[[ 'Bekaboo/dropbar.nvim', ]]
     { "SmiteshP/nvim-navic", lazy = true },
     "lukas-reineke/lsp-format.nvim",
     {
@@ -38,6 +41,8 @@ local M = {
 }
 
 function M.config()
+  vim.lsp.set_log_level("off")
+
   require("mason")
   require("mason-lspconfig").setup({ automatic_installation = true, })
 
@@ -72,7 +77,7 @@ function M.config()
       -- Format on save
       vim.cmd([[
               cabbrev wq execute "Format sync" <bar> wq
-              cabbrev wqa bufdo execute "Format sync" <bar> wa <bar> q
+              cabbrev wqa bufdo execute "Format sync" <bar> wa <bar> qa
             ]])
     end
 
