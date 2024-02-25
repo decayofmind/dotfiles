@@ -22,11 +22,7 @@ function M.config()
       nls.builtins.formatting.stylua.with({
         filetypes = { "lua" },
       }),
-      nls.builtins.diagnostics.luacheck.with({
-        extra_args = { "--globals", "vim" },
-      }),
       nls.builtins.formatting.shfmt,
-      nls.builtins.diagnostics.shellcheck,
       nls.builtins.diagnostics.yamllint.with({
         extra_args = {
           "-d",
