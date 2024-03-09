@@ -134,6 +134,13 @@ local M = {
     "sindrets/diffview.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles" },
+    opts = {
+      view = {
+        merge_tool = {
+          layout = "diff3_mixed",
+        },
+      },
+    },
   },
   {
     "akinsho/git-conflict.nvim",

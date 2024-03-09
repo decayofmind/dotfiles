@@ -53,7 +53,7 @@
 	tool = nvimdiff2
 [merge]
 	prompt = true
-	tool = diffview.nvim
+	tool = nvim
 	keepBackup = false
 [github]
 	user = decayofmind
@@ -63,8 +63,8 @@
 	textconv = sops -d
 ; [mergetool "diffview.nvim"]
 ; 	cmd = nvim \"+DiffviewOpen\"
-[mergetool "diffview.nvim"]
-	cmd = nvim -f -c \"DiffviewOpen\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
+[mergetool "nvim"]
+	cmd = nvim -f -c \"DiffviewOpen\"
 	# trustExitCode = true
 	prompt = false
 ; [mergetool "nvimdiff4"]

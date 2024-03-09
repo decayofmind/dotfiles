@@ -84,7 +84,7 @@ zinit light Aloxaf/fzf-tab
   zstyle ':completion:*:descriptions' format '[%d]'
   zstyle ':fzf-tab:*' prefix ''
   zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -1 --color=always $realpath'
   zstyle ':fzf-tab:*' switch-group ',' '.'
   zstyle -d ':completion:*' format
 
