@@ -15,6 +15,7 @@
 	; fixup = "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && COMMIT=$(git rev-parse $1) && git commit --fixup=$COMMIT && EDITOR=true git rebase -i --autosquash $COMMIT~1' -"
 	fixup = "!f() { TARGET=$(git rev-parse "$1"); git commit --fixup=$TARGET ${@:2} && EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
 	fixprev = "!f() { SHA=$(git rev-parse HEAD) && REV=$(git rev-parse $SHA) && git commit --fixup $SHA && EDITOR=true git rebase -i --autosquash $REV^; }; f -"
+	fomo = !git fetch origin main && git rebase origin/main
 	c = commit
 	ca = commit --all
 	mt = mergetool
