@@ -1,24 +1,5 @@
 #!/usr/bin/env zsh
 
-aws-profile() {
-    case ${1} in
-        "" | clear)
-            export AWS_PROFILE=""
-            ;;
-        *)
-            export AWS_PROFILE="${1}"
-            ;;
-    esac
-}
-
-kpst() {
-  if ( $SPACESHIP_KUBECONTEXT_SHOW ); then
-    export SPACESHIP_KUBECONTEXT_SHOW=false
-  else
-    export SPACESHIP_KUBECONTEXT_SHOW=true
-  fi
-}
-
 weather() {
   curl "http://wttr.in/$1"
 }
@@ -29,7 +10,7 @@ myip() {
 
 zbench() {
   for i in $(seq 1 10); do
-    /usr/bin/time /usr/local/bin/zsh -i -c exit
+    /usr/bin/time $HOMEBREW_PREFIX/bin/zsh -i -c exit
   done
 }
 

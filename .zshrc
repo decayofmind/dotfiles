@@ -1,6 +1,13 @@
 # vim:foldlevel=0
 # vim:foldmethod=marker
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Start profiler
 if [[ "${ZSH_PROFILE}" == 1 ]]; then
     zmodload zsh/zprof
@@ -9,67 +16,46 @@ else
 fi
 
 # Zinit {{{
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME:-~/.local/share}}/zinit"
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
 
-if [[ ! -d $ZINIT_HOME ]]; then
-  mkdir -p "$(dirname $ZINIT_HOME)"
-  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME/repo"
-fi
+zinit ice depth"1" atload'!source ~/.p10k.zsh'
+zinit light romkatv/powerlevel10k
 
-source "${ZINIT_HOME}/repo/zinit.zsh"
-
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-zinit light-mode for \
+zinit light-mode depth"1" for \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-bin-gem-node \
-    NICHOLAS85/z-a-eval
+    NICHOLAS85/z-a-eval \
+    zsh-users/zsh-completions
 
 # Prezto {{{
-zinit snippet PZT::modules/environment/init.zsh
-zinit snippet PZT::modules/gnu-utility/init.zsh
+zinit snippet PZTM::gnu-utility
 
 zstyle ':prezto:module:utility' safe-ops 'no'
 zinit snippet PZTM::utility
 
-zinit ice wait'1' lucid; zinit snippet PZT::modules/directory/init.zsh
-zinit snippet PZT::modules/history/init.zsh
-zinit snippet PZT::modules/completion/init.zsh
-zinit snippet PZT::modules/osx/init.zsh
-zinit snippet PZT::modules/gpg/init.zsh
+zinit snippet PZTM::history
+# zinit snippet PZT::modules/completion/init.zsh
+zinit snippet PZTM::gpg
 
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:editor' ps-context 'yes'
-zstyle ':prezto:module:prompt' managed 'yes'
 zinit snippet PZTM::editor
 
-# zinit load "jreese/zsh-titles"
 zstyle ':prezto:module:terminal' auto-title 'yes'
-zinit snippet PZT::modules/terminal/init.zsh
+zinit snippet PZTM::terminal
 # }}}
 
 zinit light mafredri/zsh-async
 
-zinit ice depth=1
+zinit ice depth'1'
 zinit light jeffreytse/zsh-vi-mode
-
-zinit ice depth=1 atload'!source ~/.p10k.zsh'
-zinit light romkatv/powerlevel10k
-
-# Python {{{
-# zinit ice lucid wait'1' atinit"local ZSH_PYENV_LAZY_VIRTUALENV=true" \
-#   atload"pyenv virtualenvwrapper_lazy"
-# zinit light davidparsson/zsh-pyenv-lazy
-# zinit ice svn wait'2' silent; zinit snippet OMZ::plugins/pyenv
-# }}}
 
 zinit ice wait'0' lucid
 zinit light ajeetdsouza/zoxide
-
-zinit ice wait'0' blockf lucid
-zinit light zsh-users/zsh-completions
 
 zinit ice wait"0" lucid; zinit load zdharma-continuum/history-search-multi-word
 
@@ -87,6 +73,8 @@ zinit light Aloxaf/fzf-tab
   zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -1 --color=always $realpath'
   zstyle ':fzf-tab:*' switch-group ',' '.'
   zstyle -d ':completion:*' format
+  zstyle ':completion:*' use-cache on
+  zstyle ':completion:*' cache-path ${XDG_CACHE_HOME:-$HOME/.cache}/zsh
 
 zinit ice wait"0" lucid if'[[ ! $TERM =~ ".*kitty" ]]'; zinit light marzocchi/zsh-notify
 
@@ -98,15 +86,22 @@ zinit load gnachman/iTerm2-shell-integration
 zinit ice lucid atload"unalias gcd"
 zinit snippet OMZP::git
 
+zinit snippet OMZP::asdf
+zinit snippet OMZP::brew
+
 # Programs {{{
 zinit ice wait lucid from"gh-r" \
     mv"direnv* -> direnv" sbin"direnv" \
     eval"./direnv hook zsh"
 zinit load direnv/direnv
 
-zinit ice wait'0' lucid; zinit light "akarzim/zsh-docker-aliases"
-zinit ice wait'1' as"completion" lucid
+zinit ice wait"0" lucid
+zinit light "akarzim/zsh-docker-aliases"
+zinit ice wait"1" as"completion" lucid
 zinit snippet OMZP::docker
+
+zinit ice lucid
+zinit snippet OMZP::aws
 
 zinit ice wait'1' as"completion" lucid
 zinit snippet OMZP::terraform/_terraform
@@ -148,7 +143,6 @@ zinit light zsh-users/zsh-history-substring-search
   bindkey -M emacs '^N' history-substring-search-down
   bindkey -M vicmd 'k' history-substring-search-up
   bindkey -M vicmd 'j' history-substring-search-down
-
 # }}}
 
 # End Profiler
@@ -163,8 +157,6 @@ if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
 else
   compinit -C;
 fi
-
-. $(brew --prefix asdf)/libexec/asdf.sh
 
 zinit cdreplay -q
 
@@ -187,8 +179,15 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_ENV_HINTS=1
 export KEYTIMEOUT=1
 
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='\UE0A0 '
+typeset -g POWERLEVEL9K_VCS_GIT_ICON=
+typeset -g POWERLEVEL9K_HOME_ICON=''
+typeset -g POWERLEVEL9K_HOME_SUB_ICON=''
+typeset -g POWERLEVEL9K_FOLDER_ICON=''
+typeset -g POWERLEVEL9K_ETC_ICON=''
+typeset -g POWERLEVEL9K_APPLE_ICON=''
+
 for file in ${HOME}/.zsh/*.zsh; do
   source $file
 done
-
-export PATH="$PATH:$HOME/.local/bin"
