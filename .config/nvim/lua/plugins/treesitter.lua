@@ -11,7 +11,12 @@ local M = {
     "nvim-treesitter/nvim-treesitter-refactor",
     "RRethy/nvim-treesitter-endwise",
     "andymass/vim-matchup",
-    "nvim-treesitter/playground"
+    "nvim-treesitter/playground",
+    {
+      "chrisgrieser/nvim-various-textobjs",
+      lazy = false,
+      opts = { useDefaultKeymaps = true },
+    },
   },
 }
 

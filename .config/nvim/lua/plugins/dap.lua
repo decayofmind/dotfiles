@@ -5,12 +5,7 @@ local M = {
     "theHamsta/nvim-dap-virtual-text",
     "leoluz/nvim-dap-go",
     "mfussenegger/nvim-dap-python",
-    {
-      "rcarriga/nvim-dap-ui",
-      config = function()
-        require("dapui").setup()
-      end,
-    },
+    { "rcarriga/nvim-dap-ui", dependencies = "nvim-neotest/nvim-nio" },
     "nvim-telescope/telescope-dap.nvim",
   },
 }

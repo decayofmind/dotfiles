@@ -5,7 +5,7 @@ local M = {
       vim.g.adwaita_darker = true
       vim.g.adwaita_disable_cursorline = true
       vim.g.adwaita_transparent = true
-    end
+    end,
   },
   {
     "ramojus/mellifluous.nvim",
@@ -15,10 +15,10 @@ local M = {
   {
     "navarasu/onedark.nvim",
     config = function()
-      require("onedark").setup {
-        style = "darker"
-      }
-    end
+      require("onedark").setup({
+        style = "darker",
+      })
+    end,
   },
   { "shaunsingh/oxocarbon.nvim" },
   {
@@ -36,15 +36,20 @@ local M = {
     end,
   },
   {
-    'AlexvZyl/nordic.nvim',
+    "AlexvZyl/nordic.nvim",
     lazy = false,
     priority = 1000,
-    config = function()
-      require 'nordic'.load()
-    end
+  },
+  {
+    "Verf/deepwhite.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      low_blue_light = true,
+    },
   },
   "kaiuri/nvim-juliana",
-  "arzg/vim-colors-xcode"
+  "arzg/vim-colors-xcode",
 }
 
 return M

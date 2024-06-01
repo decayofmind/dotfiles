@@ -22,12 +22,17 @@ function M.config()
       nls.builtins.formatting.stylua.with({
         filetypes = { "lua" },
       }),
+<<<<<<< HEAD
+      nls.builtins.formatting.shfmt,
+=======
       -- TODO: Find replacement
       --[[ nls.builtins.diagnostics.luacheck.with({ ]]
       --[[   extra_args = { "--globals", "vim" }, ]]
       --[[ }), ]]
+      nls.builtins.formatting.shfmt,
       -- TODO: Find replacement
       --[[ nls.builtins.diagnostics.shellcheck, ]]
+>>>>>>> a10a4bb ([nvim] Small updates)
       nls.builtins.diagnostics.yamllint.with({
         extra_args = {
           "-d",

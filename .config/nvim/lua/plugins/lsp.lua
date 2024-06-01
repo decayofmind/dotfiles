@@ -6,7 +6,7 @@ local M = {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
-    { "folke/neodev.nvim",   config = true },
+    { "folke/neodev.nvim", config = true },
     {
       "j-hui/fidget.nvim",
       tag = "legacy",
@@ -44,7 +44,7 @@ function M.config()
   vim.lsp.set_log_level("off")
 
   require("mason")
-  require("mason-lspconfig").setup({ automatic_installation = true, })
+  require("mason-lspconfig").setup({ automatic_installation = true })
 
   local lspconfig = require("lspconfig")
   local configs = require("lspconfig.configs")
@@ -67,8 +67,9 @@ function M.config()
     buf_set_keymap("n", "<leader>ld", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
     buf_set_keymap("n", "<leader>lD", "<cmd>split | lua vim.lsp.buf.definition()<CR>", opts)
 
-    if client.server_capabilities.documentFormattingProvider
-        or client.server_capabilities.documentRangeFormattingProvider
+    if
+      client.server_capabilities.documentFormattingProvider
+      or client.server_capabilities.documentRangeFormattingProvider
     then
       local lspformat = require("lsp-format")
       lspformat.setup({})
@@ -133,10 +134,10 @@ function M.config()
     on_attach = on_attach,
   })
 
-  lspconfig.helm_ls.setup {
+  lspconfig.helm_ls.setup({
     filetypes = { "helm" },
     cmd = { "helm_ls", "serve" },
-  }
+  })
 
   lspconfig.jsonls.setup({
     capabilities = capabilities,
@@ -153,9 +154,10 @@ function M.config()
     on_attach = on_attach,
   })
 
-  lspconfig.solargraph.setup({
+  lspconfig.ruby_lsp.setup({
     capabilities = capabilities,
     on_attach = on_attach,
+    cmd = { os.getenv("HOME") .. "/.asdf/shims/ruby-lsp", "stdio" },
   })
 
   lspconfig.gopls.setup({
@@ -173,7 +175,7 @@ function M.config()
           constantValues = true,
           functionTypeParameters = true,
           parameterNames = true,
-          rangeVariableTypes = true
+          rangeVariableTypes = true,
         },
         staticcheck = true,
       },

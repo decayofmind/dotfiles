@@ -34,7 +34,7 @@ function M.config()
     "live_grep_args",
     "persisted",
     "projects",
-    "undo"
+    "undo",
   }
 
   table.insert(vimgrep_arguments, "--hidden")
@@ -49,8 +49,8 @@ function M.config()
       prompt_prefix = " ",
       dynamic_preview_title = true,
       mappings = {
-        i = { ["<esc>"] = "close", ["<c-t>"] = require("trouble.providers.telescope").open_with_trouble },
-        n = { ["<c-t>"] = require("trouble.providers.telescope").open_with_trouble },
+        i = { ["<esc>"] = "close", ["<c-t>"] = require("trouble.sources.telescope").open },
+        n = { ["<c-t>"] = require("trouble.sources.telescope").open },
       },
       file_ignore_patterns = {
         "%.git/*",
@@ -79,7 +79,7 @@ function M.config()
         layout_config = {
           preview_height = 0.8,
         },
-      }
+      },
     },
   })
 end

@@ -136,6 +136,7 @@ local M = {
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles" },
     opts = {
       view = {
+        -- https://github.com/sindrets/diffview.nvim/pull/205
         merge_tool = {
           layout = "diff3_mixed",
         },
