@@ -15,7 +15,7 @@
       "Blink Allowed": true,
       "BM Growl": false,
       "Columns": 120,
-      "Command": "/usr/local/bin/zsh",
+      "Command": "/opt/homebrew/bin/zsh",
       "Custom Command": "Yes",
       "Custom Directory": "Advanced",
       "Draw Powerline Glyphs": true,
@@ -26,7 +26,7 @@
       "Title Components": 512,
       "Transparency": 0.2,
       "Unlimited Scrollback": true,
-      "Normal Font": "MonacoNerdFontCompleteM- 12",
+      "Normal Font": "MesloLGS-NF-Regular 12",
       "Option Key Sends": 2,
       "Right Option Key Sends": 0,
       "Semantic History": {
