@@ -1,7 +1,3 @@
-#!/usr/bin/env zsh
-# vim:syntax=zsh
-# vim:filetype=zsh
-
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -22,10 +18,10 @@ export GOPATH="${HOME}/.go"
 # Zsh search path for executable
 path=(
   $HOME/.local/bin
-  $HOME/.krew/bin
   ${GOPATH}/bin
   /usr/local/opt/node@10/bin
   /usr/local/{bin,sbin}
+  /opt/homebrew/{bin,sbin}
   $path
 )
 
@@ -44,6 +40,10 @@ if command -v nvim > /dev/null 2>&1; then
   export VISUAL=nvim
 fi
 export EDITOR=$VISUAL
+
+if command -v kubectl-krew > /dev/null 2>&1; then
+  path+=("$HOME/.krew/bin")
+fi
 
 # Set base16 theme
 export BASE16_THEME='black-metal-khold'

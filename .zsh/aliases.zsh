@@ -1,6 +1,5 @@
 alias bootstrap='$HOME/.yadm/bootstrap'
 alias brewdump='brew bundle dump --force --global'
-alias ap='aws-profile'
 alias c='z'
 alias ci='zi'
 alias cdp='cdproject'

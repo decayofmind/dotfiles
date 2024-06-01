@@ -1,13 +1,6 @@
 # vim:foldlevel=0
 # vim:foldmethod=marker
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # Start profiler
 if [[ "${ZSH_PROFILE}" == 1 ]]; then
     zmodload zsh/zprof
@@ -86,8 +79,8 @@ zinit load gnachman/iTerm2-shell-integration
 zinit ice lucid atload"unalias gcd"
 zinit snippet OMZP::git
 
-zinit snippet OMZP::asdf
 zinit snippet OMZP::brew
+zinit snippet OMZP::asdf
 
 # Programs {{{
 zinit ice wait lucid from"gh-r" \
@@ -105,11 +98,6 @@ zinit snippet OMZP::aws
 
 zinit ice wait'1' as"completion" lucid
 zinit snippet OMZP::terraform/_terraform
-
-zinit ice wait lucid from"gh-r" bpick"krew-darwin_amd64.tar.gz" \
-            mv"krew-darwin_amd64 -> krew" \
-            sbin"krew" has"kubectl"
-zinit load kubernetes-sigs/krew
 
 # zinit ice wait'0' lucid
 zinit snippet OMZP::kubectl
@@ -179,7 +167,6 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_ENV_HINTS=1
 export KEYTIMEOUT=1
 
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='\UE0A0 '
 typeset -g POWERLEVEL9K_VCS_GIT_ICON=
 typeset -g POWERLEVEL9K_HOME_ICON=''
@@ -188,6 +175,7 @@ typeset -g POWERLEVEL9K_FOLDER_ICON=''
 typeset -g POWERLEVEL9K_ETC_ICON=''
 typeset -g POWERLEVEL9K_APPLE_ICON=''
 
-for file in ${HOME}/.zsh/*.zsh; do
-  source $file
-done
+() {
+  local f
+  for f in ${HOME}/.zsh/*.zsh(N); source $f
+}
