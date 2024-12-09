@@ -47,9 +47,6 @@ zinit light mafredri/zsh-async
 zinit ice depth'1'
 zinit light jeffreytse/zsh-vi-mode
 
-zinit ice wait'0' lucid
-zinit light ajeetdsouza/zoxide
-
 zinit ice wait"0" lucid; zinit load zdharma-continuum/history-search-multi-word
 
 zinit ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-bindings.zsh" \
@@ -80,7 +77,8 @@ zinit ice lucid atload"unalias gcd"
 zinit snippet OMZP::git
 
 zinit snippet OMZP::brew
-zinit snippet OMZP::asdf
+zinit snippet OMZP::mise
+ZOXIDE_CMD_OVERRIDE=cd zinit snippet OMZP::zoxide
 
 # Programs {{{
 zinit ice wait lucid from"gh-r" \
