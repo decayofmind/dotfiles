@@ -1,5 +1,6 @@
 alias bootstrap='$HOME/.yadm/bootstrap'
 alias brewdump='brew bundle dump --force --global'
+alias b64='base64 --wrap 0'
 alias c='z'
 alias ci='zi'
 alias cdp='cdproject'
@@ -29,7 +30,10 @@ alias kns='kubens'
 alias kx='kctx'
 alias kn='kns'
 alias kgjs='k get jobs'
-alias kb='kustomize build --load-restrictor=LoadRestrictionsNone ./ --stack-trace | cat --language=yaml'
+alias kges='k get externalsecrets'
+alias kgpv='k get pv'
+alias kb='kustomize build --load-restrictor=LoadRestrictionsNone ./ --stack-trace | yamlfmt - | cat --language=yaml'
+alias kds='(){ kgsec $1 -o json | jq ".data | map_values(@base64d)" }'
 
 if command -v nvim > /dev/null 2>&1; then
   alias vim='nvim'

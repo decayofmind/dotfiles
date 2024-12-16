@@ -29,8 +29,10 @@ zinit snippet PZTM::gnu-utility
 zstyle ':prezto:module:utility' safe-ops 'no'
 zinit snippet PZTM::utility
 
+setopt appendhistory
+# https://github.com/sorin-ionescu/prezto/blob/master/modules/history/init.zsh
 zinit snippet PZTM::history
-# zinit snippet PZT::modules/completion/init.zsh
+zinit snippet PZTM::completion
 zinit snippet PZTM::gpg
 
 zstyle ':prezto:module:editor' dot-expansion 'yes'

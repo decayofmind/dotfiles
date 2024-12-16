@@ -1,0 +1,8 @@
+# https://github.com/Kampfkarren/selene/issues/284
+# std="lua54+vim"
+
+[lints]
+global_usage = "allow"
+multiple_statements = "allow"
+incorrect_standard_library_use = "allow"
+mixed_table = "allow"

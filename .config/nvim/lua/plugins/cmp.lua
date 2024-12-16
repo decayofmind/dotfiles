@@ -27,7 +27,9 @@ local M = {
 
 function M.config()
   local has_words_before = function()
-    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+      return false
+    end
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
   end
@@ -68,10 +70,10 @@ function M.config()
       -- ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
       -- ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
       ["<M-Space>"] = cmp.mapping(
-        cmp.mapping.complete {
+        cmp.mapping.complete({
           reason = cmp.ContextReason.Manual,
-          config = { sources = { { name = "nvim_lsp" } } }
-        },
+          config = { sources = { { name = "nvim_lsp" } } },
+        }),
         { "i", "c" }
       ),
       ["<C-e>"] = cmp.mapping({
@@ -104,6 +106,7 @@ function M.config()
       end),
     }),
     sources = cmp.config.sources({
+      { name = "lazydev", group_index = 0 },
       { name = "nvim_lsp", priority_weight = 100 },
       { name = "nvim_lsp_signature_help", priority_weight = 120 },
       { name = "luasnip", priority_weight = 60 },

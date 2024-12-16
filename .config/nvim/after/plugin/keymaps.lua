@@ -22,14 +22,14 @@ cnoreabbrev({ "Q", "q" })
 cnoreabbrev({ "Qall", "qall" })
 
 -- Don't yank!
-map("n", "x", '"_x', opts)
-map("n", "X", '"_X', opts)
-map("n", "c", '"_c', opts)
-map("v", "c", '"_c', opts)
-map("v", "C", '"_C', opts)
+map("n", "x", "\"_x", opts)
+map("n", "X", "\"_X", opts)
+map("n", "c", "\"_c", opts)
+map("v", "c", "\"_c", opts)
+map("v", "C", "\"_C", opts)
 
 -- Don't yank on visual paste
-map("v", "p", '"_dP', opts)
+map("v", "p", "\"_dP", opts)
 
 -- Move selected line / block of text in visual mode
 map("x", "K", ":move '<-2<CR>gv-gv", opts)
@@ -39,8 +39,7 @@ map("x", "J", ":move '>+1<CR>gv-gv", opts)
 map(
   "n",
   "K",
-  "<cmd>lua require('telescope.builtin').grep_string({layout_strategy='vertical', search = vim.fn.expand('<cword>')})<cr>"
-  ,
+  "<cmd>lua require('telescope.builtin').grep_string({layout_strategy='vertical', search = vim.fn.expand('<cword>')})<cr>",
   { noremap = true, silent = true }
 )
 
@@ -63,7 +62,7 @@ map(
 -- Window management
 map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { noremap = true, silent = true })
 map("n", "<S-Tab>", "<C-w>w", { noremap = true, silent = true })
-map("n", "q", "<cmd>wincmd c<cr>", { noremap = true, silent = true })
+-- map("n", "q", "<cmd>wincmd c<cr>", { noremap = true, silent = true })
 map("n", "<leader>w", "<cmd>w<cr>", { noremap = true })
 map("n", "<leader>x", "<cmd>Bdelete<cr>", { noremap = true })
 map("n", "<leader>X", "<cmd>Bdelete!<cr>", { noremap = true })

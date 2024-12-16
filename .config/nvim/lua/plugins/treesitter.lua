@@ -5,7 +5,6 @@ local M = {
   end,
   event = "BufReadPost",
   dependencies = {
-    "p00f/nvim-ts-rainbow",
     "nvim-treesitter/nvim-treesitter-textobjects",
     "JoosepAlviste/nvim-ts-context-commentstring",
     "nvim-treesitter/nvim-treesitter-refactor",
@@ -54,6 +53,7 @@ function M.config()
       "gotmpl",
       "hcl",
       "http",
+      "javascript",
       "json",
       "lua",
       "luap",

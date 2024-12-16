@@ -6,7 +6,13 @@ local M = {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
-    { "folke/neodev.nvim", config = true },
+    {
+      "folke/lazydev.nvim",
+      ft = "lua",
+      -- opts = {
+      --   debug = true,
+      -- },
+    },
     {
       "j-hui/fidget.nvim",
       tag = "legacy",
@@ -16,7 +22,7 @@ local M = {
     },
     "b0o/schemastore.nvim",
     -- TODO: try out with 0.10.x
-    --[[ 'Bekaboo/dropbar.nvim', ]]
+    "Bekaboo/dropbar.nvim",
     { "SmiteshP/nvim-navic", lazy = true },
     "lukas-reineke/lsp-format.nvim",
     {
@@ -74,12 +80,6 @@ function M.config()
       local lspformat = require("lsp-format")
       lspformat.setup({})
       lspformat.on_attach(client)
-
-      -- Format on save
-      vim.cmd([[
-              cabbrev wq execute "Format sync" <bar> wq
-              cabbrev wqa bufdo execute "Format sync" <bar> wa <bar> qa
-            ]])
     end
 
     if client.server_capabilities.documentSymbolProvider then
