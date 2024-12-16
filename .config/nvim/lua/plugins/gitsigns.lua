@@ -1,15 +1,17 @@
 local M = {
   "lewis6991/gitsigns.nvim",
+  event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "nvim-lua/plenary.nvim",
+    "purarue/gitsigns-yadm.nvim",
   },
 }
 
 function M.config()
   require("gitsigns").setup({
-    yadm = {
-      enable = true,
-    },
+    _on_attach_pre = function(_, callback)
+      require("gitsigns-yadm").yadm_signs(callback)
+    end,
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
 

@@ -2,7 +2,7 @@ local M = {
   {
     "rest-nvim/rest.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim"
+      "nvim-lua/plenary.nvim",
     },
     ft = { "http" },
     config = true,
@@ -14,7 +14,7 @@ local M = {
         save_on_toggle = true,
         enter_on_sendcmd = true,
       },
-    }
+    },
   },
   {
     url = "https://gitlab.com/yorickpeterse/nvim-pqf",
@@ -27,15 +27,13 @@ local M = {
     event = "VeryLazy",
     config = function()
       local notify = require("notify")
-      notify.setup(
-        {
-          render = "minimal",
-          stages = "fade",
-          timeout = 3000,
-        }
-      )
+      notify.setup({
+        render = "minimal",
+        stages = "fade",
+        timeout = 3000,
+      })
       vim.notify = notify
-    end
+    end,
   },
   {
     "famiu/bufdelete.nvim",
@@ -47,18 +45,36 @@ local M = {
     opts = {
       enable_check_bracket_line = false,
       check_ts = true,
-    }
+    },
   },
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
     opts = {
-      mapping = { "jk", "jj", "kk" },
-    }
+      default_mappings = false,
+      mappings = {
+        i = {
+          j = {
+            k = "<Esc>",
+            j = "<Esc>",
+          },
+          k = {
+            k = "<Esc>",
+            j = "<Esc>",
+          },
+        },
+      },
+    },
   },
   {
     "nmac427/guess-indent.nvim",
-    config = true
+    config = true,
+  },
+  {
+    "MeanderingProgrammer/markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ft = "markdown",
+    config = true,
   },
   {
     "ahmedkhalf/project.nvim",
@@ -89,7 +105,7 @@ local M = {
         "<leader>S",
         "<cmd>Outline<cr>",
         desc = "Symbols",
-      }
+      },
     },
     opts = {
       auto_preview = false,
@@ -99,7 +115,7 @@ local M = {
           hovered = true,
         },
       },
-    }
+    },
   },
   {
     "folke/trouble.nvim",
@@ -110,7 +126,7 @@ local M = {
         "<leader>T",
         "<cmd>TroubleToggle<cr>",
         desc = "Trouble",
-      }
+      },
     },
   },
   -- Git
@@ -124,7 +140,7 @@ local M = {
       integrations = {
         diffview = true,
       },
-    }
+    },
   },
   {
     "ThePrimeagen/git-worktree.nvim",
@@ -174,7 +190,7 @@ local M = {
       completion = true,
       tabouts = {
         { open = "'", close = "'" },
-        { open = '"', close = '"' },
+        { open = "\"", close = "\"" },
         { open = "`", close = "`" },
         { open = "(", close = ")" },
         { open = "[", close = "]" },
@@ -207,7 +223,7 @@ local M = {
         "<leader>K",
         "<cmd>DashWord<cr>",
         desc = "Search in Dash",
-      }
+      },
     },
   },
   {
@@ -235,7 +251,7 @@ local M = {
     -- instead of nvim-telescope/telescope-symbols.nvim
     "ziontee113/icon-picker.nvim",
     cmd = { "PickEverything" },
-    config = true
+    config = true,
   },
   {
     "axieax/urlview.nvim",
@@ -245,9 +261,9 @@ local M = {
         "<leader>fL",
         "<cmd>UrlView buffer action=clipboard<cr>",
         desc = "URLs",
-      }
+      },
     },
-    config = true
+    config = true,
   },
   {
     "rafcamlet/nvim-luapad",
@@ -271,17 +287,17 @@ local M = {
   "drybalka/tree-climber.nvim",
   {
     "tversteeg/registers.nvim",
-    cmd = { 'Registers' },
+    cmd = { "Registers" },
     keys = {
-      { '<c-r>', mode = { 'i' } },
-      { '"',     mode = { 'n', 'v' } },
+      { "<c-r>", mode = { "i" } },
+      { "\"", mode = { "n", "v" } },
     },
     opts = {
       window = {
         border = "single",
         transparency = 20,
       },
-    }
+    },
   },
   {
     "allaman/kustomize.nvim",
@@ -290,7 +306,14 @@ local M = {
     opts = { defaults = true },
   },
   { "anuvyklack/fold-preview.nvim", dependencies = "anuvyklack/keymap-amend.nvim", config = true },
-  { "olimorris/persisted.nvim",     config = true }
+  {
+    "olimorris/persisted.nvim",
+    config = true,
+    keys = {
+      { "<leader>L", "<Cmd>SessionLoadLast<Cr>", desc = "Load Last Session" },
+    },
+  },
+  { "tris203/precognition.nvim", event = "VeryLazy" },
 }
 
 return M

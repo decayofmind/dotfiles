@@ -4,7 +4,6 @@ local M = {
   event = "BufReadPost",
   config = {},
   keys = {
-
     {
       "]t",
       function()
